@@ -11,5 +11,13 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/db', (req, res) => res.render('pages/db'))
+
+  .get('/login', (req, res) => {
+    res.render('pages/loginPage')
+  })
+
+  .get('/register', (req, res) => {
+    res.render('pages/registerPage')
+  })
+
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
