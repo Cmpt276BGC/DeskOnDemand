@@ -6,9 +6,15 @@
         <title>Register</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/register.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
     </head>
     <body>
+        <div class="images">
+            <img src="/Logos/BGC_Logo.png">
+            <br>
+            <img src="/Logos/DeskonDemand.jpg" width="100px" >
+        </div>
         
         <h1>Register</h1>
         <form action="/register" method="POST">
@@ -24,9 +30,14 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Register</button>
+            <div>
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                
+            </div>
+            <input type="submit" value="Register"></input>
         </form>
-        <a href="/login">Login</a>
+        <a href="/login"> Already Regitered? Please Login</a>
         <script src="" async defer></script>
     </body>
 </html>
