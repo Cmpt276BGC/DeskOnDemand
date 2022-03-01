@@ -5,11 +5,28 @@
         <title>Login</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
     </head>
     <body>
+        <div class="images">
+            <img src="/Logos/BGC_Logo.png">
+            <br>
+            <img src="/Logos/DeskonDemand.jpg" width="100px" >
+        </div>
         
-        
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <input type="submit" value="Login"></input>
+        </form>
+        <a href="/register">Register</a>
         
         <script src="" async defer></script>
     </body>
