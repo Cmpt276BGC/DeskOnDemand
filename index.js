@@ -9,9 +9,20 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const session = require('express-session')
 
+// database connection
+const { Pool } = require('pg');
+var pool;
+pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  // connectionString: 'postgres://postgres:@localhost/',
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
 var app = express()
 app.use(express.static(path.join(__dirname, 'public')))
- app.use(session({
+app.use(session({
   name: "sesson",
   secret: 'this is the way', 
   resave: false, // forces session to be saved back to session store
@@ -34,4 +45,18 @@ app.get('/register', (req, res) => {
 
 app.get('/dashboard', (req,res)=>{
   res.render('pages/dashboard')
+})
+
+
+app.get('/db', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM test_table');
+    const results = { 'results': (result) ? result.rows : null};
+    res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
 })
