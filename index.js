@@ -122,16 +122,16 @@ app.post('/login', async (req, res) =>{
     req.session.user = user;
     //if the user is an admin send them to the admin page automatically
     if(req.session.user.rows[0].admin){
-      res.render('pages/adminPage');
+      res.redirect('pages/adminPage');
      }
      //if the user is not an admin, redirect them to the main user page
      else{
-      res.render('pages/userPage');
+      res.redirect('pages/userPage');
      }
   }
   //if the user does not exist, redirect to error page login failed
   else{
-    res.render('pages/failedLoginPage');
+    res.redirect('pages/failedLoginPage');
   }
 });
 
