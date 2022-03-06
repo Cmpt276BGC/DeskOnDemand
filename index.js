@@ -114,7 +114,7 @@ app.get('/adminPage', (req,res)=>{
 app.get('/tokenDump', (req,res)=>{
 
 
-  var adminQueryResult = {'adminQueryResult' : req.session.user.rows[0].admin};
+  var adminQueryResult = {'adminQueryResult' : req.session.user.rows[0]};
   var adminQueryResultString = JSON.stringify(existsQueryResult);
 
   if(adminQueryResultString.includes('{"existQueryResult":true}')){
