@@ -8,14 +8,16 @@ var bodyParser = require('body-parser');
 
 const { Pool } = require('pg');
 const res = require('express/lib/response');
+const { request } = require('http');
+const { user } = require('pg/lib/defaults');
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  //connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  //ssl: {
+    //rejectUnauthorized: false
+  //}
 });
 
 var app = express()
@@ -50,6 +52,7 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
   res.render('pages/registerPage')
 })
+
 
 app.get('/db', async (req, res) => {
   try {
@@ -115,38 +118,60 @@ app.post('/login', async (req, res) =>{
   if(existsQuery.rows[0].exists){
     var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${userEmailInput}' AND upass='${userPasswordInput}'`);
     req.session.user = user;
+    req.session.loggedin = true;
     //if the user is an admin send them to the admin page automatically
     if(req.session.user.rows[0].admin){
-      res.render('pages/adminPage');
+      res.redirect('/adminPage');
      }
      //if the user is not an admin, redirect them to the main user page
-     else{
-      res.render('pages/userPage');
+     else {
+      res.redirect('/userPage');
      }
   }
   //if the user does not exist, redirect to error page login failed
   else{
-    res.render('pages/failedLoginPage');
+    res.render('/failedLoginPage');
   }
 });
 
 //logout function to destroy token when /logout is accessed 
 app.post('/logout', (req,res)=>{
+  req.session.loggedin = false;
   req.session.destroy((err)=>{
     res.redirect('/login')
   })
 })
 
+//redirects to user page url if logged in, else back to login page
+app.get('/userPage', (req, res)=>{
+  if(req.session.user){
+    res.render('pages/userPage')
+  } else {
+    res.redirect('/login')
+  }
+  res.end();
+})
+
 app.get('/adminPage', (req,res)=>{
 
+//redirects to login page to prevent access to admin page from url and hide undefined rows error
+if(req.session.user === undefined){
+  res.redirect('/login')
+}
 
 //redirect to admin page if JSON token has admin flag set to true (an admin)
  if(req.session.user.rows[0].admin){
   res.render('pages/adminPage');
  }
+
 //redirect back to regular user page if JSON token admin flag is set to false (not an admin)
- else{
-  res.render('pages/userPage');
+ else if(req.session.user){
+  res.redirect('/userPage');
+ } 
+
+ //redirect back to login if user not logged in
+ else {
+   res.redirect('/login')
  }
 
 })
@@ -157,6 +182,10 @@ app.get('/tokenDump', (req,res)=>{
   res.send(req.session.user.rows[0]);
   
 })
+
+
+
+
 
 
 
