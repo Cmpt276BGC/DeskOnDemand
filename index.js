@@ -75,16 +75,12 @@ app.post('/register', async (req, res) => {
     //query database to make sure we aren't just registering duplicate emails
     var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newuemail}')`);
 
-    var existsQueryResult = {'existQueryResult' : existsQuery.rows[0].exists};
+    //var existsQueryResult = {'existQueryResult' : existsQuery.rows[0].exists};
 
-    res.send(existsQueryResult);
+    //res.send(existsQueryResult);
 
-    var existsQueryResultString = JSON.stringify(existsQueryResult);
-
-    var doesExist = 0;
-
-    if(existsQueryResultString.includes('{"existQueryResult":true}')){
-      doesExist = 1;
+    if(existsQueryResult.rows[0].exists){
+      res.send("email already in use");
      }
 
      res.send(doesExist);
