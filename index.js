@@ -81,17 +81,8 @@ app.post('/register', async (req, res) => {
 
     if(existsQueryResult.rows[0].exists){
       res.send("email already in use");
-     }
-
-     res.send(doesExist);
-
-
-
-     if(doesExist){
-      res.send("ERROR: This email is in use already");
-     }
-    
-    else if(!doesExist) {
+    }
+    else{
       const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
       res.redirect('/dashboard');
     }
