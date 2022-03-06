@@ -80,7 +80,7 @@ app.post('/register', async (req, res) => {
     var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newuemail}')`);
 
     if(existsQuery.rows[0].exists){
-      res.send("existalreadyerror");
+      //res.send("existalreadyerror");
       res.redirect('/duplicateEmailErrorPage');
     }
     else{
