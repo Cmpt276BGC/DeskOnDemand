@@ -1,8 +1,3 @@
-//Patrick Pulled / pushed successfully 
-// harsh's commit
-//Matt's commit
-
-// emmii's commit 02-28-2022
 
 const express = require('express')
 const path = require('path')
