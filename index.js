@@ -115,13 +115,14 @@ app.get('/tokenDump', (req,res)=>{
 
 
   var adminQueryResult = {'adminQueryResult' : req.session.user.rows[0].admin};
+  var adminQueryResultString = JSON.stringify(existsQueryResult);
 
-  if(existsQueryResultString.includes('{"existQueryResult":true}')){
+  if(adminQueryResultString.includes('{"existQueryResult":true}')){
     res.send("is admin");
   }
 
 
-  res.send(adminQueryResult);
+  res.send(adminQueryResultString);
 
 })
 
