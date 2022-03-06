@@ -81,7 +81,7 @@ app.post('/register', async (req, res) => {
     }
     else{
       var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
-      res.send("new user added");
+      res.render('pages/userPage');
     }
 
   } catch {
@@ -100,11 +100,10 @@ app.post('/login', async (req, res) =>{
     var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`);
     req.session.user = user;
     if(req.session.user.rows[0].admin){
-
       res.render('pages/adminPage');
      }
      else{
-      res.send("user/pw correct and query success");
+      res.render('pages/userPage');
      }
   }
   else{
