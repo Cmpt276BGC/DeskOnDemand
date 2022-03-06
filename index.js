@@ -83,8 +83,8 @@ app.post('/login', async (req, res) =>{
   let pw = req.body.password;
   // database
   userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
-  // run query
   var user = await pool.query(userPasswordQuery);
+  res.send("" + user + "");
   req.session.user = user;
   res.send(`<br><a href="/dashboard">GO TO DASHBOARD</a>`)
 });
