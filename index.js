@@ -6,7 +6,6 @@ const session = require('express-session')
 
 var bodyParser = require('body-parser');
 
-// database connection
 const { Pool } = require('pg');
 const res = require('express/lib/response');
 var pool;
@@ -75,19 +74,14 @@ app.post('/register', async (req, res) => {
   var newuemail =req.body.email;
   var newupass = req.body.password;
   try {
-
-    //query database to make sure we aren't just registering duplicate emails
     var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newuemail}')`);
 
     if(existsQuery.rows[0].exists){
-      //res.send("existalreadyerror");
       res.render('pages/duplicateEmailErrorPage');
     }
     else{
-      //res.send("MAKINGNEW");
       var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
       res.send("new user added");
-     // res.redirect('/dashboard');
     }
 
   } catch {
@@ -99,33 +93,23 @@ app.post('/login', async (req, res) =>{
   //whoever named these variables needs to make them readable lol
   let ue = req.body.email;
   let pw = req.body.password;
-  // database
 
-////////////
   var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${ue}' AND upass = '${pw}')`);
 
-  //res.send(existsQuery);
-
   if(existsQuery.rows[0].exists){
-    //res.send("user/pw correct");
     var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`);
     req.session.user = user;
-    res.send("user/pw correct and query success");
-    //res.render('/dashboard');
+    if(req.session.user.rows[0].admin){
+
+      res.render('pages/adminPage');
+     }
+     else{
+      res.send("user/pw correct and query success");
+     }
   }
   else{
-    //res.send("user/pw incorrect");
     res.render('pages/failedLoginPage');
   }
-/////////
-
-  //userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
- // var user = await pool.query(userPasswordQuery);
-  //if(!user){
- //   res.send("please login");
- // }
- // req.session.user = user;
- // res.send(`<br><a href="/dashboard">GO TO DASHBOARD</a>`)
 });
 
 app.get('/dashboard', (req,res)=>{
@@ -146,7 +130,7 @@ app.post('/logout', (req,res)=>{
 app.get('/adminPage', (req,res)=>{
 
  if(req.session.user.rows[0].admin){
-  //res.send("isadmin");
+
   res.render('pages/adminPage');
  }
  else{
