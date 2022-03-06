@@ -65,6 +65,10 @@ app.get('/db', async (req, res) => {
   }
 })
 
+app.get('/duplicateEmailErrorPage', (req, res) => {
+  res.render('/duplicateEmailErrorPage')
+})
+
 app.post('/register', async (req, res) => {
   var newfname =req.body.fname;
   var newlname = req.body.lname;
