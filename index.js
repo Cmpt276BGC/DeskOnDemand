@@ -107,8 +107,9 @@ app.post('/login', async (req, res) =>{
 
   if(existsQuery.rows[0].exists){
     //res.send("user/pw correct");
-    var userToken = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`);
-    req.session.user = userToken;
+    var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`);
+    req.session.user = user;
+    res.send("user/pw correct and query success");
     res.render('/dashboard');
   }
   else{
