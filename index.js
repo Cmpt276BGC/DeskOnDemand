@@ -4,6 +4,8 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const session = require('express-session')
 
+var bodyParser = require('body-parser');
+
 // database connection
 const { Pool } = require('pg');
 var pool;
@@ -104,11 +106,20 @@ app.get('/adminPage', (req,res)=>{
   } else {
     res.redirect('/login');
   }
+
+  //const existsQueryResult = {'existQueryResult' : req.session.user.rows[0].exists};
   
 })
 
 app.get('/tokenDump', (req,res)=>{
-  res.send(req.session.user);
+
+  
+
+  //res.send(req.session.user);
+
+  const adminQueryResult = {'existQueryResult' : req.session.user.rows[0].admin};
+  res.send(adminQueryResult);
+
 })
 
 
