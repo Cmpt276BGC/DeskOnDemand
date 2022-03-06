@@ -9,11 +9,11 @@ const { Pool } = require('pg');
 var pool;
 pool = new Pool({
   //connectionString: process.env.DATABASE_URL,
-  // connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod',
-  ssl: {
-    rejectUnauthorized: false
-  }
+  //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  //ssl: {
+  //  rejectUnauthorized: false
+  //}
 });
 
 var app = express()
@@ -92,6 +92,12 @@ app.get('/dashboard', (req,res)=>{
     res.redirect('/login');
   }
   
+})
+
+app.post('/logout', (req,res)=>{
+  req.session.destroy((err)=>{
+    res.redirect('/login')
+  })
 })
 
 
