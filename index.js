@@ -135,7 +135,7 @@ app.post('/login', async (req, res) =>{
   }
   //if the user does not exist, redirect to error page login failed
   else{
-    res.render('/failedLoginPage');
+    res.render('pages/failedLoginPage');
   }
 });
 
