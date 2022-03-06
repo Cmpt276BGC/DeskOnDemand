@@ -13,8 +13,9 @@ const session = require('express-session')
 const { Pool } = require('pg');
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  //connectionString: process.env.DATABASE_URL,
   // connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod',
   ssl: {
     rejectUnauthorized: false
   }

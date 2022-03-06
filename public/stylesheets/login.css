@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+h3{
+    text-align: center;
+}
+
+.login {
+    display: table-cell;
+    vertical-align: middle;
+}
