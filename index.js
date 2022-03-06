@@ -51,11 +51,6 @@ app.get('/register', (req, res) => {
   res.render('pages/registerPage')
 })
 
-app.get('/userPage', (req, res) => {
-  res.render('pages/userPage')
-})
-
-
 app.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -82,7 +77,7 @@ app.post('/register', async (req, res) => {
   var newUserPasswordInput = req.body.passwordInput;
   var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
 
-  //check if passwords match
+  //check if passowrds match
   if(newUserPasswordInput != newUserConfirmedPasswordInput){
     res.render('pages/passwordMismatch');
   }
@@ -122,7 +117,7 @@ app.post('/login', async (req, res) =>{
     req.session.user = user;
     //if the user is an admin send them to the admin page automatically
     if(req.session.user.rows[0].admin){
-      res.redirect('/adminPage');
+      res.render('pages/adminPage');
      }
      //if the user is not an admin, redirect them to the main user page
      else{
@@ -131,7 +126,7 @@ app.post('/login', async (req, res) =>{
   }
   //if the user does not exist, redirect to error page login failed
   else{
-    res.render('/failedLoginPage');
+    res.render('pages/failedLoginPage');
   }
 });
 
@@ -144,6 +139,7 @@ app.post('/logout', (req,res)=>{
 
 app.get('/adminPage', (req,res)=>{
 
+
 //redirect to admin page if JSON token has admin flag set to true (an admin)
  if(req.session.user.rows[0].admin){
   res.render('pages/adminPage');
@@ -154,7 +150,6 @@ app.get('/adminPage', (req,res)=>{
  }
 
 })
-
 
 app.get('/tokenDump', (req,res)=>{
 
