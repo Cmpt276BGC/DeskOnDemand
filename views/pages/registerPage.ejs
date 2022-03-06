@@ -16,6 +16,14 @@
         </div>
         
         <h1>Register</h1>
+
+        <ul>
+            <% if(typeof error != 'undefined'){ %>
+                <% error.forEach(errors=>{ %>
+                    <li><%= errors.message %></li> 
+               <% }) %> 
+            <%} %>
+        </ul>
         <form id = "inputForm" form action="/register" method="POST">
             <div>
                 <label for="fname">First Name</label>

@@ -80,27 +80,36 @@ app.post('/register', async (req, res) => {
   var newUserPasswordInput = req.body.passwordInput;
   var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
 
-  //check if passwords match
+  let error=[];
+  //if there are errors the register page will render instead of going to a new page.
   if(newUserPasswordInput != newUserConfirmedPasswordInput){
-    res.render('pages/passwordMismatch');
+    //res.render('pages/passwordMismatch');
+    error.push({message: "Passwords do not match"}); 
   }
-
-  try {
-    //query database and determine if user already exists 
-    var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newUserEmailInput}')`);
-
-    //if the user already exists in the database, redirect to duplicate email error page
-    if(existsQuery.rows[0].exists){
-      res.render('pages/duplicateEmailErrorPage');
+  if(newUserPasswordInput.length < 8){
+    error.push({message: "Password should be of at least 7 characters"});
+  }
+  if(error.length > 0){
+    res.render("pages/registerPage",{error});
+  }
+  else{
+    try {
+      //query database and determine if user already exists 
+      var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newUserEmailInput}')`);
+  
+      //if the user already exists in the database, redirect to duplicate email error page
+      if(existsQuery.rows[0].exists){
+        res.render('pages/duplicateEmailErrorPage');
+      }
+      else{
+      //if the user does not exist, create the user and redirect to main user page
+        var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newUserEmailInput}', '${newUserPasswordInput}', 'f','${newUserFirstNameInput}','${newUserLastNameInput}')`);
+        res.render('pages/userPage');
+      }
+  
+    } catch {
+      res.send("error??");
     }
-    else{
-    //if the user does not exist, create the user and redirect to main user page
-      var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newUserEmailInput}', '${newUserPasswordInput}', 'f','${newUserFirstNameInput}','${newUserLastNameInput}')`);
-      res.render('pages/userPage');
-    }
-
-  } catch {
-    res.send("error??");
   }
 });
 
