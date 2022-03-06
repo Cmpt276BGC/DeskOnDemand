@@ -5,24 +5,25 @@
         <title>Login</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/stylesheets/mainCSS.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+        <link rel="stylesheet" href="/stylesheets/login.css">
     </head>
     <body>
         <div class="login">
-        <form id = "inputForm" form action="/login" method="POST">
-            <h3>Login</h3>
+        <h3>Login</h3>
+        <form action="/login" method="POST">
             <div>
                 <label for="email">Email</label>
-                <input type="text" id="email" class="textInput" name="userEmailInput" required>
+                <input type="text" id="email" name="userEmailInput" required>
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" id="password" class="textInput" name="userPasswordInput" required>
+                <input type="password" id="password" name="userPasswordInput" required>
             </div>
-            <input type="submit" value="Login" class="Buttons"></input>
-            <form action="/register" method="GET">
-                <input type="submit" value="Register">
-            </form>
+            <input type="submit" value="Login"></input>
+        </form>
+        <form action="/register" method="GET">
+            <input type="submit" value="Register">
         </form>
         
         <script src="" async defer></script>
