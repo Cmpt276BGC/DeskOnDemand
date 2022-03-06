@@ -21,7 +21,10 @@ pool = new Pool({
 });
 
 var app = express()
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static('public'));
 app.use(session({
   name: "sesson",
   secret: 'this is the way', 
@@ -29,6 +32,9 @@ app.use(session({
   saveUninitialized: false, // forces a session that is "uninitialized" to be saved to store
   maxAge: 30 * 60 * 1000, // 30 minutes
 })) 
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -71,4 +77,4 @@ app.post('/register', async (req, res) => {
     res.send(error);
   }
 
-})
+});
