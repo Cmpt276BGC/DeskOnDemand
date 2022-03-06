@@ -101,7 +101,7 @@ app.post('/login', async (req, res) =>{
   // database
 
 ////////////
-  var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE ue = '${uw}' AND pw = '${pw}')`);
+  var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${ue}' AND upass = '${pw}')`);
 
   res.send(existsQuery);
 
