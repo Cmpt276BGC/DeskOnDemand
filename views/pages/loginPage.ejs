@@ -20,7 +20,9 @@
                 <input type="password" id="password" class="textInput" name="userPasswordInput" required>
             </div>
             <input type="submit" value="Login" class="Buttons"></input>
-            <input type="submit" class="Buttons" id="registerButton" onclick="javascript: form.action ='/register'">
+            <form action="/register" method="GET">
+                <input type="submit" value="Register">
+            </form>
         </form>
         
         <script src="" async defer></script>
