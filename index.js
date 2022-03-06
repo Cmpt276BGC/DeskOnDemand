@@ -103,7 +103,7 @@ app.post('/login', async (req, res) =>{
 ////////////
   var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${ue}' AND upass = '${pw}')`);
 
-  res.send(existsQuery);
+  //res.send(existsQuery);
 
   if(existsQuery.rows[0].exists){
     res.send("user/pw correct");
