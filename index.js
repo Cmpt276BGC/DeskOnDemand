@@ -77,9 +77,9 @@ app.post('/register', async (req, res) => {
 
     //var existsQueryResult = {'existQueryResult' : existsQuery.rows[0].exists};
 
-    res.send(existsQueryResult);
+    res.send(existsQuery);
 
-    if(existsQueryResult.rows[0].exists){
+    if(existsQuery.rows[0].exists){
       res.send("email already in use");
     }
     else{
