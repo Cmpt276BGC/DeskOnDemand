@@ -68,10 +68,12 @@ app.get('/db', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
+  var newfname =req.body.fname;
+  var newlname = req.body.lname;
   var newuemail =req.body.email;
   var newupass = req.body.password;
   try {
-    const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin) VALUES ('${newuemail}', '${newupass}', 'f')`);
+    const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
     res.render('pages/loginPage');
   } catch {
     res.send(error);
