@@ -77,7 +77,7 @@ app.post('/register', async (req, res) => {
 
     const existsQueryResult = {'existQueryResult' : existsQuery.rows[0].exists};
 
-    res.send(existsQueryResult);
+   // res.send(existsQueryResult);
 
     var doesExist = 0;
 
