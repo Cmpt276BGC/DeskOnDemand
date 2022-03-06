@@ -85,6 +85,8 @@ app.post('/register', async (req, res) => {
       doesExist = 1;
      }
 
+     res.send(doesExist);
+
      if(doesExist){
       res.send("ERROR: This email is in use already");
      }
