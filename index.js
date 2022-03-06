@@ -107,10 +107,12 @@ app.post('/logout', (req,res)=>{
 app.get('/adminPage', (req,res)=>{
 
  if(req.session.user.rows[0].admin){
-  res.render('/adminPage');
+  res.send("isadmin");
+  //res.render('/adminPage');
  }
  else{
-  res.redirect('/dashboard');
+  //res.redirect('/dashboard');
+  res.send("isnotadmin");
  }
 
 })
