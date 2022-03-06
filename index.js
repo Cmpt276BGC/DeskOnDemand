@@ -77,8 +77,9 @@ app.post('/register', async (req, res) => {
   var newUserPasswordInput = req.body.passwordInput;
   var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
 
+  //check if passwords match
   if(newUserPasswordInput != newUserConfirmedPasswordInput){
-    res.render(passwordMismatch);
+    res.render('pages/passwordMismatch');
   }
 
   try {
