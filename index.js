@@ -108,11 +108,10 @@ app.get('/adminPage', (req,res)=>{
 
  if(req.session.user.rows[0].admin){
   //res.send("isadmin");
-  res.render('pages/dashboard')
+  res.render('pages/dashboard');
  }
  else{
-  //res.redirect('/dashboard');
-  res.send("isnotadmin");
+  res.redirect('/dashboard');
  }
 
 })
