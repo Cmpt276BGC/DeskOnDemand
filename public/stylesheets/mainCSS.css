@@ -1,0 +1,70 @@
+body{
+    font-family: Verdana, sans-serif;
+    font-family:inherit;
+    background-color: rgb(255, 255, 255);
+    font-size:25px;
+}
+
+#whiteBackground{
+    background-color: rgb(189, 72, 72);
+    padding: 5px 20px 10px 10px;
+    margin :auto;
+    width: 80%;
+    max-width: 840px;
+    box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+    border-radius:10px;
+}
+
+#inputForm{
+    font-size:14px;
+    font-family:inherit;
+    padding: 10px 10px 10px 10px;
+    width: 95%;
+    align-self: center;
+    align-content: center;
+    margin: auto;
+    box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+    border-radius:10px;
+    max-width: 800px;
+    text-align: center;
+}
+
+.textInput{
+    align-self: center;
+    align-content: center;
+    font-size:14px;
+    font-family:inherit;
+    padding: 10px;
+    width: 80%;
+    text-align: center;
+    margin: 10px 5px 5px 5px;
+    box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+    border-radius:10px;
+    max-width: 600px;
+}
+
+.Buttons{
+    background-color: #6161617a;
+    border-radius:10px;
+    box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+    color: rgb(56, 56, 56);
+    padding: 15px 15px 15px 15px;
+    text-align: center;
+    margin: 10px 5px 5px 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.Buttons:hover{
+    background-color: #3300c071;
+    border-radius:10px;
+    box-shadow: rgb(60, 120, 184) 0px 20px 30px -10px;
+    color: rgb(255, 255, 255);
+    padding: 15px 15px 15px 15px;
+    text-align: center;
+    margin: 10px 5px 5px 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
