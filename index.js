@@ -71,17 +71,29 @@ app.post('/register', async (req, res) => {
   var newuemail =req.body.email;
   var newupass = req.body.password;
   try {
-    const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
-    res.redirect('/login');
+
+    //query database to make sure we aren't just registering duplicate emails
+    var existsQuery = await client.query(`SELECT EXISTS(SELECT FROM BGCUsers WHERE uemail = ${ue})`);
+    var existsQueryResult = existsQuery.rows[0].exists;
+    if(existsQueryResult){
+      res.send("Email already registered");
+    }
+    else {
+      const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
+      res.redirect('/login');
+    }
   } catch {
     res.send(error);
   }
 });
 
 app.post('/login', async (req, res) =>{
+  //whoever named these variables needs to make them readable lol
   let ue = req.body.email;
   let pw = req.body.password;
   // database
+
+
   userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
   var user = await pool.query(userPasswordQuery);
   if(!user){
