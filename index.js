@@ -83,7 +83,7 @@ app.post('/register', async (req, res) => {
 
   try {
     //query database and determine if user already exists 
-    var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newuemail}')`);
+    var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newUserEmailInput}')`);
 
     //if the user already exists in the database, redirect to duplicate email error page
     if(existsQuery.rows[0].exists){
