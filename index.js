@@ -85,7 +85,7 @@ app.post('/register', async (req, res) => {
     }
     else{
       const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
-      res.redirect('/dashboard');
+      res.render('/dashboard');
     }
 
   } catch {
@@ -99,14 +99,26 @@ app.post('/login', async (req, res) =>{
   let pw = req.body.password;
   // database
 
+////////////
+  var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE ue = '${uw}' AND pw = '${pw}')`);
 
-  userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
-  var user = await pool.query(userPasswordQuery);
-  if(!user){
-    res.send("please login");
+  if(existsQuery.rows[0].exists){
+    userToken = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`);
+    req.session.user = userToken;
+    res.render('/dashboard');
   }
-  req.session.user = user;
-  res.send(`<br><a href="/dashboard">GO TO DASHBOARD</a>`)
+  else{
+    res.render('pages/failedLoginPage');
+  }
+/////////
+
+  //userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
+ // var user = await pool.query(userPasswordQuery);
+  //if(!user){
+ //   res.send("please login");
+ // }
+ // req.session.user = user;
+ // res.send(`<br><a href="/dashboard">GO TO DASHBOARD</a>`)
 });
 
 app.get('/dashboard', (req,res)=>{
