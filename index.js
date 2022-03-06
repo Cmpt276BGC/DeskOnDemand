@@ -8,9 +8,9 @@ const session = require('express-session')
 const { Pool } = require('pg');
 var pool;
 pool = new Pool({
-  //connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
   //ssl: {
   //  rejectUnauthorized: false
   //}
@@ -79,6 +79,7 @@ app.post('/login', async (req, res) =>{
   // run query
   var user = await pool.query(userPasswordQuery);
   req.session.user = user;
+  console.error("********************************************************************************" + user));
   res.send(`
     <br>
     <a href="/dashboard">GO TO DASHBOARD</a>
@@ -98,6 +99,15 @@ app.post('/logout', (req,res)=>{
   req.session.destroy((err)=>{
     res.redirect('/login')
   })
+})
+
+app.get('/adminPage', (req,res)=>{
+  if (req.session.user == admin) {
+    res.render('pages/adminPage')
+  } else {
+    res.redirect('/login');
+  }
+  
 })
 
 
