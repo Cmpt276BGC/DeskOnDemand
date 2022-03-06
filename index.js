@@ -86,7 +86,7 @@ app.post('/register', async (req, res) => {
     else{
       //res.send("MAKINGNEW");
       var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
-      res.render('/dashboard');
+      res.redirect('/dashboard');
     }
 
   } catch {
