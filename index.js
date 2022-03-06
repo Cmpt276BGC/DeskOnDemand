@@ -88,7 +88,7 @@ app.post('/register', async (req, res) => {
     }
 
   } catch {
-    res.send("error");
+    res.send("error??");
   }
 });
 
