@@ -81,7 +81,7 @@ app.post('/register', async (req, res) => {
 
     if(existsQuery.rows[0].exists){
       //res.send("existalreadyerror");
-      res.redirect('/duplicateEmailErrorPage');
+      res.render('pages/duplicateEmailErrorPage');
     }
     else{
       const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
