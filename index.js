@@ -49,11 +49,6 @@ app.get('/register', (req, res) => {
   res.render('pages/registerPage')
 })
 
-app.get('/dashboard', (req,res)=>{
-  res.render('pages/dashboard')
-})
-
-
 app.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -74,7 +69,7 @@ app.post('/register', async (req, res) => {
   var newupass = req.body.password;
   try {
     const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
-    res.render('pages/loginPage');
+    res.redirect('/login');
   } catch {
     res.send(error);
   }
@@ -89,8 +84,18 @@ app.post('/login', async (req, res) =>{
   var user = await pool.query(userPasswordQuery);
   req.session.user = user;
   res.send(`
-    LOGGED IN SUCCESSFULLY!
     <br>
     <a href="/dashboard">GO TO DASHBOARD</a>
   `)
 });
+
+app.get('/dashboard', (req,res)=>{
+  if (req.session.user) {
+    res.render('pages/dashboard')
+  } else {
+    res.redirect('/login');
+  }
+  
+})
+
+
