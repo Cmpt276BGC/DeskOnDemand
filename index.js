@@ -79,6 +79,7 @@ app.post('/register', async (req, res) => {
       res.send("Email already registered");
     }
     else {
+      res.send("does not exist");
       const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
       res.redirect('/login');
     }
