@@ -78,5 +78,19 @@ app.post('/register', async (req, res) => {
   } catch {
     res.send(error);
   }
+});
 
+app.post('/login', async (req, res) =>{
+  let ue = req.body.email;
+  let pw = req.body.password;
+  // database
+  userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
+  // run query
+  var user = await pool.query(userPasswordQuery);
+  req.session.user = user;
+  res.send(`
+    LOGGED IN SUCCESSFULLY!
+    <br>
+    <a href="/dashboard">GO TO DASHBOARD</a>
+  `)
 });
