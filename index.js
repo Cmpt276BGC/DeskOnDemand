@@ -12,12 +12,12 @@ const { request } = require('http');
 const { user } = require('pg/lib/defaults');
 var pool;
 pool = new Pool({
-  //connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
-  //ssl: {
-    //rejectUnauthorized: false
-  //}
+  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 var app = express()
