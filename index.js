@@ -106,14 +106,7 @@ app.post('/logout', (req,res)=>{
 
 app.get('/adminPage', (req,res)=>{
 
-  if(req.session.users.rows[0].admin){
-    res.send("user is an admin");
-  }
-  else{
-    res.send("user is not an admin");
-  }
-
-  //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
+ //res.send(req.session.users.rows[0])
 
 })
 
@@ -121,8 +114,9 @@ app.get('/tokenDump', (req,res)=>{
 
   //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
 
-  res.send(req.session.user);
+  res.send(req.session.user.rows[0]);
   
 })
+
 
 
