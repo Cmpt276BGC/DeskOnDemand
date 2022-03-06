@@ -107,10 +107,10 @@ app.post('/logout', (req,res)=>{
 app.get('/adminPage', (req,res)=>{
 
  if(req.session.user.rows[0].admin){
-   res.send("is admin");
+   res.redirect('/dashboard');
  }
  else{
-   res.send("is not admin");
+   res.render('adminPage');
  }
 
 })
@@ -119,7 +119,7 @@ app.get('/tokenDump', (req,res)=>{
 
   //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
 
-  res.send(req.session.user.rows[0].admin);
+  res.send(req.session.user.rows[0]);
   
 })
 
