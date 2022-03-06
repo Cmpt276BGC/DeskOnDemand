@@ -38,7 +38,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-  res.redirect('/dashboard');
+  res.redirect('/login');
 })
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
@@ -68,19 +68,30 @@ app.get('/duplicateEmailErrorPage', (req, res) => {
   res.render('/duplicateEmailErrorPage')
 })
 
+//register a new user 
 app.post('/register', async (req, res) => {
-  var newfname =req.body.fname;
-  var newlname = req.body.lname;
-  var newuemail =req.body.email;
-  var newupass = req.body.password;
+  //pull data from html form
+  var newUserFirstNameInput = req.body.firstNameInput;
+  var newUserLastNameInput = req.body.lastNameInput;
+  var newUserEmailInput = req.body.emailInput;
+  var newUserPasswordInput = req.body.passwordInput;
+  var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
+
+  if(newUserPasswordInput != newUserConfirmedPasswordInput){
+    res.render(passwordMismatch);
+  }
+
   try {
+    //query database and determine if user already exists 
     var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newuemail}')`);
 
+    //if the user already exists in the database, redirect to duplicate email error page
     if(existsQuery.rows[0].exists){
       res.render('pages/duplicateEmailErrorPage');
     }
     else{
-      var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
+    //if the user does not exist, create the user and redirect to main user page
+      var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newUserEmailInput}', '${newUserPasswordInput}', 'f','${newUserFirstNameInput}','${newUserLastNameInput}')`);
       res.render('pages/userPage');
     }
 
@@ -89,37 +100,36 @@ app.post('/register', async (req, res) => {
   }
 });
 
+
+
+//login page
 app.post('/login', async (req, res) =>{
-  //whoever named these variables needs to make them readable lol
-  let ue = req.body.email;
-  let pw = req.body.password;
+  let userEmailInput = req.body.userEmailInput;
+  let userPasswordInput = req.body.userPasswordInput;
 
-  var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${ue}' AND upass = '${pw}')`);
+  //verify the user exists at all and check password
+  var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${userEmailInput}' AND upass = '${userPasswordInput}')`);
 
+  //if the user exists, query and confirm the password is correct and set the user session token from the database JSON object of the users information
   if(existsQuery.rows[0].exists){
-    var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`);
+    var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${userEmailInput}' AND upass='${userPasswordInput}'`);
     req.session.user = user;
+    //if the user is an admin send them to the admin page automatically
     if(req.session.user.rows[0].admin){
       res.render('pages/adminPage');
      }
+     //if the user is not an admin, redirect them to the main user page
      else{
       res.render('pages/userPage');
      }
   }
+  //if the user does not exist, redirect to error page login failed
   else{
     res.render('pages/failedLoginPage');
   }
 });
 
-app.get('/dashboard', (req,res)=>{
-  if (req.session.user) {
-    res.render('pages/dashboard')
-  } else {
-    res.redirect('/login');
-  }
-  
-})
-
+//logout function to destroy token when /logout is accessed 
 app.post('/logout', (req,res)=>{
   req.session.destroy((err)=>{
     res.redirect('/login')
@@ -128,20 +138,21 @@ app.post('/logout', (req,res)=>{
 
 app.get('/adminPage', (req,res)=>{
 
- if(req.session.user.rows[0].admin){
 
+//redirect to admin page if JSON token has admin flag set to true (an admin)
+ if(req.session.user.rows[0].admin){
   res.render('pages/adminPage');
  }
+//redirect back to regular user page if JSON token admin flag is set to false (not an admin)
  else{
-  res.redirect('/dashboard');
+  res.render('pages/userPage');
  }
 
 })
 
 app.get('/tokenDump', (req,res)=>{
 
-  //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
-
+  //for debugging, will dump JSON token assigned to the user session by the server
   res.send(req.session.user.rows[0]);
   
 })
