@@ -51,6 +51,11 @@ app.get('/register', (req, res) => {
   res.render('pages/registerPage')
 })
 
+app.get('/userPage', (req, res) => {
+  res.render('pages/userPage')
+})
+
+
 app.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -138,7 +143,6 @@ app.post('/logout', (req,res)=>{
 })
 
 app.get('/adminPage', (req,res)=>{
-
 
 //redirect to admin page if JSON token has admin flag set to true (an admin)
  if(req.session.user.rows[0].admin){
