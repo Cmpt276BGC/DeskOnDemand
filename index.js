@@ -84,8 +84,8 @@ app.post('/register', async (req, res) => {
       res.render('pages/duplicateEmailErrorPage');
     }
     else{
-      res.send("MAKINGNEW");
-      const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
+      //res.send("MAKINGNEW");
+      var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
       res.render('/dashboard');
     }
 
