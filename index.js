@@ -73,7 +73,7 @@ app.post('/register', async (req, res) => {
   try {
 
     //query database to make sure we aren't just registering duplicate emails
-    var existsQuery = await client.query(`SELECT EXISTS(SELECT FROM BGCUsers WHERE uemail = ${newemail})`);
+    var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = ${newemail})`);
 
     const existsQueryResult = {'existQueryResult' : existsQuery.rows[0].exists};
 
