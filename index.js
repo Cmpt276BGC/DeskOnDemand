@@ -79,7 +79,7 @@ app.post('/login', async (req, res) =>{
   // run query
   var user = await pool.query(userPasswordQuery);
   req.session.user = user;
-  console.error("********************************************************************************" + user));
+  console.error("********************************************************************************" + user);
   res.send(`
     <br>
     <a href="/dashboard">GO TO DASHBOARD</a>
