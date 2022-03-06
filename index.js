@@ -65,7 +65,7 @@ app.post('/register', async (req, res) => {
   var newuemail =req.body.email;
   var newupass = req.body.password;
   try {
-    const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin) VALUES ('${newuemail}', '${newupass}', 'f'`);
+    const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin) VALUES ('${newuemail}', '${newupass}', 'f')`);
     res.redirect('/login');
   } catch {
     res.send(error);
