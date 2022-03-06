@@ -81,7 +81,6 @@ app.post('/login', async (req, res) =>{
   // run query
   var user = await pool.query(userPasswordQuery);
   req.session.user = user;
-  console.error("********************************************************************************" + user);
   res.send(`<br><a href="/dashboard">GO TO DASHBOARD</a>`)
 });
 
@@ -101,29 +100,24 @@ app.post('/logout', (req,res)=>{
 })
 
 app.get('/adminPage', (req,res)=>{
-  if (req.session.user == admin) {
-    res.render('pages/adminPage')
-  } else {
-    res.redirect('/login');
+
+  if(req.session.users.rows[0].admin){
+    res.send("user is an admin");
   }
+  else{
+    res.send("user is not an admin");
+  }
+
+  //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
 
 })
 
 app.get('/tokenDump', (req,res)=>{
 
+  //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
 
   res.send(req.session.user.rows[0].admin);
-
-  //var adminQueryResult = req.session.user.rows[0];
-  //var adminQueryResultString = JSON.stringify(existsQueryResult);
-
-  //if(adminQueryResultString.includes('{"existQueryResult":true}')){
-  //  res.send("is admin");
-  //}
-
-
-  //res.send(adminQueryResultString);
-
+  
 })
 
 
