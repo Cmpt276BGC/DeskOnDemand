@@ -121,7 +121,7 @@ app.get('/tokenDump', (req,res)=>{
 
   //var adminQueryString = JSON.stringify(req.session.users.rows[0].admin);
 
-  res.send(req.session.user.rows[0].admin);
+  res.send(req.session.user.rows[0].admin[0]);
   
 })
 
