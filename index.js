@@ -1,8 +1,3 @@
-//Patrick Pulled / pushed successfully 
-// harsh's commit
-//Matt's commit
-
-// emmii's commit 02-28-2022
 
 const express = require('express')
 const path = require('path')
@@ -50,11 +45,6 @@ app.get('/register', (req, res) => {
   res.render('pages/registerPage')
 })
 
-app.get('/dashboard', (req,res)=>{
-  res.render('pages/dashboard')
-})
-
-
 app.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -75,9 +65,33 @@ app.post('/register', async (req, res) => {
   var newupass = req.body.password;
   try {
     const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
-    res.render('pages/loginPage');
+    res.redirect('/login');
   } catch {
     res.send(error);
   }
-
 });
+
+app.post('/login', async (req, res) =>{
+  let ue = req.body.email;
+  let pw = req.body.password;
+  // database
+  userPasswordQuery = `SELECT * FROM BGCUsers WHERE uemail='${ue}' AND upass='${pw}'`;
+  // run query
+  var user = await pool.query(userPasswordQuery);
+  req.session.user = user;
+  res.send(`
+    <br>
+    <a href="/dashboard">GO TO DASHBOARD</a>
+  `)
+});
+
+app.get('/dashboard', (req,res)=>{
+  if (req.session.user) {
+    res.render('pages/dashboard')
+  } else {
+    res.redirect('/login');
+  }
+  
+})
+
+
