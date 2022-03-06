@@ -9,20 +9,18 @@
     </head>
     <body>
         <div class="login">
-        <h3>Login</h3>
         <form id = "inputForm" form action="/login" method="POST">
+            <h3>Login</h3>
             <div>
                 <label for="email">Email</label>
-                <input type="text" id="email" name="userEmailInput" required>
+                <input type="text" id="email" class="textInput" name="userEmailInput" required>
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="userPasswordInput" required>
+                <input type="password" id="password" class="textInput" name="userPasswordInput" required>
             </div>
-            <input type="submit" value="Login"></input>
-        </form>
-        <form action="/register" method="GET">
-            <input type="submit" value="Register">
+            <input type="submit" value="Login" class="Buttons"></input>
+            <input type="submit" class="Buttons" id="registerButton" onclick="javascript: form.action ='/register'">
         </form>
         
         <script src="" async defer></script>
