@@ -77,7 +77,7 @@ app.post('/register', async (req, res) => {
 
     var existsQueryResult = {'existQueryResult' : existsQuery.rows[0].exists};
 
-   // res.send(existsQueryResult);
+    res.send(existsQueryResult);
 
     var existsQueryResultString = JSON.stringify(existsQueryResult);
 
@@ -99,6 +99,7 @@ app.post('/register', async (req, res) => {
       const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newuemail}', '${newupass}', 'f','${newfname}','${newlname}')`);
       res.redirect('/dashboard');
     }
+
   } catch {
     res.send("error");
   }
