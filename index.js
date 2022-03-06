@@ -114,12 +114,12 @@ app.get('/adminPage', (req,res)=>{
 app.get('/tokenDump', (req,res)=>{
 
 
-  const adminQueryResult = {'adminQueryResult' : req.session.user.rows[0].admin};
+  var adminQueryResult = {'adminQueryResult' : req.session.user.rows[0].admin};
 
   if(existsQueryResultString.includes('{"existQueryResult":true}')){
     res.send("is admin");
   }
-  
+
 
   res.send(adminQueryResult);
 
