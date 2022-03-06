@@ -80,10 +80,7 @@ app.post('/login', async (req, res) =>{
   var user = await pool.query(userPasswordQuery);
   req.session.user = user;
   console.error("********************************************************************************" + user);
-  res.send(`
-    <br>
-    <a href="/dashboard">GO TO DASHBOARD</a>
-  `)
+  res.send(`<br><a href="/dashboard">GO TO DASHBOARD</a>`)
 });
 
 app.get('/dashboard', (req,res)=>{
@@ -108,6 +105,10 @@ app.get('/adminPage', (req,res)=>{
     res.redirect('/login');
   }
   
+})
+
+app.get('/tokenDump', (req,res)=>{
+  res.send(req.session.user);
 })
 
 
