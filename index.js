@@ -107,22 +107,22 @@ app.get('/adminPage', (req,res)=>{
     res.redirect('/login');
   }
 
-  //const existsQueryResult = {'existQueryResult' : req.session.user.rows[0].exists};
-  
 })
 
 app.get('/tokenDump', (req,res)=>{
 
 
-  var adminQueryResult = {'adminQueryResult' : req.session.user.rows[0]};
-  var adminQueryResultString = JSON.stringify(existsQueryResult);
+  res.send(req.session.user.rows[0]);
 
-  if(adminQueryResultString.includes('{"existQueryResult":true}')){
-    res.send("is admin");
-  }
+  //var adminQueryResult = req.session.user.rows[0];
+  //var adminQueryResultString = JSON.stringify(existsQueryResult);
+
+  //if(adminQueryResultString.includes('{"existQueryResult":true}')){
+  //  res.send("is admin");
+  //}
 
 
-  res.send(adminQueryResultString);
+  //res.send(adminQueryResultString);
 
 })
 
