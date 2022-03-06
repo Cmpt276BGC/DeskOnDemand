@@ -14,7 +14,7 @@ const { Pool } = require('pg');
 var pool;
 pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // connectionString: 'postgres://postgres:@localhost/',
+  // connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
   ssl: {
     rejectUnauthorized: false
   }
@@ -59,4 +59,16 @@ app.get('/db', async (req, res) => {
     console.error(err);
     res.send("Error " + err);
   }
+})
+
+app.post('/register', async (req, res) => {
+  var newuemail =req.body.email;
+  var newupass = req.body.password;
+  try {
+    const result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin) VALUES ('${newuemail}', '${newupass}', 'f'`);
+    res.redirect('/login');
+  } catch {
+    res.send(error);
+  }
+
 })
