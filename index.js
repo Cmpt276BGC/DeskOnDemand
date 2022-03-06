@@ -112,7 +112,7 @@ app.get('/adminPage', (req,res)=>{
 app.get('/tokenDump', (req,res)=>{
 
 
-  res.send(req.session.user.rows[0]);
+  res.send(req.session.user.rows[0].admin);
 
   //var adminQueryResult = req.session.user.rows[0];
   //var adminQueryResultString = JSON.stringify(existsQueryResult);
