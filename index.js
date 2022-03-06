@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 
 // database connection
 const { Pool } = require('pg');
+const res = require('express/lib/response');
 var pool;
 pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -36,7 +37,11 @@ app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-app.get('/', (req, res) => res.render('pages/index'))
+
+app.get('/', (req, res) => {
+  res.redirect('/dashboard');
+})
+
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 app.get('/login', (req, res) => {
