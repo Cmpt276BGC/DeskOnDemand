@@ -106,7 +106,12 @@ app.post('/logout', (req,res)=>{
 
 app.get('/adminPage', (req,res)=>{
 
- //res.send(req.session.users.rows[0])
+ if(req.session.user.rows[0].admin){
+   res.send("is admin");
+ }
+ else{
+   res.send("is not admin");
+ }
 
 })
 
