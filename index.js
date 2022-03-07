@@ -10,14 +10,15 @@ const { Pool } = require('pg');
 const res = require('express/lib/response');
 const { request } = require('http');
 const { user } = require('pg/lib/defaults');
+const { error } = require('console');
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  //connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  //ssl: {
+  //  rejectUnauthorized: false
+  //}
 });
 
 var app = express()
@@ -79,19 +80,19 @@ app.post('/register', async (req, res) => {
   var newUserEmailInput = req.body.emailInput;
   var newUserPasswordInput = req.body.passwordInput;
   var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
-
-  let error=[];
-  //if there are errors the register page will render instead of going to a new page.
+  
+  //redirects user back to original register page and prevents the submission of the registration with mismatched passwords.
+  //error message is displayed with javascript function
   if(newUserPasswordInput != newUserConfirmedPasswordInput){
-    //res.render('pages/passwordMismatch');
-    error.push({message: "Passwords do not match"}); 
+    return;
   }
-  if(newUserPasswordInput.length < 8){
-    error.push({message: "Password should be of at least 7 characters"});
+
+  //redirects user back to original register page and prevents the submission of invalid password lengths
+  //error message is handled with html validation
+  if(newUserPasswordInput.length < 8 || newUserPasswordInput.length > 32){
+    return;
   }
-  if(error.length > 0){
-    res.render("pages/registerPage",{error});
-  }
+
   else{
     try {
       //query database and determine if user already exists 
@@ -104,11 +105,11 @@ app.post('/register', async (req, res) => {
       else{
       //if the user does not exist, create the user and redirect to main user page
         var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newUserEmailInput}', '${newUserPasswordInput}', 'f','${newUserFirstNameInput}','${newUserLastNameInput}')`);
-        res.render('pages/userPage');
+        res.redirect('/login');
       }
   
     } catch {
-      res.send("error??");
+      res.send("error");
     }
   }
 });
@@ -139,7 +140,7 @@ app.post('/login', async (req, res) =>{
   }
   //if the user does not exist, redirect to error page login failed
   else{
-    res.render('/failedLoginPage');
+    res.render('pages/failedLoginPage');
   }
 });
 
