@@ -1,4 +1,3 @@
-
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
@@ -36,9 +35,6 @@ app.use(session({
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
   res.redirect('/login');
