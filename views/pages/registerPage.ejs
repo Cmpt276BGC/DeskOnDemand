@@ -17,13 +17,6 @@
         
         <h1>Register</h1>
 
-        <ul>
-            <% if(typeof error != 'undefined'){ %>
-                <% error.forEach(errors=>{ %>
-                    <li><%= errors.message %></li> 
-               <% }) %> 
-            <%} %>
-        </ul>
         <form id = "inputForm" form action="/register" method="POST">
             <div>
                 <label for="fname">First Name</label>
@@ -39,18 +32,16 @@
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="passwordInput" required>
+                <input type="password" id="password" name="passwordInput" minlength="8" maxlength="32" required>
             </div>
             <div>
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirmPasswordInput" required>
+                <input type="password" id="confirm_password" name="confirmPasswordInput" minlength="8" maxlength="32" required>
                 
             </div>
-            <input type="submit" value="Register"></input>
+            <button type="submit">Register</button>
+            <button type="button"><a href="/login" style="text-decoration: none;">Login</a></button>
         </form>
-        <form action="/login" method="GET">
-            <input type="submit" value="Login">
-        </form>
-        <script src="" async defer></script>
+        <script src="scripts.js" async defer></script>
     </body>
 </html>

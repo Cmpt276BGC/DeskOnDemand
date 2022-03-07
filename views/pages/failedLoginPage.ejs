@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<head>
-    <link rel="stylesheet" href="/stylesheets/mainCSS.css">
-</head>
-<body>
-    <section id ="whiteBackground">
-        <h1>USERNAME AND OR PASSWORD INCORRECT OR DOES NOT EXIST</h1>
-        <form id = "inputForm" form action="/login" method="GET">
-        <input type="submit" value="Login">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/stylesheets/login.css">
+    </head>
+    <body>
+        <div class="login">
+        <h3>Login</h3>
+        <form action="/login" method="POST">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="userEmailInput" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="userPasswordInput" required>
+            </div>
+            <input type="submit" value="Login"></input>
         </form>
-    </section>
-</body>
+        <form action="/register" method="GET">
+            <input type="submit" value="Register">
+        </form>
+        <script src="" async defer></script>
+    </div>
+    <p>Invalid email/password</p>
+    </body>
 </html>
