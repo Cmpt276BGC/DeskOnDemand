@@ -7,11 +7,15 @@ html {
     margin: auto;
 }
 
-h3{
+h3 {
     text-align: center;
 }
 
 .login {
     display: table-cell;
     vertical-align: middle;
+}
+
+.bi.bi-eye-slash {
+    cursor: pointer;
 }

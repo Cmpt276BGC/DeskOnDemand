@@ -6,6 +6,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/stylesheets/login.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     </head>
     <body>
         <div class="login">
@@ -13,19 +14,28 @@
         <form action="/login" method="POST">
             <div>
                 <label for="email">Email</label>
-                <input type="text" id="email" name="userEmailInput" required>
+                <input type="email" id="email" name="userEmailInput" required>
             </div>
             <div>
                 <label for="password">Password</label>
                 <input type="password" id="password" name="userPasswordInput" required>
+                <i class="bi bi-eye-slash" id="togglePassword"></i> <!-- eye icon from bootstrap-->
             </div>
             <input type="submit" value="Login"></input>
         </form>
         <form action="/register" method="GET">
             <input type="submit" value="Register">
         </form>
-        
-        <script src="" async defer></script>
     </div>
+    <script>
+        var togglePassword = document.querySelector("#togglePassword")
+        var password = document.querySelector("#password")
+
+        togglePassword.addEventListener("click", function() {
+            var type = password.getAttribute("type") === "password" ? "text" : "password" // swap current type
+            password.setAttribute("type", type)
+            togglePassword.classList.toggle("bi-eye") // change icon's visual state
+        })
+    </script>
     </body>
 </html>
