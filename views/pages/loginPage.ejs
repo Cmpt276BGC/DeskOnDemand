@@ -9,8 +9,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     </head>
     <body>
+        <div class="images">
+            <img src="/Logos/BGC_Logo.png">
+            <br>
+            <img src="/Logos/DeskonDemand.jpg" width="100px" >
+        </div>
         <div class="login">
-        <h3>Login</h3>
+        <h1>Login</h1>
         <form action="/login" method="POST">
             <div>
                 <label for="email">Email</label>
@@ -21,10 +26,10 @@
                 <input type="password" id="password" name="userPasswordInput" required>
                 <i class="bi bi-eye-slash" id="togglePassword"></i> <!-- eye icon from bootstrap-->
             </div>
-            <input type="submit" value="Login"></input>
+            <input class="button" type="submit" value="Login"></input>
         </form>
         <form action="/register" method="GET">
-            <input type="submit" value="Register">
+            <input class="button" type="submit" value="Register">
         </form>
     </div>
     <script>

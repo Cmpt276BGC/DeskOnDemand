@@ -69,3 +69,30 @@ body{
     font-size: 16px;
 }
 
+.images{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+.button {
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    margin-top: 18px;
+    font-weight: bold;
+    color: black;
+  }
+  input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
