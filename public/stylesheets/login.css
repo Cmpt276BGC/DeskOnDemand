@@ -7,7 +7,11 @@ html {
     margin: auto;
 }
 
+<<<<<<< HEAD
 h1 {
+=======
+h3 {
+>>>>>>> 2c44d4ce75ed4d2d8aa8edd0c63d4c2f196b4b86
     text-align: center;
 }
 
@@ -19,6 +23,7 @@ h1 {
 .bi.bi-eye-slash {
     cursor: pointer;
 }
+<<<<<<< HEAD
 .images{
     display: flex;
     justify-content: center;
@@ -43,3 +48,5 @@ h1 {
     box-sizing: border-box;
   }
 
+=======
+>>>>>>> 2c44d4ce75ed4d2d8aa8edd0c63d4c2f196b4b86
