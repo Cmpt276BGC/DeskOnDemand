@@ -10,10 +10,12 @@ const res = require('express/lib/response');
 const { request } = require('http');
 const { user } = require('pg/lib/defaults');
 const { error } = require('console');
+const client = require('pg/lib/native/client');
 var pool;
 pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
+  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
   ssl: {
     rejectUnauthorized: false
   }
@@ -109,8 +111,6 @@ app.post('/register', async (req, res) => {
   }
 });
 
-
-
 //login page
 app.post('/login', async (req, res) =>{
   let userEmailInput = req.body.userEmailInput;
@@ -188,6 +188,37 @@ app.get('/tokenDump', (req,res)=>{
   
 })
 
+//USER PAGE FUNCTIONALITY
+//As of 2022-03-08 only works with selecting dates listed under availabledates property in db, query hasn't been completed to check for all values yet
+
+app.post('/searchTablesSpecificDate', async (req, res) =>{
+  try{
+    const searchTablesClient = await pool.connect();
+    
+    //const floor = req.body.floor;
+
+    const specificDate = new Date(req.body.specificDate);
+    specificDate.setHours(specificDate.getHours() + 8);
+    var specificDateISOString = specificDate.toISOString().split('T')[0];
+
+    /*
+    const office = req.body.office;
+    const window = req.body.window;
+    const corner = req.body.corner;
+    const cubicle = req.body.cubicle;
+    const single = req.body.single;
+    const double = req.body.double;
+    */
+
+    const searchTablesSpecificDateQuery = await searchTablesClient.query(`SELECT * FROM bgctables where availabledates='${specificDateISOString}'`);
+    const results = {'results': (searchTablesSpecificDateQuery) ? searchTablesSpecificDateQuery.rows : null};
+    res.render('pages/userPageQueryResults', results);
+    searchTablesClient.release();
+
+  } catch(err) {
+    res.send(err);
+  }
+})
 
 
 

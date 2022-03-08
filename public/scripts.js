@@ -13,7 +13,7 @@ function validatePasswordMatch(){
 password.onchange = validatePasswordMatch;
 confirm_password.onkeyup = validatePasswordMatch;
 
-//Function to display error message if email is duplicate
+
 
 
 

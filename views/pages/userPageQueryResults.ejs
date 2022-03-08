@@ -50,6 +50,36 @@
             <input type="submit" value="Submit">
 
         </form>
+        <table>
+            <% results.forEach(function(r) { %>
+                <tr>
+                    <th>Floor</th>
+                    <th>Workstation ID</th>
+                    <th>Reserved Dates</th>
+                    <th>Available Dates</th>
+                    <th>Permanent</th>
+                    <th>Office</th>
+                    <th>Window Office</th>
+                    <th>Corner</th>
+                    <th>Cubicle</th>
+                    <th>Single</th>
+                    <th>Double</th>
+                </tr>
+                <tr>
+                    <td><%= r.floor %></td>
+                    <td><%= r.tableid %></td>
+                    <td><%= r.reserveddates %></td>
+                    <td><%= r.availabledates %></td>
+                    <td><%= r.permanent %></td>
+                    <td><%= r.office %></td>
+                    <td><%= r.windowoffice %></td>
+                    <td><%= r.corner %></td>
+                    <td><%= r.cubicle %></td>
+                    <td><%= r.single %></td>
+                    <td><%= r.double %></td>
+                </tr>
+            <% }); %>
+        </table>
         <form method="POST" action="/logout">
             <input type="submit" value="Log Out">
         </form>
