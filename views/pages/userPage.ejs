@@ -27,24 +27,25 @@
             
             <fieldset style="width: 150px;">
                 <legend><u>Additional: </u></legend>
+
                 <label for="Office">Office: </label>
-                <input type="hidden" name="office" value="false">
-                <input type="checkbox" id="office" name="office" value="true"><br>
+                <input type="checkbox" id="office" name="office" value="true">
+
                 <label for="Window">Window: </label>
-                <input type="hidden" name="window" value="false">
-                <input type="checkbox" id="window" name="window" value="true"><br>
+                <input type="checkbox" id="window" name="window" value="true">
+
                 <label for="Corner">Corner: </label>
-                <input type="hidden" name="corner" value="false">
                 <input type="checkbox" id="corner" name="corner" value="true"><br>
+
                 <label for="Cubicle">Cubicle: </label>
-                <input type="hidden" name="cubicle" value="false">
                 <input type="checkbox" id="cubicle" name="cubicle" value="true"><br>
+
                 <label for="single">Single: </label>
-                <input type="hidden" name="single" value="false">
                 <input type="checkbox" id="single" name="single" value="true"><br>
+
                 <label for="double">Double: </label>
-                <input type="hidden" name="double" value="false">
                 <input type="checkbox" id="double" name="double" value="true"><br>
+
             </fieldset>
 
             <input type="submit" value="Submit">
@@ -53,5 +54,6 @@
         <form method="POST" action="/logout">
             <input type="submit" value="Log Out">
         </form>
+        <script src="userPageScripts.js" async defer></script>
     </body>
 </html>

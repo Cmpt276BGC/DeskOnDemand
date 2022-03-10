@@ -10,15 +10,14 @@ const res = require('express/lib/response');
 const { request } = require('http');
 const { user } = require('pg/lib/defaults');
 const { error } = require('console');
-const client = require('pg/lib/native/client');
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  //connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  //ssl: {
+  //  rejectUnauthorized: false
+  //}
 });
 
 var app = express()
@@ -193,34 +192,71 @@ app.get('/tokenDump', (req,res)=>{
 
 app.post('/searchTablesSpecificDate', async (req, res) =>{
   try{
+    
     const searchTablesClient = await pool.connect();
     
-    //const floor = req.body.floor;
-
-    const specificDate = new Date(req.body.specificDate);
+    //set javascript calendar datetime to align with sql default datetime value
+    var specificDate = new Date(req.body.specificDate);
     specificDate.setHours(specificDate.getHours() + 8);
     var specificDateISOString = specificDate.toISOString().split('T')[0];
 
-    /*
-    const office = req.body.office;
-    const window = req.body.window;
-    const corner = req.body.corner;
-    const cubicle = req.body.cubicle;
-    const single = req.body.single;
-    const double = req.body.double;
-    */
+    //variables
+    var floor = req.body.floor;
+    var office = req.body.office;
+    var window = req.body.window;
+    var corner = req.body.corner;
+    var cubicle = req.body.cubicle;
+    var single = req.body.single;
+    var double = req.body.double;
 
-    const searchTablesSpecificDateQuery = await searchTablesClient.query(`SELECT * FROM bgctables where availabledates='${specificDateISOString}'`);
-    const results = {'results': (searchTablesSpecificDateQuery) ? searchTablesSpecificDateQuery.rows : null};
-    res.render('pages/userPageQueryResults', results);
-    searchTablesClient.release();
+    //checks for default undefined value given by unchecked checkbox and sets it to false string
+    var workstationAttributeArr = new Array(office, window, corner, cubicle, single, double);
+    for(let i = 0; i<workstationAttributeArr.length; i++){
+      if(workstationAttributeArr[i] === undefined){
+        workstationAttributeArr[i] = 'false';
+      }
+    }
+
+    //queries DB for specific attributes selected as well as date
+    //SORRY ABOUT RIDICULOUSLY LONG QUERY I WILL MAKE IT LOOK BETTER ONCE I FIGURE OUT HOW - Matt
+    if(floor === 'any'){
+      const anyFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
+      const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' : (anyFloorSpecificDateQuery) ? anyFloorSpecificDateQuery.rows : null};
+      res.render('pages/anyFloorSpecificDateQueryResults', anyFloorSpecificDateQueryResults);
+      searchTablesClient.release();
+    } else if(floor === '2' || floor === '3' || floor === '4' || floor === '5' || floor === '6') {
+      const specificFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND floor='${floor}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and floor='${floor}' and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
+      const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' : (specificFloorSpecificDateQuery) ? specificFloorSpecificDateQuery.rows : null};
+      res.render('pages/specificFloorSpecificDateQueryResults', specificFloorSpecificDateQueryResults);
+      searchTablesClient.release();
+    } else {
+      res.send('error');
+    }
 
   } catch(err) {
     res.send(err);
   }
 })
 
+app.get('/returnToSearch', (req, res) =>{
+  try{
+        res.redirect('/userPage');
+  } catch(err) {
+    res.send(err);
+  }
+})
 
+//View information about selected workstation from query and book
+/*
+app.get('/table/:tableid', (req, res) =>{
+  try{
+
+  } catch(err) {
+    res.render("Error");
+  }
+})
+
+*/
 
 
 
