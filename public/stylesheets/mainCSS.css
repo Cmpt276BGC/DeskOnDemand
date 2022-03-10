@@ -96,3 +96,7 @@ h1 {
     margin: 8px 0;
     box-sizing: border-box;
   }
+  label{
+    width:100px;
+    display:inline-block;
+}

@@ -7,11 +7,7 @@ html {
     margin: auto;
 }
 
-<<<<<<< HEAD
-h1 {
-=======
 h3 {
->>>>>>> 2c44d4ce75ed4d2d8aa8edd0c63d4c2f196b4b86
     text-align: center;
 }
 
@@ -23,7 +19,6 @@ h3 {
 .bi.bi-eye-slash {
     cursor: pointer;
 }
-<<<<<<< HEAD
 .images{
     display: flex;
     justify-content: center;
@@ -47,6 +42,7 @@ h3 {
     margin: 8px 0;
     box-sizing: border-box;
   }
-
-=======
->>>>>>> 2c44d4ce75ed4d2d8aa8edd0c63d4c2f196b4b86
+label{
+    width:100px;
+    display:inline-block;
+}
