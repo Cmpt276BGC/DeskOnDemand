@@ -136,7 +136,7 @@ app.post('/login', async (req, res) =>{
   else{
     let errorFailedLogin = [];
     errorFailedLogin.push({message: "Invalid Email/Password"});
-    res.render('pages/loginPage', {errorFailedLogin});
+    res.render('/loginPage', {errorFailedLogin});
   }
 });
 
