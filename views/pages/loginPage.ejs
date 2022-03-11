@@ -16,6 +16,13 @@
         </div>
         <div class="login">
         <h1>Login</h1>
+        <ul>
+            <% if(typeof errmessage != 'undefined'){ %>
+                <% errmessage.forEach(error=>{ %>
+                    <li><%=error.message %></li>
+               <% }) %>
+           <% } %>
+        </ul>
         <form action="/login" method="POST" display="table">
             <div>
                 <label for="email">Email</label>
