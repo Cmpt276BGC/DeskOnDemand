@@ -134,7 +134,9 @@ app.post('/login', async (req, res) =>{
   }
   //if the user does not exist, redirect to error page login failed
   else{
-    res.render('pages/failedLoginPage');
+    let errorFailedLogin = []
+    errorFailedLogin.push({message: "Invalid Email/Password"});
+    res.render('pages/loginPage',errorFailedLogin);
   }
 });
 
