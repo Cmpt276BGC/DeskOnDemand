@@ -77,25 +77,18 @@ app.post('/register', async (req, res) => {
   var newUserPasswordInput = req.body.passwordInput;
   var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
   
-  let error =[];
   //redirects user back to original register page and prevents the submission of the registration with mismatched passwords.
   //error message is displayed with javascript function
   if(newUserPasswordInput != newUserConfirmedPasswordInput){
-    //return;
-    error.push({message: "Passwords do not match"} );
+    return;
   }
 
   //redirects user back to original register page and prevents the submission of invalid password lengths
   //error message is handled with html validation
   if(newUserPasswordInput.length < 8 || newUserPasswordInput.length > 32){
-    //return;
-    if(newUserPasswordInput.length < 8){
-      error.push({messages: "Password should be atleast 8 characters"})
-    }
-    else{
-      error.push({message: "Password should not exceed 32 characters "})
-    }
+    return;
   }
+
   else{
     try {
       //query database and determine if user already exists 
@@ -114,9 +107,6 @@ app.post('/register', async (req, res) => {
     } catch {
       res.send("error");
     }
-  }
-  if(error.length > 0){
-    res.render("pages/loginPage",{error})
   }
 });
 
