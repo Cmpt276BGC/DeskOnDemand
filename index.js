@@ -234,13 +234,23 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     //SORRY ABOUT RIDICULOUSLY LONG QUERY I WILL MAKE IT LOOK BETTER ONCE I FIGURE OUT HOW - Matt
     if(floor === 'any'){
       const anyFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
-      const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' : (anyFloorSpecificDateQuery) ? anyFloorSpecificDateQuery.rows : null};
+      const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' :  anyFloorSpecificDateQuery.rows };
+      if(anyFloorSpecificDateQuery.rows.lenght>0){
       res.render('pages/anyFloorSpecificDateQueryResults', anyFloorSpecificDateQueryResults);
+      }
+      else{
+        res.redirect('/noResultsForSearch')
+      }
       searchTablesClient.release();
     } else if(floor === '2' || floor === '3' || floor === '4' || floor === '5' || floor === '6') {
       const specificFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND floor='${floor}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and floor='${floor}' and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
-      const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' : (specificFloorSpecificDateQuery) ? specificFloorSpecificDateQuery.rows : null};
-      res.render('pages/specificFloorSpecificDateQueryResults', specificFloorSpecificDateQueryResults);
+      const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' :  specificFloorSpecificDateQuery.rows};
+      if(specificFloorSpecificDateQuery.rows.length>0){
+        res.render('pages/specificFloorSpecificDateQueryResults', specificFloorSpecificDateQueryResults);
+      }
+      else{
+        res.redirect('/noResultsForSearch')
+      }
       searchTablesClient.release();
     } else {
       res.send('error');
@@ -249,6 +259,9 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
   } catch(err) {
     res.send(err);
   }
+})
+app.get('/noResultsForSearch', (req, res) => {
+  res.render('pages/userPageQueryNoResults')
 })
 
 app.get('/returnToSearch', (req, res) =>{
