@@ -202,19 +202,32 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
 
     //variables
     var floor = req.body.floor;
+    if(floor==undefined){
+      floor='false'
+    }
     var office = req.body.office;
+    if(office==undefined){
+      office='false'
+    }
     var window = req.body.window;
+    if(window==undefined){
+      window='false'
+    }
     var corner = req.body.corner;
+    if(corner==undefined){
+      corner='false'
+    }
     var cubicle = req.body.cubicle;
+    if(cubicle==undefined){
+      cubicle='false'
+    }
     var single = req.body.single;
+    if(single==undefined){
+      single='false'
+    }
     var double = req.body.double;
-
-    //checks for default undefined value given by unchecked checkbox and sets it to false string
-    var workstationAttributeArr = new Array(office, window, corner, cubicle, single, double);
-    for(let i = 0; i<workstationAttributeArr.length; i++){
-      if(workstationAttributeArr[i] === undefined){
-        workstationAttributeArr[i] = 'false';
-      }
+    if(double==undefined){
+      double='false'
     }
 
     //queries DB for specific attributes selected as well as date
