@@ -10,17 +10,20 @@
     <body>
         
         <h3>User Page</h3>
-
-            <table>
-                <% specificFloorSpecificDateQueryResults.forEach(function(r) { %>
-                <tr>
-                    <th>Workstation ID</th>
-                </tr>
-                <tr>
-                    <td><%= r.tableid %></td>
-                </tr>
-                <% }); %>
-            </table>
+        <form method="POST" action="/booking">
+            <h1>WorkStation IDs</h1>
+            <% specificFloorSpecificDateQueryResults.forEach(function(r) { %>
+            <ul>
+                <li>
+                    <label for="<%= r.tableid %>"><%= r.tableid %></label>
+                    <input type="radio" value='<%= r.tableid %>' name="title">
+                </li>
+            </ul>
+            
+            <% }); %>
+            <br>
+            <input type="submit" value="Book">
+        </form>
 
         <form method="GET" action="/returnToSearch">
             <input type="submit" value="Search again">
@@ -29,6 +32,7 @@
         <form method="POST" action="/logout">
             <input type="submit" value="Log Out">
         </form>
+        
 
     </body>
 </html>

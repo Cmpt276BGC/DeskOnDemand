@@ -15,9 +15,11 @@ pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
   //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  //connectionString: 'postgres://postgres:Reset123@localhost/bgcuser'
   ssl: {
     rejectUnauthorized: false
   }
+  
 });
 
 var app = express()
@@ -283,6 +285,17 @@ app.get('/table/:tableid', (req, res) =>{
 })
 
 */
+
+app.post('/booking', async (req,res)=>{
+  var tableid = req.body.title;
+  console.log(tableid);
+  console.log(req.session.user.rows[0].uemail);
+  const searchTablesClient = await pool.connect();
+    
+
+  //const booking = await searchTablesClient.query(`Insert into bgcbooking values()`)
+  res.send("hello")
+})
 
 
 
