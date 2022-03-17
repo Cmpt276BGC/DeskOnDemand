@@ -12,13 +12,13 @@ const { user } = require('pg/lib/defaults');
 const { error } = require('console');
 var pool;
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  //connectionString: process.env.DATABASE_URL,
   //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
   //connectionString: 'postgres://postgres:Reset123@localhost/bgcuser'
-  ssl: {
-    rejectUnauthorized: false
-  }
+  //ssl: {
+  //  rejectUnauthorized: false
+  //}
   
 });
 
@@ -199,14 +199,13 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     
     //set javascript calendar datetime to align with sql default datetime value
     var specificDate = new Date(req.body.specificDate);
-    specificDate.setHours(specificDate.getHours() + 8);
-    var specificDateISOString = specificDate.toISOString().split('T')[0];
+    var specificDateISOString = specificDate.toISOString();
+    //().split('T')[0];
+    console.log(specificDateISOString);
 
     //variables
     var floor = req.body.floor;
-    if(floor==undefined){
-      floor='false'
-    }
+    
     var office = req.body.office;
     if(office==undefined){
       office='false'
@@ -232,30 +231,49 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       double='false'
     }
 
-    //queries DB for specific attributes selected as well as date
-    //SORRY ABOUT RIDICULOUSLY LONG QUERY I WILL MAKE IT LOOK BETTER ONCE I FIGURE OUT HOW - Matt
-    if(floor === 'any'){
-      const anyFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
-      const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' :  anyFloorSpecificDateQuery.rows };
-      if(anyFloorSpecificDateQuery.rows.lenght>0){
-      res.render('pages/anyFloorSpecificDateQueryResults', anyFloorSpecificDateQueryResults);
+    
+    //queries DB for specific date if no specific attributes are selected
+    //intended for when people simply want a desk to use
+    if(floor === 'any' && office=='false' && window=='false' && corner=='false' && cubicle=='false' && single=='false' && double=='false'){
+      const noAttributeSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' OR reserveddate IS NULL ORDER BY tableid;`);
+      const noAttributeSpecificDateQueryResults = {'noAttributeSpecificDateQueryResults' : noAttributeSpecificDateQuery.rows };
+      if(noAttributeSpecificDateQuery.rows.length>0){
+        res.render('pages/noAttributeSpecificDateQueryResults', noAttributeSpecificDateQueryResults)
+      } else{
+        res.redirect('/noResultsForSearch')
       }
-      else{
+    }
+    else if(office=='false' && window=='false' && corner=='false' && cubicle=='false' && single=='false' && double=='false'){
+      const noAttributeSpecificDateSpecificFloorQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND floor='${floor}' OR reserveddate IS NULL ORDER BY tableid;`)
+      const noAttributeSpecificDateSpecificFloorQueryResults = {'noAttributeSpecificDateSpecificFloorQueryResults' : noAttributeSpecificDateSpecificFloorQuery.rows};
+      if(noAttributeSpecificDateSpecificFloorQuery.rows.length>0){
+        res.render('/pages/noAttributeSpecificDateSpecificFloorQueryResults', noAttributeSpecificDateSpecificFloorQueryResults);
+      } else {
+        res.redirect('/noResultsForSearch');
+      }
+    } else{ 
+        //queries DB for specific attributes selected as well as date
+        //SORRY ABOUT RIDICULOUSLY LONG QUERY I WILL MAKE IT LOOK BETTER ONCE I FIGURE OUT HOW - Matt
+        if(floor === 'any'){
+          const anyFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
+          const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' :  anyFloorSpecificDateQuery.rows };
+          if(anyFloorSpecificDateQuery.rows.length>0){
+            res.render('pages/anyFloorSpecificDateQueryResults', anyFloorSpecificDateQueryResults);
+          }
+          else{
+            res.redirect('/noResultsForSearch')
+          }
+        searchTablesClient.release();
+        } else {
+          const specificFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND floor='${floor}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and floor='${floor}' and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
+          const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' :  specificFloorSpecificDateQuery.rows};
+          if(specificFloorSpecificDateQuery.rows.length>0){
+            res.render('pages/specificFloorSpecificDateQueryResults', specificFloorSpecificDateQueryResults);
+          } else {
         res.redirect('/noResultsForSearch')
       }
       searchTablesClient.release();
-    } else if(floor === '2' || floor === '3' || floor === '4' || floor === '5' || floor === '6') {
-      const specificFloorSpecificDateQuery = await searchTablesClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where reserveddate!='${specificDateISOString}' AND floor='${floor}' AND office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' OR reserveddate IS NULL and floor='${floor}' and office='${office}' and haswindow='${window}' and corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' ORDER BY tableid;`);
-      const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' :  specificFloorSpecificDateQuery.rows};
-      if(specificFloorSpecificDateQuery.rows.length>0){
-        res.render('pages/specificFloorSpecificDateQueryResults', specificFloorSpecificDateQueryResults);
-      }
-      else{
-        res.redirect('/noResultsForSearch')
-      }
-      searchTablesClient.release();
-    } else {
-      res.send('error');
+    } 
     }
 
   } catch(err) {
