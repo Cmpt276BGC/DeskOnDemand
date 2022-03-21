@@ -10,7 +10,7 @@
     <body>
         <h3>User Page</h3>
 
-        <form method="POST" action="/searchTablesSpecificDate">
+        <form method="POST" action="/searchTablesDateRange">
             
             <label for="Floor">Floor: </label>
             <select name="floor" id="floor">
@@ -23,7 +23,10 @@
             </select>
 
             <label for="Date">Date: </label>
-            <input type="date" id="specificDate" name="specificDate">
+            <label for="fromDate">From: </label>
+            <input type="date" id="fromDate" name="fromDate">
+            <label for="toDate"> To: </label>
+            <input type="date" id="toDate" name="toDate">
             
             <fieldset style="width: 150px;">
                 <legend><u>Additional: </u></legend>
@@ -51,8 +54,8 @@
             <input type="submit" value="Submit">
 
         </form>
-        <form method="GET" action="/userPageRangeOfDates">
-            <input type="submit" value="Search For Range of Dates">
+        <form method="GET" action="/userPage">
+
         </form>
         <form method="POST" action="/logout">
             <input type="submit" value="Log Out">
