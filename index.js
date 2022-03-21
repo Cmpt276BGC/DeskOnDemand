@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const session = require('express-session')
-
+var cors = require("cors") // cross-origin resource sharing
 var bodyParser = require('body-parser');
 
 const { Pool } = require('pg');
@@ -19,10 +19,10 @@ pool = new Pool({
   //ssl: {
   //  rejectUnauthorized: false
   //}
-  
 });
 
 var app = express()
+app.use("/", cors())
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -317,4 +317,6 @@ app.post('/booking', async (req,res)=>{
 
 
 
+
+module.exports = app; // need for testing
 
