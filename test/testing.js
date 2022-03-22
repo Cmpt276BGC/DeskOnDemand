@@ -25,7 +25,7 @@ describe('Register', function() {
 })
 
 describe('Login', function() {
-    it('should login', function(done) {
+    it('should login', function() {             // done was taken out as it is async
         chai.request(server).post('/login')
             .send({
                 userEmailInput:'test@test.com',
@@ -35,7 +35,6 @@ describe('Login', function() {
                 res.should.has.status(200)
                 res.should.be.html
                 res.body.should.be.a('object')
-                done()
             })
     })
 })
