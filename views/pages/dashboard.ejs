@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
   </head>
   <body>
+    <div class="background">
     <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
     <form method="POST" action="/searchTablesSpecificDate">
             
@@ -53,6 +54,7 @@
       <input type="submit" value="Search For Range of Dates">
     </form>
     <a href="/users/logout">Logout</a>
+    </div>
     <script src="userPageScripts.js" async defer></script>
   </body>
 </html>

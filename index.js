@@ -132,7 +132,6 @@ app.post('/users/register', async (req, res) => {
   }
 });
 
-
 // regular user login
 app.post(
   "/users/login", 

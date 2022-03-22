@@ -8,7 +8,6 @@ body {
   font-family: Arial;
   width: 60%;
   margin-left: 20%;
-  
 }
 
 .background {
@@ -59,6 +58,11 @@ input {
 }
 
 label{
-  width:100px;
+  width:80px;
   display:inline-block;
+}
+
+ul {
+  list-style-type:none;
+  padding: 0;
 }
