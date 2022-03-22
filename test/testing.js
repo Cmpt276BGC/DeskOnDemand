@@ -6,9 +6,12 @@ var should = chai.should()
 const { Pool } = require('pg');
 var pool = new Pool({
 //   connectionString: 'postgres://postgres:root@localhost/bgcusers'
+  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod' //Matts connection string
 });
 
 chai.use(chaiHttp)
+chai.use(require('chai-json'))
+chai.use(require('chai-things'))
 
 before(function() {
     pool.query(`delete from bgcusers where upass='test1234'`)
@@ -69,6 +72,30 @@ describe('Login', function() {
                 res.should.redirectTo('/adminPage')
                 res.should.be.text
                 res.should.be.a('object')
+                done()
+            })
+    })
+})
+
+//not complete
+describe('Search', function(){
+    it('should search for available workstations on a particular date with no specific floor or attributes', function(done){
+        chai.request(server).post('/searchTablesSpecificDate')
+            .send({
+                specificDateISOString: '2022-03-16',
+                specificDateEndISOString: '2022-03-17',
+                floor: 'any',
+                office: 'false',
+                window: 'false',
+                corner: 'false',
+                cubicle: 'false',
+                single: 'false',
+                double: 'false'
+            })
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.json
                 done()
             })
     })
