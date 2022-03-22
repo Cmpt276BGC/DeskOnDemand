@@ -13,8 +13,8 @@ const { error } = require('console');
 var pool;
 pool = new Pool({
   //connectionString: process.env.DATABASE_URL,
-  //connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
+  connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
+  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
   //connectionString: 'postgres://postgres:Reset123@localhost/bgcuser'
   //ssl: {
   //  rejectUnauthorized: false
@@ -187,6 +187,13 @@ app.get('/tokenDump', (req,res)=>{
   //for debugging, will dump JSON token assigned to the user session by the server
   res.send(req.session.user.rows[0]);
   
+})
+
+// ADMIN FUNCTIONS
+
+// view as regular user
+app.get('/regularUser', (req,res)=>{
+  res.redirect('/userPage');
 })
 
 //SEARCH FUNCTIONALITY
