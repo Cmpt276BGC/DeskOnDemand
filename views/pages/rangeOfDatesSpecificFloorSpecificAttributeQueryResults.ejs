@@ -9,17 +9,19 @@
     </head>
     <body>
         <h3>User Page</h3>
-
-            <table>
-                <% rangeOfDatesSpecificFloorSpecificAttributeQueryResults.forEach(function(r) { %>
-                <tr>
-                    <th>Workstation ID</th>
-                </tr>
-                <tr>
-                    <td><%= r.tableid %></td>
-                </tr>
-                <% }); %>
-            </table>
+            <% rangeOfDatesSpecificFloorSpecificAttributeQueryResults.forEach(function(r) { %>
+                    <form method="POST" action="/booking">
+                        <ul>
+                            <li>
+                                <label for="<%= r.tableid %>"><%= r.tableid %></label>
+                                <input type="radio" value='<%= r.tableid %>' name="title">
+                            </li>
+                        </ul>
+                    
+                        <% }); %>
+                        <br>
+                        <input type="submit" value="Book">
+                    </form>
 
         <form method="GET" action="/returnToSearch">
             <input type="submit" value="Search again">
