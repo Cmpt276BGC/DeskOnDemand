@@ -1,48 +1,52 @@
-const express = require('express')
-const path = require('path')
-const PORT = process.env.PORT || 5000
-const session = require('express-session')
-var cors = require("cors") // cross-origin resource sharing
-var bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+const { pool } = require("./dbConfig");  // dbConfig.js has database configurations
+const path = require('path');
+const { request } = require('http');  // required so that http can be omitted
+const bcrypt = require('bcrypt');  // for password hashing
+const session = require('express-session');  // for session authentication
+const flash = require('express-flash');   // for flash messages
+const passport = require('passport');  // passportJS package
+const initializePassport = require("./passportConfig");  // passport configurations
+const cors = require("cors") // cross-origin resource sharing
 
-const { Pool } = require('pg');
 const res = require('express/lib/response');
-const { request } = require('http');
 const { user } = require('pg/lib/defaults');
 const { error } = require('console');
-var pool;
-pool = new Pool({
-  //connectionString: process.env.DATABASE_URL,
-  connectionString: 'postgres://postgres:1433@localhost/bgc',  // emmii's local database
-  //connectionString: 'postgres://postgres:Jojek2020.@localhost/dod', //matts local db
-  //connectionString: 'postgres://postgres:Reset123@localhost/bgcuser'
-  //ssl: {
-  //  rejectUnauthorized: false
-  //}
-});
+var bodyParser = require('body-parser');
 
-var app = express()
-app.use("/", cors())
-app.use(express.json());
+// passport initialization
+initializePassport(passport);
+
+// environment variable
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+// middlewares
+app.set('view engine', 'ejs');  // use ejs view engine to render ejs files
 app.use(express.urlencoded({extended:false}));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public', express.static('public'));
+app.use(express.json());
 app.use(session({
-  name: "sesson",
   secret: 'this is the way', 
-  resave: false, // forces session to be saved back to session store
-  saveUninitialized: false, // forces a session that is "uninitialized" to be saved to store
+  resave: false, // if nothing is changed, do not resave
+  saveUninitialized: false, // if empty, do not save
   maxAge: 30 * 60 * 1000, // 30 minutes
 })) 
+app.use(passport.initialize());  // sets up passport to use in our app
+app.use(passport.session());
+app.use(flash());  // use flash messages
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static('public'));
+
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.use("/", cors());
 
 app.get('/', (req, res) => {
-  res.redirect('/login');
-})
+  res.render('pages/index');
+});
 
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
 
 app.get('/login', (req, res) => {
     res.render('pages/loginPage')

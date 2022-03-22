@@ -5,6 +5,8 @@ var should = chai.should()
 
 chai.use(chaiHttp);
 
+// emmii's temporary tests
+
 describe('Admins', function(){
   // tests associated with administrative users
   it('should log in as admin and redirect to html page', function(){

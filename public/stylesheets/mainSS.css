@@ -1,0 +1,42 @@
+.header {
+  color: #110481;
+}
+
+body {
+  background-image: linear-gradient(90deg, #271f8c 0%, #7a7abc 35%, #d5d6e9 100%);
+  text-align: center;
+  font-family: Arial;
+  width: 60%;
+  margin-left: 20%;
+  
+}
+
+.background {
+  background: #ffffff;
+  opacity:55%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 2px #271f8c;
+  padding: 0;
+  margin: auto;
+}
+
+.inputbox {
+  height: 1.8em;
+  border-radius: 8px;
+  border: 0;
+  box-shadow: 0px 0px 6px 2px #000000;
+}
+
+input[type=submit] {
+  width: 5em;
+  color: #e0ebeb;
+  border-radius: 3px;
+  background-color: #271f8c;
+  border: 0px;
+  height: 2.2em;
+  font-size: 0.9em;
+}
+
+.bottomlink {
+  color: #110481;
+}
