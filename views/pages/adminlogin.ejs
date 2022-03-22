@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+  </head>
+  <body>
+    <div class="background">
+      <br>
+      <h1 class="header">Admin Login</h1>
+      <ul>
+        <% if (messages.success_msg) { %>
+          <li><%=messages.success_msg %></li>
+        <% } %>
+      </ul>
+      <ul>
+        <% if (messages.error) { %>
+          <li><%=messages.error %></li>
+        <% } %>
+      </ul>
+      <form action="/users/adminlogin" method="POST">
+      <div>
+        <input type="email" class="inputbox" id="email" name="email" placeholder="Email" required /> 
+      </div>
+      <br>
+      <div>
+        <input type="password" class="inputbox" id="password" name="password" placeholder="Password" required /> 
+      </div>
+      <br>
+      <div>
+        <input type="submit" class="button" value="Login" />
+      </div>
+      <br>
+      <a class="bottomlink" href="/users/register">Create a new account</a>
+      <br>
+      <br>
+    </div>
+  </form>
+  </body>
+</html>

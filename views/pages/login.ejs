@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  </head>
+  <body>
+    <div class="background">
+      <br>
+      <h1 class="header">Login</h1>
+      <ul>
+        <% if (messages.success_msg) { %>
+          <li><%=messages.success_msg %></li>
+        <% } %>
+      </ul>
+      <ul>
+        <% if (messages.error) { %>
+          <li><%=messages.error %></li>
+        <% } %>
+      </ul>
+      <form action="/users/login" method="POST">
+      <div>
+        <input type="email" class="inputbox" id="email" name="email" placeholder="Email" required />
+        <i>&nbsp;&nbsp;&nbsp;&nbsp;</i>
+      </div>
+      <br>
+      <div>
+        <input type="password" class="inputbox" id="password" name="password" placeholder="Password" required />
+        <i class="bi bi-eye-slash" id="togglePassword">&nbsp;</i> <!-- eye icon from bootstrap-->
+      </div>
+      <br>
+      <div>
+        <input type="submit" class="button" value="Login" />
+      </div>
+      <br>
+      <a class="bottomlink" href="/users/register">Create a new account</a>
+      <a class="bottomlink" href="/users/adminlogin">Admin Login</a>
+      <br>
+      <br>
+      </form>
+    </div>
+    <script>
+      var togglePassword = document.querySelector("#togglePassword")
+      var password = document.querySelector("#password")
+
+      togglePassword.addEventListener("click", function() {
+          var type = password.getAttribute("type") === "password" ? "text" : "password" // swap current type
+          password.setAttribute("type", type)
+          togglePassword.classList.toggle("bi-eye") // change icon's visual state
+      })
+    </script>
+  </body>
+</html>

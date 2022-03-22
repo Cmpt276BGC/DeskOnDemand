@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+  </head>
+  <body>
+    <div class="background">
+    <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    <form method="POST" action="/searchTablesSpecificDate">
+            
+      <label for="Floor">Floor: </label>
+      <select name="floor" id="floor">
+          <option value="any">Any</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+      </select>
+
+      <label for="Date">Date: </label>
+      <input type="date" id="specificDate" name="specificDate">
+      
+      <fieldset style="width: 150px;">
+          <legend><u>Additional: </u></legend>
+
+          <label for="Office">Office: </label>
+          <input type="checkbox" id="office" name="office" value="true">
+
+          <label for="Window">Window: </label>
+          <input type="checkbox" id="window" name="window" value="true">
+
+          <label for="Corner">Corner: </label>
+          <input type="checkbox" id="corner" name="corner" value="true"><br>
+
+          <label for="Cubicle">Cubicle: </label>
+          <input type="checkbox" id="cubicle" name="cubicle" value="true"><br>
+
+          <label for="single">Single: </label>
+          <input type="checkbox" id="single" name="single" value="true"><br>
+
+          <label for="double">Double: </label>
+          <input type="checkbox" id="double" name="double" value="true"><br>
+
+      </fieldset>
+
+      <input type="submit" value="Submit">
+    </form>
+    <form method="GET" action="/userPageRangeOfDates">
+      <input type="submit" value="Search For Range of Dates">
+    </form>
+    <a href="/users/logout">Logout</a>
+    </div>
+    <script src="userPageScripts.js" async defer></script>
+  </body>
+</html>

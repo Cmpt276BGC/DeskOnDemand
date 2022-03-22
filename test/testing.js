@@ -55,7 +55,6 @@ describe('Login', function() {
                 res.should.redirectTo('/userPage')
                 res.should.be.text
                 res.body.should.be.a('object')
-                done()
             })
     })
 

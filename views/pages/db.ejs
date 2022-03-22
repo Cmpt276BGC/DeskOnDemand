@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%- include ("../partials/header.ejs") %>
-</head>
+  <head>
+    BGCUSERS DATABASE FOR TROUBLESHOOTING
+  </head>
 
-<body>
+  <body>
 
-<%- include ("../partials/nav.ejs") %>
 
-<div class="container">
-<h2>Database Results</h2>
 
-<ul>
-    <% results.forEach(function(r) { %>
-        <li>Name: <%= r.fname %> <%= r.lname %> Email: <%= r.uemail %> Password: <%= r.upass %> Admin: <%=r.admin%></li>
-    <% }); %>
-</ul>
+    <div class="container">
+      <h2>Database Results</h2>
 
-</div>
+      <ul>
+          <% results.forEach(function(r) { %>
+              <li>Name: <%= r.fname %> <%= r.lname %> Email: <%= r.uemail %> Password: <%= r.upass %> Admin: <%=r.admin%></li>
+          <% }); %>
+      </ul>
 
-</body>
+    </div>
+
+  </body>
 </html>
