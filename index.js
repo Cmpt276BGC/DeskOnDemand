@@ -49,8 +49,12 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
+  //redirects to login page to prevent access to admin page from url and hide undefined rows error
+  if(req.session.user === undefined){
+    res.render('pages/registerPage');
+  }
   // redirect to user page if JSON token does not have admin flag set to true (not an admin)
-  if(!req.session.user.rows[0].admin && req.session.user){
+  else if(!req.session.user.rows[0].admin && req.session.user){
     res.render('pages/userPage');
   } else {
     res.render('pages/registerPage');

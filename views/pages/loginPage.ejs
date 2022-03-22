@@ -14,16 +14,18 @@
             <br>
             <img src="/Logos/DeskonDemand.jpg" width="100px" >
         </div>
-        <div class="login">
-        <h1>Login</h1>
-        <form action="/login" method="POST" display="table">
+        
+        <div class="background">
+        <br>
+        <h1 class="header">Login</h1>
+        <form class="inputForm" action="/login" method="POST" display="table">
             <div>
                 <label for="email">Email</label>
-                <input type="email" id="email" name="userEmailInput" required>
+                <input type="email" class="inputbox" id="email" name="userEmailInput" required>
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="userPasswordInput" required>
+                <input type="password" class="inputbox" id="password" name="userPasswordInput" required>
                 <i class="bi bi-eye-slash" id="togglePassword"></i> <!-- eye icon from bootstrap-->
             </div>
             <input class="button" type="submit" value="Login"></input>

@@ -1,48 +1,64 @@
-html, body {
-    height: 100%;
-}
-
-html {
-    display: table;
-    margin: auto;
-}
-
-h3 {
+body {
+    background-image: linear-gradient(90deg, #271f8c 0%, #7a7abc 35%, #d5d6e9 100%);
     text-align: center;
+    font-family: Arial;
+    width: 60%;
+    margin-left: 20%;
 }
 
-.login {
-    display: table-cell;
-    vertical-align: middle;
+.header {
+    color: #110481;
 }
+
+.background {
+    background: #ffffff;
+    opacity:55%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 2px #271f8c;
+    padding: 0;
+    margin: auto;
+  }
 
 .bi.bi-eye-slash {
     cursor: pointer;
 }
+
 .images{
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
-.button {
-    outline: none;
-    border: none;
+
+input[type=submit] {
+    width: 5em;
+    color: #e0ebeb;
+    border-radius: 3px;
+    background-color: #271f8c;
+    border: 0px;
+    height: 2.2em;
+    font-size: 1em;
+    margin: 10px 5px 5px 5px;
+}
+
+
+.inputbox {
+    padding: 10px;
+    margin: 10px 5px 5px 5px;
+    height: 1.8em;
     border-radius: 4px;
-    padding-top: 8px;
-    padding-right: 8px;
-    padding-bottom: 8px;
-    padding-left: 8px;
-    margin-top: 18px;
-    font-weight: bold;
-    color: black;
-  }
-  input {
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-  }
+    border: 0;
+    box-shadow: 0px 0px 6px 2px #000000;
+    }
+
+.inputForm{
+    align-self: center;
+    align-content: center;
+    margin: auto;
+    text-align: center;
+}
+
 label{
-    width:100px;
+
     display:inline-block;
 }
