@@ -19,7 +19,7 @@ initializePassport(passport);
 
 // environment variable
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
 
 // middlewares
 app.set('view engine', 'ejs');  // use ejs view engine to render ejs files
@@ -425,8 +425,8 @@ app.post('/booking', async (req,res)=>{
   res.send("hello")
 })
 
-
-
+// environment listen
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 module.exports = app; // need for testing
 

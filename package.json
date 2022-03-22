@@ -7,9 +7,16 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
+    
   },
+
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
@@ -27,7 +34,8 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "pg": "^8.7.3",
-    "pg-native": "^3.0.0"
+    "pg-native": "^3.0.0",
+    "serve": "^13.0.2"
   },
   "devDependencies": {
     "got": "^11.3.0",
