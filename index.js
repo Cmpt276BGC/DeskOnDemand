@@ -49,7 +49,13 @@ app.get('/login', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-  res.render('pages/registerPage')
+  // redirect to user page if JSON token does not have admin flag set to true (not an admin)
+  if(!req.session.user.rows[0].admin && req.session.user){
+    res.render('pages/userPage');
+  } else {
+    res.render('pages/registerPage');
+  }
+ 
 })
 
 
@@ -72,6 +78,9 @@ app.get('/duplicateEmailErrorPage', (req, res) => {
 
 //register a new user 
 app.post('/register', async (req, res) => {
+  
+
+ 
   //pull data from html form
   var newUserFirstNameInput = req.body.firstNameInput;
   var newUserLastNameInput = req.body.lastNameInput;
@@ -160,25 +169,25 @@ app.get('/userPage', (req, res)=>{
 
 app.get('/adminPage', (req,res)=>{
 
-//redirects to login page to prevent access to admin page from url and hide undefined rows error
-if(req.session.user === undefined){
-  res.redirect('/login')
-}
+  //redirects to login page to prevent access to admin page from url and hide undefined rows error
+  if(req.session.user === undefined){
+    res.redirect('/login')
+  }
 
-//redirect to admin page if JSON token has admin flag set to true (an admin)
- if(req.session.user.rows[0].admin){
-  res.render('pages/adminPage');
- }
+  //redirect to admin page if JSON token has admin flag set to true (an admin)
+  if(req.session.user.rows[0].admin){
+    res.render('pages/adminPage');
+  }
 
-//redirect back to regular user page if JSON token admin flag is set to false (not an admin)
- else if(req.session.user){
-  res.redirect('/userPage');
- } 
+  //redirect back to regular user page if JSON token admin flag is set to false (not an admin)
+  else if(req.session.user){
+    res.redirect('/userPage');
+  } 
 
- //redirect back to login if user not logged in
- else {
-   res.redirect('/login')
- }
+  //redirect back to login if user not logged in
+  else {
+    res.redirect('/login')
+  }
 
 })
 
@@ -194,7 +203,14 @@ app.get('/tokenDump', (req,res)=>{
 // view as regular user
 app.get('/regularUser', (req,res)=>{
   res.redirect('/userPage');
-})
+});
+
+// register for another employee
+app.get('/registerNew', (req,res)=>{
+   res.redirect('/register');
+ 
+});
+
 
 //SEARCH FUNCTIONALITY
 
