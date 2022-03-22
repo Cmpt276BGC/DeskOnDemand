@@ -19,13 +19,14 @@
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "i": "^0.3.7",
+    "node-gyp": "^9.0.0",
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
     "pg-native": "^3.0.0"
   },
   "devDependencies": {
     "got": "^11.3.0",
-    "tape": "^4.7.0"
+    "tape": "^4.2.2"
   },
   "repository": {
     "type": "git",
