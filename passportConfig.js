@@ -14,7 +14,8 @@ function initialize(passport) {
         // if email in database
         if (results.rows.length > 0) {
           const user = results.rows[0];  // first element of list
-          bcrypt.compare(password, user.password, (err, isMatch) => {
+          console.log(user.fname);
+          bcrypt.compare(password, user.upass, (err, isMatch) => {
             if (err) {
               throw err;
             }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+  </head>
+  <body>
+    <h1>Hello Admin <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    <form method="GET" action="/regularUser">
+      <input type="submit" value="View as Regular User">
+    </form>
+    <form method="GET" action="/registerNew">
+      <input type="submit" value="Create New User">
+    </form>
+    <form method="POST" action="/allDesks">
+      <input type="submit" value="Manage Desks">
+    </form>
+    <form method="POST" action="/bookings">
+      <input type="submit" value="Book Desks">
+    </form>
+    <a href="/users/logout">Logout</a>
+  </body>
+</html>

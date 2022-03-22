@@ -11,7 +11,6 @@ const initializePassport = require("./passportConfig");  // passport configurati
 const cors = require("cors") // cross-origin resource sharing
 
 const res = require('express/lib/response');
-const { user } = require('pg/lib/defaults');
 const { error } = require('console');
 var bodyParser = require('body-parser');
 
@@ -42,180 +41,158 @@ app.use('/public', express.static('public'));
 app.set('views', path.join(__dirname, 'views'));
 app.use("/", cors());
 
+// main page
 app.get('/', (req, res) => {
-  res.render('pages/index');
+  res.render('pages/main');
 });
 
+app.get('/users/register', checkAuthenticated, (req, res) => {
+  res.render('pages/register');
+});
 
+app.get('/users/login', checkAuthenticated, (req, res) => {
+  res.render('pages/login');
+});
 
-app.get('/login', (req, res) => {
-    res.render('pages/loginPage')
+app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
+  res.render('pages/adminlogin');
+});
+
+app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
+  res.render('pages/dashboard', { user: req.user.fname });
+});
+
+app.get('/users/admindash', checkAuthorization, (req, res) => {
+  res.render('pages/admindash', { user: req.user.fname });
+});
+
+app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
+  req.logOut();  // function within passport
+  req.flash('success_msg', "Successfully logged out");
+  res.redirect('/users/login');
 })
 
-app.get('/register', (req, res) => {
-  //redirects to login page to prevent access to admin page from url and hide undefined rows error
-  if(req.session.user === undefined){
-    res.render('pages/registerPage');
-  }
-  // redirect to user page if JSON token does not have admin flag set to true (not an admin)
-  else if(!req.session.user.rows[0].admin && req.session.user){
-    res.render('pages/userPage');
-  } else {
-    res.render('pages/registerPage');
-  }
- 
-})
+app.post('/users/register', async (req, res) => {
+  let {fname, lname, email, password, confirmpw} = req.body;
 
+  let errors = [];  // form validation
 
-app.get('/db', async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query('SELECT * FROM BGCUsers');
-    const results = { 'results': (result) ? result.rows : null};
-    res.render('pages/db', results );
-    client.release();
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
-})
-
-app.get('/duplicateEmailErrorPage', (req, res) => {
-  res.render('/duplicateEmailErrorPage')
-})
-
-//register a new user 
-app.post('/register', async (req, res) => {
-  
-
- 
-  //pull data from html form
-  var newUserFirstNameInput = req.body.firstNameInput;
-  var newUserLastNameInput = req.body.lastNameInput;
-  var newUserEmailInput = req.body.emailInput;
-  var newUserPasswordInput = req.body.passwordInput;
-  var newUserConfirmedPasswordInput = req.body.confirmPasswordInput;
-  
-  //redirects user back to original register page and prevents the submission of the registration with mismatched passwords.
-  //error message is displayed with javascript function
-  if(newUserPasswordInput != newUserConfirmedPasswordInput){
-    return;
+  // check that no field(s) left empty
+  if (!fname || !lname || !email || !password || !confirmpw) {
+    errors.push({ message: "Please fill in all fields" });
   }
 
-  //redirects user back to original register page and prevents the submission of invalid password lengths
-  //error message is handled with html validation
-  if(newUserPasswordInput.length < 8 || newUserPasswordInput.length > 32){
-    return;
+  // check password length
+  if (password.length < 8) {
+    errors.push({ message: "Password must be at least 8 characters" });
   }
 
-  else{
-    try {
-      //query database and determine if user already exists 
-      var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${newUserEmailInput}')`);
-  
-      //if the user already exists in the database, redirect to duplicate email error page
-      if(existsQuery.rows[0].exists){
-        res.render('pages/duplicateEmailErrorPage');
+  // check password re-entered correctly
+  if (password != confirmpw) {
+    errors.push({ message: "Passwords do not match" })
+  }
+
+  // if any validation checks resulted in error
+  if (errors.length > 0) {
+    res.render('pages/register', { errors });
+  } else {  // passed validation checks
+    // hash password
+    let hashedPW = await bcrypt.hash(password, 10);  // hashed 10 times
+    console.log(hashedPW);
+
+    // check if email already exists
+    pool.query(
+      `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
+        if (err) {
+          throw err;
+        } 
+
+        console.log(results.rows);
+
+        // email already in database
+        if (results.rows.length > 0) {
+          errors.push ({ message: "Email already registered" });
+          res.render('pages/register', { errors });
+        } else {
+          pool.query (
+            `INSERT INTO bgcusers (fname, lname, uemail, upass, admin) 
+            VALUES ($1, $2, $3, $4, 'f') 
+            RETURNING id, upass`, [fname,lname,email,hashedPW], (err, results) => {
+              if (err) {
+                throw err;
+              }
+              console.log(results.rows);
+              req.flash('success_msg', "Successfully registered, please log in");
+              res.redirect("/users/login");
+            }
+          )
+        }
       }
-      else{
-      //if the user does not exist, create the user and redirect to main user page
-        var result = await pool.query(`INSERT INTO bgcusers (uemail, upass, admin, fname, lname) VALUES ('${newUserEmailInput}', '${newUserPasswordInput}', 'f','${newUserFirstNameInput}','${newUserLastNameInput}')`);
-        res.redirect('/login');
-      }
-  
-    } catch {
-      res.send("error");
-    }
+    );
   }
 });
 
-//login page
-app.post('/login', async (req, res) =>{
-  let userEmailInput = req.body.userEmailInput;
-  let userPasswordInput = req.body.userPasswordInput;
 
-  //verify the user exists at all and check password
-  var existsQuery = await pool.query(`SELECT EXISTS(SELECT FROM bgcusers WHERE uemail = '${userEmailInput}' AND upass = '${userPasswordInput}')`);
-
-  //if the user exists, query and confirm the password is correct and set the user session token from the database JSON object of the users information
-  if(existsQuery.rows[0].exists){
-    var user = await pool.query(`SELECT * FROM BGCUsers WHERE uemail='${userEmailInput}' AND upass='${userPasswordInput}'`);
-    req.session.user = user;
-    req.session.loggedin = true;
-    //if the user is an admin send them to the admin page automatically
-    if(req.session.user.rows[0].admin){
-      res.redirect('/adminPage');
-     }
-     //if the user is not an admin, redirect them to the main user page
-     else {
-      res.redirect('/userPage');
-     }
-  }
-  //if the user does not exist, redirect to error page login failed
-  else{
-    res.render('pages/failedLoginPage');
-  }
-});
-
-//logout function to destroy token when /logout is accessed 
-app.post('/logout', (req,res)=>{
-  req.session.loggedin = false;
-  req.session.destroy((err)=>{
-    res.redirect('/login')
+// regular user login
+app.post(
+  "/users/login", 
+  passport.authenticate('local', {
+    successRedirect: "/users/dashboard",
+    failureRedirect: "/users/login",
+    failureFlash: true  // if authentication fails, pass in message (from err)
   })
-})
+);
 
-//redirects to user page url if logged in, else back to login page
-app.get('/userPage', (req, res)=>{
-  if(req.session.user){
-    res.render('pages/userPage')
-  } else {
-    res.redirect('/login')
+// admin user login
+app.post(
+  "/users/adminlogin", 
+  passport.authenticate('local', {
+    successRedirect: "/users/admindash",
+    failureRedirect: "/users/adminlogin",
+    failureFlash: true  // if authentication fails, pass in message (from err)
+  })
+);
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {  // function within passport
+    // redirects to dashboard if user IS authenticated
+    return res.redirect('/users/dashboard');
   }
-  res.end();
-})
+  next();  // otherwise, goes to next piece of middleware
+}
 
-app.get('/adminPage', (req,res)=>{
-
-  //redirects to login page to prevent access to admin page from url and hide undefined rows error
-  if(req.session.user === undefined){
-    res.redirect('/login')
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { 
+    return next();
   }
+  res.redirect('/users/login');
+}
 
-  //redirect to admin page if JSON token has admin flag set to true (an admin)
-  if(req.session.user.rows[0].admin){
-    res.render('pages/adminPage');
+
+// if user is admin
+function checkAuthorization(req, res, next) {
+  if (req.isAuthenticated() && (req.user.admin)) {
+      return next();
   }
+  return res.redirect('/users/dashboard');
+}
 
-  //redirect back to regular user page if JSON token admin flag is set to false (not an admin)
-  else if(req.session.user){
-    res.redirect('/userPage');
-  } 
 
-  //redirect back to login if user not logged in
-  else {
-    res.redirect('/login')
-  }
 
-})
+// emmii's note-to-self: DO NOT DELETE BEYOND THIS POINT!!!!!!
 
-app.get('/tokenDump', (req,res)=>{
 
-  //for debugging, will dump JSON token assigned to the user session by the server
-  res.send(req.session.user.rows[0]);
-  
-})
 
 // ADMIN FUNCTIONS
 
 // view as regular user
 app.get('/regularUser', (req,res)=>{
-  res.redirect('/userPage');
+  res.redirect('users/dashboard');
 });
 
 // register for another employee
 app.get('/registerNew', (req,res)=>{
-   res.redirect('/register');
+   res.redirect('users/register');
  
 });
 
@@ -315,7 +292,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
 })
 
 //function to search for a table which is available for a specific range of dates
-app.post('/searchTablesDateRange', async (req,res)=>{
+app.post('/searchTablesDateRange',  async (req,res)=>{
   try{
     const searchTablesDateRangeClient = await pool.connect();
   
@@ -406,12 +383,9 @@ app.post('/searchTablesDateRange', async (req,res)=>{
 })
 
 //redirects user to search for range of dates
-app.get('/userPageRangeOfDates', (req, res) =>{
-  if(req.session.user){
-    res.render('pages/userPageRangeOfDatesSearch')
-  } else {
-    res.redirect('/login')
-  }
+app.get('/userPageRangeOfDates', checkNotAuthenticated, (req, res) =>{
+  res.render('pages/userPageRangeOfDatesSearch');
+  
 })
 
 app.get('/noResultsForSearch', (req, res) => {
