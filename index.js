@@ -198,7 +198,7 @@ app.post('/users/addUser', checkAuthorization, async (req, res) => {
   }
 });
 
-app.post('/users/addAdmin', checkAuthorization, async (req, res) => {
+app.post('/addAdmin', checkAuthorization, async (req, res) => {
 
   let {fname, lname, email, password, confirmpw} = req.body;
   let errors = [];  // form validation
