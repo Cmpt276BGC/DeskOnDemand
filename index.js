@@ -116,7 +116,7 @@ app.post('/users/register', async (req, res) => {
         } else {
           pool.query (
             `INSERT INTO bgcusers (fname, lname, uemail, upass, admin) 
-            VALUES ($1, $2, $3, $4, 'f') 
+            VALUES ($1, $2, $3, $4, 't') 
             RETURNING id, upass`, [fname,lname,email,hashedPW], (err, results) => {
               if (err) {
                 throw err;
