@@ -283,7 +283,7 @@ app.post('/deleteUser', checkAuthorization, async (req, res) => {
           res.render('pages/manageUsers', { errors });
         } else {
           pool.query (
-            `DELETE * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
+            `DELETE FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
               if (err) {
                 throw err;
               }
