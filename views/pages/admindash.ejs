@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
   </head>
   <body>
+    <div class ="background">
     <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
     <form method="GET" action="/users/admindash/manageUsers">
       <input type="submit" value="Manage Users">
@@ -22,6 +23,7 @@
       <input type="submit" value="Book Desks">
     </form>
     <br><a href="/users/logout">Logout</a>
+    </div>
     <br><br>Desks on Demand
   </body>
 </html>
