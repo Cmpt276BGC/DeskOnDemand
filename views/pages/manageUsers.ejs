@@ -18,7 +18,7 @@
           <% }) %>
         <% } %>
       </ul>
-      <form action="/users/register" method="POST">
+      <form action="/users/addUser" method="POST">
         <div>
           <input type="text" class="inputbox" id="fname" name="fname" placeholder="First Name" required /> 
         </div>
@@ -46,7 +46,6 @@
             <input type="submit" class="button" onclick="location.href='/db';" value="Display All Users" />
         </div>
         <br>
-        <a class="bottomlink" href="/users/login">Already registered? Login here</a>
         <br>
         <br>
       </form>
