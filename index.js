@@ -239,7 +239,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       double='false'
     }
 
-    /*
+    
     //queries DB for specific date if no specific attributes are selected
     //intended for when people simply want a desk to use
     //complete
@@ -263,8 +263,8 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       } else {
         res.redirect('/noResultsForSearch');
       }
-      */
-     
+    }
+     else{
         //searches db for the specific set of attributes, for any kind of floor
         //complete
         if(floor === 'any'){
@@ -289,7 +289,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
           }
        searchTablesClient.release();
      } 
-   
+    }
   } catch(err) {
     res.send(err);
   }
