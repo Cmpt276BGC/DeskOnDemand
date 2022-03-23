@@ -176,7 +176,19 @@ function checkAuthorization(req, res, next) {
   return res.redirect('/users/dashboard');
 }
 
-
+// for troubleshooting purposes - displays bgcusers db data
+app.get('/db', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM BGCUsers');
+    const results = { 'results': (result) ? result.rows : null};
+    res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
 
 // emmii's note-to-self: DO NOT DELETE BEYOND THIS POINT!!!!!!
 
@@ -263,7 +275,8 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       } else {
         res.redirect('/noResultsForSearch');
       }
-    } else{ 
+    }
+     else{
         //searches db for the specific set of attributes, for any kind of floor
         //complete
         if(floor === 'any'){
@@ -288,7 +301,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
           }
        searchTablesClient.release();
      } 
-   }
+    }
   } catch(err) {
     res.send(err);
   }
@@ -396,7 +409,7 @@ app.get('/noResultsForSearch', (req, res) => {
 
 app.get('/returnToSearch', (req, res) =>{
   try{
-        res.redirect('/userPage');
+        res.redirect('/users/dashboard');
   } catch(err) {
     res.send(err);
   }
@@ -421,12 +434,46 @@ app.get('/tables/:tableid', async (req, res) =>{
 })
 */
 
+
+app.get('/bookedworkstations', async (req, res) => {
+  try{
+    const bookedworkstations = await pool.connect();
+    const booked = await bookedworkstations.query(`SELECT * from bgcbookings where uemail='${req.user.uemail}'`);
+    const bookedResults = {'bookedResults':(booked) ?  booked.rows: null};
+    if(booked.rows.length>0){
+    res.render('pages/bookedWorkstations',bookedResults);
+    }
+    else{
+      res.render('pages/nobookedWorkstation')
+    }
+  }catch(err){
+    res.send('error')
+  }
+
+
+})
+// Not woking in process -Bhavneet
+app.post('/cancelBooking', async (req,res)=>{
+  var tableidcancellation = req.body.cancel;
+  console.log(tableidcancellation);
+  try{
+    const cancelBooking= await pool.connect();
+    const cancel = await cancelBooking.query(`DELETE from bgcbookings where tableid='${tableidcancellation}' AND uemail='${req.user.email}'`);
+    res.redirect('/users/dashboard');
+  }catch(err){
+    res.send(err);
+  }
+   
+
+})
+
+
 //remember to ensure booking system adds fromdate and todate 
 //EXAMPLE IN DB- reserveddate: 2022-03-10 | fromdate: 2022-03-10 | todate: 2022-03-11
 app.post('/booking', async (req,res)=>{
   var tableid = req.body.title;
-  console.log(tableid);
-  console.log(req.session.user.rows[0].uemail);
+  //console.log(tableid);
+  console.log(req.user.uemail);
   const searchTablesClient = await pool.connect();
     
 
