@@ -9,6 +9,9 @@
   </head>
   <body>
     <h1>Hello Admin <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    <form method="GET" action="/manageUsers">
+      <input type="submit" value="Manage Users">
+    </form>
     <form method="GET" action="/regularUser">
       <input type="submit" value="View as Regular User">
     </form>
