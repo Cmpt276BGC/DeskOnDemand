@@ -239,7 +239,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       double='false'
     }
 
-    
+    /*
     //queries DB for specific date if no specific attributes are selected
     //intended for when people simply want a desk to use
     //complete
@@ -263,7 +263,8 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       } else {
         res.redirect('/noResultsForSearch');
       }
-    } else{ 
+      */
+     
         //searches db for the specific set of attributes, for any kind of floor
         //complete
         if(floor === 'any'){
@@ -288,7 +289,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
           }
        searchTablesClient.release();
      } 
-   }
+   
   } catch(err) {
     res.send(err);
   }
@@ -396,7 +397,7 @@ app.get('/noResultsForSearch', (req, res) => {
 
 app.get('/returnToSearch', (req, res) =>{
   try{
-        res.redirect('/userPage');
+        res.redirect('/users/dashboard');
   } catch(err) {
     res.send(err);
   }
@@ -421,12 +422,46 @@ app.get('/tables/:tableid', async (req, res) =>{
 })
 */
 
+
+app.get('/bookedworkstations', async (req, res) => {
+  try{
+    const bookedworkstations = await pool.connect();
+    const booked = await bookedworkstations.query(`SELECT * from bgcbookings where uemail='${req.user.uemail}'`);
+    const bookedResults = {'bookedResults':(booked) ?  booked.rows: null};
+    if(booked.rows.length>0){
+    res.render('pages/bookedWorkstations',bookedResults);
+    }
+    else{
+      res.render('pages/nobookedWorkstation')
+    }
+  }catch(err){
+    res.send('error')
+  }
+
+
+})
+// Not woking in process -Bhavneet
+app.post('/cancelBooking', async (req,res)=>{
+  var tableidcancellation = req.body.cancel;
+  console.log(tableidcancellation);
+  try{
+    const cancelBooking= await pool.connect();
+    const cancel = await cancelBooking.query(`DELETE from bgcbookings where tableid='${tableidcancellation}' AND uemail='${req.user.email}'`);
+    res.redirect('/users/dashboard');
+  }catch(err){
+    res.send(err);
+  }
+   
+
+})
+
+
 //remember to ensure booking system adds fromdate and todate 
 //EXAMPLE IN DB- reserveddate: 2022-03-10 | fromdate: 2022-03-10 | todate: 2022-03-11
 app.post('/booking', async (req,res)=>{
   var tableid = req.body.title;
-  console.log(tableid);
-  console.log(req.session.user.rows[0].uemail);
+  //console.log(tableid);
+  console.log(req.user.uemail);
   const searchTablesClient = await pool.connect();
     
 
