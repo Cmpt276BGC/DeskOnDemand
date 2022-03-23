@@ -208,15 +208,33 @@ app.post('/users/updateUser', checkAuthorization, async (req, res) => {
     errors.push({ message: "Please fill in an email" });
   }
 
-    if(req.body.fname && req.body.id){
-      pool.query(`UPDATE bgcusers SET fname = '${fname}' WHERE uemail = ${email};`);
+  if(req.body.fname && req.body.email){
+    pool.query (
+      `UPDATE bgcusers SET fname = $1 WHERE uemail=$2`, [fname,email], (err, results) => {
+        if (err) {
+          throw err;
+        }
+        console.log(results.rows);
+        req.flash('success_msg', "Successfully registered, please log in");
+        res.redirect("/users/admindash/manageUsers");
+      }
+    )
+  }
+    
+    if(req.body.lname && req.body.email){
+      pool.query (
+        `UPDATE bgcusers SET lname = $1 WHERE uemail=$2`, [lname,email], (err, results) => {
+          if (err) {
+            throw err;
+          }
+          console.log(results.rows);
+          req.flash('success_msg', "Successfully registered, please log in");
+          res.redirect("/users/admindash/manageUsers");
+        }
+      )
     }
     
-    if(req.body.lname && req.body.id){
-      pool.query(`UPDATE bgcusers SET lname = ${lname} WHERE uemail = ${email};`);
-    }
-    
-    if(req.body.password && req.body.id){
+    if(req.body.password && req.body.email){
         // check password length
       if (password.length < 8) {
         errors.push({ message: "Password must be at least 8 characters" });
@@ -225,9 +243,18 @@ app.post('/users/updateUser', checkAuthorization, async (req, res) => {
       if (password != confirmpw) {
         errors.push({ message: "Passwords do not match" })
       }
-      let hashedPW = await bcrypt.hash(password, 10);  // hashed 10 times
+      let hashedPW = await bcrypt.hash(password, 10);
       console.log(hashedPW);
-      pool.query(`UPDATE bgcusers SET password = ${hashedPW} WHERE uemail = ${email};`);
+        pool.query (
+          `UPDATE bgcusers SET upass = $1 WHERE uemail=$2`, [hashedPW,email], (err, results) => {
+            if (err) {
+              throw err;
+            }
+            console.log(results.rows);
+            req.flash('success_msg', "Successfully registered, please log in");
+            res.redirect("/users/admindash/manageUsers");
+          }
+        )
     }
 });
 
