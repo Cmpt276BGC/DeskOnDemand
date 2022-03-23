@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workstations</title>
+</head>
+<body>
+<form method="POST" action="/cancelBooking">
+
+    <% bookedResults.forEach(function(r) { %>
+    <h1>Your Booked Workstations</h1>
+    <h2>Cancel/reschedule your booking</h2>
+    <ul>
+        <li>
+            <label for="<%= r.tableid %>"><%= r.tableid %></label>
+            <input type="radio" value='<%= r.tableid %>' name="cancel">
+        </li>
+    </ul>
+   
+        <input type="submit" value="Cancel">
+</form>
+    <% }); %>
+</body>
+</html>
