@@ -138,6 +138,66 @@ app.post('/users/register', async (req, res) => {
   }
 });
 
+app.post('/users/addUser', checkAuthorization, async (req, res) => {
+
+  let {fname, lname, email, password, confirmpw} = req.body;
+  let errors = [];  // form validation
+
+  // check that no field(s) left empty
+  if (!fname || !lname || !email || !password || !confirmpw) {
+    errors.push({ message: "Please fill in all fields" });
+  }
+
+  // check password length
+  if (password.length < 8) {
+    errors.push({ message: "Password must be at least 8 characters" });
+  }
+
+  // check password re-entered correctly
+  if (password != confirmpw) {
+    errors.push({ message: "Passwords do not match" })
+  }
+
+  // if any validation checks resulted in error
+  if (errors.length > 0) {
+    res.render('pages/manageUsers', { errors });
+  } else {  // passed validation checks
+    // hash password
+    let hashedPW = await bcrypt.hash(password, 10);  // hashed 10 times
+    console.log(hashedPW);
+
+    // check if email already exists
+    pool.query(
+      `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
+        if (err) {
+          throw err;
+        } 
+
+        console.log(results.rows);
+
+        // email already in database
+        if (results.rows.length > 0) {
+          errors.push ({ message: "Email already registered" });
+          res.render('pages/manageUsers', { errors });
+        } else {
+          pool.query (
+            `INSERT INTO bgcusers (fname, lname, uemail, upass, admin) 
+            VALUES ($1, $2, $3, $4, 't') 
+            RETURNING id, upass`, [fname,lname,email,hashedPW], (err, results) => {
+              if (err) {
+                throw err;
+              }
+              console.log(results.rows);
+              req.flash('success_msg', "Successfully registered, please log in");
+              res.redirect("/users/admindash/manageUsers");
+            }
+          )
+        }
+      }
+    );
+  }
+});
+
 // regular user login
 app.post(
   "/users/login", 
