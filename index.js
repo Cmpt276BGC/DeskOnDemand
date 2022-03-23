@@ -176,7 +176,19 @@ function checkAuthorization(req, res, next) {
   return res.redirect('/users/dashboard');
 }
 
-
+// for troubleshooting purposes - displays bgcusers db data
+app.get('/db', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM BGCUsers');
+    const results = { 'results': (result) ? result.rows : null};
+    res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
 
 // emmii's note-to-self: DO NOT DELETE BEYOND THIS POINT!!!!!!
 
@@ -266,7 +278,8 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       } else {
         res.redirect('/noResultsForSearch');
       }
-    } else{ 
+    }
+     else{
         //searches db for the specific set of attributes, for any kind of floor
         //complete
         if(floor === 'any'){
@@ -291,7 +304,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
           }
        searchTablesClient.release();
      } 
-   }
+    }
   } catch(err) {
     res.send(err);
   }
@@ -412,30 +425,12 @@ app.get('/noResultsForSearch', (req, res) => {
 
 app.get('/returnToSearch', (req, res) =>{
   try{
-        res.redirect('/userPage');
+        res.redirect('/users/dashboard');
   } catch(err) {
     res.send(err);
   }
 })
 
-//View information about selected workstation by ID
-//Maybe useful for administrative functionality
-/*
-app.get('/tables/:tableid', async (req, res) =>{
-  try{
-    var tid = req.params.tableid;
-    const tableInfoClient = await pool.connect();
-    const tableInfoQuery = await tableInfoClient.query(`SELECT * from bgctables where tableid='${tid}'`);
-    const tableInfoQueryResults = {'tableInfoQueryResults' : (tableInfoQuery) ? tableInfoQuery.rows : null};
-    console.log(tableInfoQueryResults);
-    res.render('pages/tableInfo', tableInfoQueryResults);
-    tableInfoClient.release();
-    
-  } catch(err) {
-    res.send(err);
-  }
-})
-*/
 
 app.post('/booking', async (req,res)=>{
   
@@ -458,6 +453,40 @@ app.post('/booking', async (req,res)=>{
   res.redirect('/users/dashboard')
   bookingClient.release();
 })
+
+
+app.get('/bookedworkstations', async (req, res) => {
+  try{
+    const bookedworkstations = await pool.connect();
+    const booked = await bookedworkstations.query(`SELECT * from bgcbookings where uemail='${req.user.uemail}'`);
+    const bookedResults = {'bookedResults':(booked) ?  booked.rows: null};
+    if(booked.rows.length>0){
+    res.render('pages/bookedWorkstations',bookedResults);
+    }
+    else{
+      res.render('pages/nobookedWorkstation')
+    }
+  }catch(err){
+    res.send('error')
+  }
+
+
+})
+// Not woking in process -Bhavneet
+app.post('/cancelBooking', async (req,res)=>{
+  var tableidcancellation = req.body.cancel;
+  console.log(tableidcancellation);
+  try{
+    const cancelBooking= await pool.connect();
+    const cancel = await cancelBooking.query(`DELETE from bgcbookings where tableid='${tableidcancellation}' AND uemail='${req.user.email}'`);
+    res.redirect('/users/dashboard');
+  }catch(err){
+    res.send(err);
+  }
+   
+
+})
+  
 
 // environment listen
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));

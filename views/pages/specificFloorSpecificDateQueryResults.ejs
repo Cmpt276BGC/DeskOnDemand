@@ -13,6 +13,8 @@
         <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
         <% specificFloorSpecificDateQueryResults.forEach(function(r) { %>
             <form method="POST" action="/booking">
+                <img src="/public/Logos/<%= r.floor %>.jpg">
+                <h1><%= r.floor %></h1>
                 <ul>
                     <li>
                         <label for="<%= r.tableid %>"><%= r.tableid %></label>
