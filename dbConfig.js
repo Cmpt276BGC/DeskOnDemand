@@ -11,15 +11,15 @@ const connectionString =`postgresql://${process.env.DB_USER}:${process.env.DB_PA
 // const connectionString = 'postgres://postgres:Reset123@localhost/bgcuser
 // connectionString = 'postgres://postgres:root@localhost/bgcusers'
 
-const pool = new Pool({
-  connectionString: isProduction ? process.env.DATABASE_URL : connectionString
-});
+//const pool = new Pool({
+//  connectionString: isProduction ? process.env.DATABASE_URL : connectionString
+//});
 
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//     rejectUnauthorized: false
-//   }
-// });
+ const pool = new Pool({
+   connectionString: process.env.DATABASE_URL,
+   ssl: {
+     rejectUnauthorized: false
+   }
+ });
 
 module.exports = { pool };
