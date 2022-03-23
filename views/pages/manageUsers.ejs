@@ -12,6 +12,9 @@
       <br>
       <h1 class="header">Manage Users</h1>
       You can manage users here, to delete or edit a user you must enter an email
+      To edit a user, fill in only one field at a time and an email, and then select "Edit User Information"
+      To find which email is associated with each user query the database by selecting "Display All Users" below
+      You can also add users and admins here by filling in this form and selecting "Add User" or "Add Admin" respectively
       <ul class="errors">
         <% if(typeof errors != 'undefined') { %>
           <% errors.forEach(error => { %>
