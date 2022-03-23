@@ -68,7 +68,7 @@ app.get('/users/admindash', checkAuthorization, (req, res) => {
   res.render('pages/admindash', { user: req.user.fname });
 });
 
-app.get('/users/admindash/manageUsers', checkAuthenticated, (req, res) => {
+app.get('/users/admindash/manageUsers', checkAuthorization, (req, res) => {
   res.render('pages/manageUsers');
 });
 
