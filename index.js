@@ -183,7 +183,7 @@ function checkAuthorization(req, res, next) {
 }
 
 // for troubleshooting purposes - displays bgcusers db data
-app.get('/db',checkAuthorization, async (req, res) => {
+app.get('/db', async (req, res) => {
   try {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM BGCUsers');
