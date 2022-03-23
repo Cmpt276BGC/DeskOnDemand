@@ -10,6 +10,7 @@
     <body>
         
         <h3>User Page</h3>
+        <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
         <% specificFloorSpecificDateQueryResults.forEach(function(r) { %>
             <form method="POST" action="/booking">
                 <ul>
@@ -24,7 +25,7 @@
                 <input type="submit" value="Book">
             </form>
 
-        <form method="GET" action="/returnToSearch">
+        <form method="GET" action="/users/dashboard">
             <input type="submit" value="Search again">
         </form>
 
