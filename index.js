@@ -258,7 +258,7 @@ app.post('/addAdmin', checkAuthorization, async (req, res) => {
   }
 });
 
-app.post('/delete', checkAuthorization, async (req, res) => {
+app.post('/deleteUser', checkAuthorization, async (req, res) => {
 
   let {fname, lname, email, password, confirmpw} = req.body;
   let errors = [];  // form validation
