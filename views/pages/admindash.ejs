@@ -8,15 +8,12 @@
     <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
   </head>
   <body>
-    <h1>Hello Admin <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
     <form method="GET" action="/users/admindash/manageUsers">
       <input type="submit" value="Manage Users">
     </form>
     <form method="GET" action="/regularUser">
       <input type="submit" value="View as Regular User">
-    </form>
-    <form method="GET" action="/registerNew">
-      <input type="submit" value="Create New User">
     </form>
     <form method="POST" action="/allDesks">
       <input type="submit" value="Manage Desks">
@@ -25,5 +22,6 @@
       <input type="submit" value="Book Desks">
     </form>
     <a href="/users/logout">Logout</a>
+    Desks on Demand
   </body>
 </html>
