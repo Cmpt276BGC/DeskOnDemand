@@ -58,9 +58,7 @@ app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
   res.render('pages/adminlogin');
 });
 
-app.get('/users/manageUsers', checkAuthenticated, (req, res) => {
-  res.render('pages/manageUsers');
-});
+
 
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
   res.render('pages/dashboard', { user: req.user.fname });
@@ -68,6 +66,10 @@ app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
 
 app.get('/users/admindash', checkAuthorization, (req, res) => {
   res.render('pages/admindash', { user: req.user.fname });
+});
+
+app.get('/users/admindash/manageUsers', checkAuthenticated, (req, res) => {
+  res.render('pages/manageUsers');
 });
 
 app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
