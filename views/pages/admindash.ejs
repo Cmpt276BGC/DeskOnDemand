@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class ="background">
-    <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    <h1 class="header">Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
     <form method="GET" action="/users/admindash/manageUsers">
       <input type="submit" value="Manage Users">
     </form>
@@ -22,7 +22,7 @@
     <form method="POST" action="/bookings">
       <input type="submit" value="Book Desks">
     </form>
-    <br><a href="/users/logout">Logout</a>
+    <br><a href="/users/logout">Logout</a><br>
     </div>
     <br><br>Desks on Demand
   </body>
