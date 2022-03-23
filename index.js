@@ -64,11 +64,22 @@ app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
   res.render('pages/dashboard', { user: req.user.fname });
 });
 
+
 app.get('/users/admindash', checkAuthorization, (req, res) => {
   res.render('pages/admindash', { user: req.user.fname });
 });
 
-app.get('/users/admindash/manageUsers', checkAuthorization, (req, res) => {
+app.get('/users/admindash/manageUsers', checkAuthorization, async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM BGCUsers');
+    const results = { 'results': (result) ? result.rows : null};
+    res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
   res.render('pages/manageUsers');
 });
 
