@@ -18,13 +18,13 @@
           <% }) %>
         <% } %>
       </ul>
-      <form action="/users/addUser" method="POST">
+      <form method="POST">
         <div>
-          <input type="text" class="inputbox" id="fname" name="fname" placeholder="First Name" required /> 
+          <input type="text" class="inputbox" id="fname" name="fname" placeholder="First Name" /> 
         </div>
         <br>
         <div>
-          <input type="text" class="inputbox" id="lname" name="lname" placeholder="Last Name" required /> 
+          <input type="text" class="inputbox" id="lname" name="lname" placeholder="Last Name" /> 
         </div>
         <br>
         <div>
@@ -32,15 +32,15 @@
         </div>
         <br>
         <div>
-            <input type="password" class="inputbox" id="password" name="password" placeholder="Password" required /> 
+            <input type="password" class="inputbox" id="password" name="password" placeholder="Password" /> 
         </div>
         <br>
         <div>
-            <input type="password" class="inputbox" id="confirmpw" name="confirmpw" placeholder="Confirm Password" required /> 
+            <input type="password" class="inputbox" id="confirmpw" name="confirmpw" placeholder="Confirm Password" /> 
         </div>
         <br>
         <div>
-            <input type="submit" class="button" value="Add User" />
+            <input type="submit" class="button" value="Add User" onclick="javascript: form.action='/users/addUser'"/>
             <input type="submit" class="button" value="Add Admin" onclick="javascript: form.action='/addAdmin'"/>
             <input type="submit" class="button" value="Delete User" />
             <input type="submit" class="button" value="Edit User Information" />
