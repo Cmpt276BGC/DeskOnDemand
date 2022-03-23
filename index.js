@@ -268,7 +268,7 @@ app.post('/delete', checkAuthorization, async (req, res) => {
     errors.push({ message: "Please fill in the email field to delete a user" });
   }
 
-    // check if email already exists
+    // check if email exists
     pool.query(
       `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
         if (err) {
@@ -283,7 +283,7 @@ app.post('/delete', checkAuthorization, async (req, res) => {
           res.render('pages/manageUsers', { errors });
         } else {
           pool.query (
-            `DELETE FROM bgcusers WHERE uemail = $1`, [email], (err, results) => {
+            `DELETE * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
               if (err) {
                 throw err;
               }
@@ -295,8 +295,7 @@ app.post('/delete', checkAuthorization, async (req, res) => {
         }
       }
     );
-  }
-});
+  });
 
 // regular user login
 app.post(
