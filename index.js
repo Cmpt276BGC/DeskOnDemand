@@ -667,16 +667,13 @@ app.post('/booking', async (req,res)=>{
   //variables
   var tableid = req.body.title;
   var userEmail = req.user.uemail;
-  
-  //fix date values to proper form for query
-  //for some reason request body date values return as an array
-  var fromDateArr = req.body.fromDate;
-  var toDateArr = req.body.toDate;
-  var bookFromDate = fromDateArr[Object.keys(fromDateArr)[0]]
-  var bookToDate = toDateArr[Object.keys(toDateArr)[0]]
+  var bookFromDate = req.body.fromDate;
+  var bookToDate = req.body.toDate;
+  console.log(bookFromDate);
+  console.log(bookToDate);
   
   //query
-  const bookTableQuery = bookingClient.query(`insert into bgcbookings values('${tableid}', '${userEmail}', NULL, '${bookFromDate}', '${bookToDate}')`)
+  const bookTableQuery = bookingClient.query(`insert into bgcbookings values('${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
 
   res.redirect('/users/dashboard')
   bookingClient.release();
