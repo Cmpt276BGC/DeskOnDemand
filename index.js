@@ -58,6 +58,10 @@ app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
   res.render('pages/adminlogin');
 });
 
+app.get('/users/manageUsers', checkAuthenticated, (req, res) => {
+  res.render('pages/manageUsers');
+});
+
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
   res.render('pages/dashboard', { user: req.user.fname });
 });
