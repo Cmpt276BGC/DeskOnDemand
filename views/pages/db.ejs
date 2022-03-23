@@ -8,19 +8,16 @@
     <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
   </head>
 
-  <body>
-    <div class="container">
-      <h2>Database Results</h2>
-
-      <form>
-      <ul>
-          <% results.forEach(function(r) { %>
+  <div class="background">
+    <body>
+      <div class="container">
+        <h2>Database Results</h2>
+          <ul>
+            <% results.forEach(function(r) { %>
               <li>Name: <%= r.fname %> <%= r.lname %> Email: <%= r.uemail %> Password: <%= r.upass %> Admin: <%=r.admin%> ID: <%= r.id %></li>
-          <% }); %>
-      </ul>
-      </form>
-
-    </div>
-
-  </body>
+            <% }); %>
+          </ul>
+        </div>
+    </body>
+  </div>
 </html>
