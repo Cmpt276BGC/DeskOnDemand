@@ -12,6 +12,9 @@
     <body>
       <div class="container">
         <h2>Database Results</h2>
+        <form method="GET" action="/users/admindash/manageUsers">
+          <input type="submit" value="Return to Manage Users">
+        </form>
           <ul>
             <% results.forEach(function(r) { %>
               <li>Name: <%= r.fname %> <%= r.lname %> Email: <%= r.uemail %> Password: <%= r.upass %> Admin: <%=r.admin%> ID: <%= r.id %></li>
