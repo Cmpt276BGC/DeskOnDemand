@@ -11,6 +11,7 @@
     <div class="background">
       <br>
       <h1 class="header">Manage Desks</h1>
+      Please click on the Workstation ID to edit info<br>
       <ul class="errors">
         <% if(typeof errors != 'undefined') { %>
           <% errors.forEach(error => { %>
@@ -40,12 +41,12 @@
               </form>
             </td>
             <td><%= r.floor %></td>
-            <td><%= r.office %></td>
-            <td><%= r.haswindow %></td>
-            <td><%= r.corner %></td>
-            <td><%= r.cubicle %></td>
-            <td><%= r.single %></td>
-            <td><%= r.double %></td>
+            <td><%= r.office === true ? 'Yes' : 'No'%></td>
+            <td><%= r.haswindow === true ? 'Yes' : 'No'%></td>
+            <td><%= r.corner === true ? 'Yes' : 'No'%></td>
+            <td><%= r.cubicle === true ? 'Yes' : 'No'%></td>
+            <td><%= r.single === true ? 'Yes' : 'No'%></td>
+            <td><%= r.double === true ? 'Yes' : 'No'%></td>
             
             <td>
               <form id="delDesk" action="/delete/<%=r.tableid%>" method="POST">

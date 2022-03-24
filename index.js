@@ -415,10 +415,6 @@ app.get('/db', async (req, res) => {
   }
 })
 
-// emmii's note-to-self: DO NOT DELETE BEYOND THIS POINT!!!!!!
-
-
-
 // ADMIN DESK FUNCTIONS
 
 // manage desks
@@ -434,7 +430,7 @@ app.get('/desks/manageDesks', async (req,res)=>{
 
 // edit desk by id
 app.post('/editDesk/:tableid', async (req, res) =>{
-  console.log(req.params.tableid);
+  
   var deskIDLookup = req.params.tableid;
   // search the database using the idlookup
   try {
@@ -447,18 +443,15 @@ app.post('/editDesk/:tableid', async (req, res) =>{
 });
 
 // update a desk
-app.post('/desks/updateDesk', async (req, res) =>{
-  var newTableID = req.params.tableid;
-  var nupdate = req.body.newrname;
-  var wdupdate = req.body.newwd;
-  var htupdate = req.body.newht;
-  var clr = req.body.newclr;
-  var fclr= req.body.newfclr;
-  var crupdate = req.body.newcr;
-  var bclr = req.body.newbclr;
-  var opupdate = req.body.newop;
+app.post('/updateDesk/:tableid', async (req, res) =>{
+  const tableID = req.params.tableid;
+  
+  let {inputNewFloor, inputNewOffice, inputNewWindow, inputNewCorner, inputNewCubicle, inputNewSingle, inputNewDouble} = req.body;
+  let errors = [];  // form validation
+  
   try {
-    const result = await pool.query(`UPDATE bgctables SET rname='${nupdate}', width=${wdupdate}, height=${htupdate}, color='${clr}', cradius=${crupdate}, fcolor='${fclr}', bcolor='${bclr}', opacity=${opupdate} WHERE rid=${updateid}`);
+    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', office='${inputNewOffice}', haswindow='${inputNewWindow}', corner='${inputNewCorner}', cubicle='${inputNewCubicle}', Single='${inputNewSingle}', double='${inputNewDouble}' WHERE tableid='${tableID}'`);
+    req.flash('success_msg', "Desk information successfully updated!");
     res.redirect('/desks/manageDesks');
   }
   catch (error) {

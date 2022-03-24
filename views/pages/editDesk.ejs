@@ -10,7 +10,7 @@
   <body>
     <div class="background">
       <br>
-      <h1 class="header">Edit Desk</h1>
+      <h1 class="header">Edit Workstation <%= deskDataRow[0].tableid %></h1>
       <ul class="errors">
         <% if(typeof errors != 'undefined') { %>
           <% errors.forEach(error => { %>
@@ -21,7 +21,7 @@
       
         <table class="tables">
           <tr>
-            <th>Workstation ID</th>
+            <th></th>
             <th>Floor</th>
             <th>Office</th>
             <th>Window</th>
@@ -32,44 +32,99 @@
             
           </tr>
           <% deskDataRow.forEach(function(r) { %>
+            <form action="/updateDesk/<%=r.tableid%>" method="POST">
+              <tr>
+                <td>
+                  Current Values
+                </td>
+                <td>
+                  <%= r.floor%>
+                </td>
+                <td>
+                  <%= r.office === true ? 'Yes' : 'No' %>
+                </td>
+                <td>
+                  <%= r.haswindow === true ? 'Yes' : 'No' %>
+                </td>
+                <td>
+                  <%= r.corner === true ? 'Yes' : 'No' %>              
+                </td>
+                <td>
+                  <%=r.cubicle === true ? 'Yes' : 'No' %>              
+                </td>
+                <td>
+                  <%= r.single === true ? 'Yes' : 'No' %>
+                </td>
+                <td>
+                  <%= r.double === true ? 'Yes' : 'No' %>
+                </td>
+              </tr>
             <tr>
               <td>
-                <input type="text" name="InputNewID" value="<%= r.tableid%>">
+                New Values
               </td>
               <td>
-                <input type="dropdown" name="InputNewFloor" value="<%= r.floor%>">
+                
+                <select name="inputNewFloor">
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
               </td>
               <td>
-                <select name="InputNewOffice" value="<%= r.office%>">
+                <select name="inputNewOffice">
+                  <option value="t">Yes</option>
+                  <option value="f">No</option>
+                </select>   
+              </td>
+              <td>
+                <select name="inputNewWindow">
+                  <option value="t">Yes</option>
+                  <option value="f">No</option>
+                </select>   
+              </td>
+              <td>
+                <select name="inputNewCorner">
+                  <option value="t">Yes</option>
+                  <option value="f">No</option>
+                </select>                 
+              </td>
+              <td>
+                <select name="inputNewCubicle">
+                  <option value="t">Yes</option>
+                  <option value="f">No</option>
+                </select>         
+              </td>
+              <td>
+                <select name="inputNewSingle">
                   <option value="t">Yes</option>
                   <option value="f">No</option>
                 </select>
               </td>
               <td>
-                <%= r.haswindow%>
-              </td>
-              <td>
-                <%= r.corner%>
-              </td>
-              <td>
-                <%= r.cubicle%>
-              </td>
-              <td>
-                <%= r.single%>
-              </td>
-              <td>
-                <%= r.double%>
+                <select name="inputNewDouble">
+                  <option value="t">Yes</option>
+                  <option value="f">No</option>
+                </select>
               </td>
             </tr>
           <% }); %>
         </table>
+        <br>
         <div>
-          <input type="submit" class="button" onclick="location.href='/users/admindash';" value="Return to Admin Dash" />
+          <input type="submit" value="SUBMIT UPDATE">
+        </form>
+        <input type="submit" class="button" onclick="location.href='/users/admindash';" value="ADMIN DASHBOARD" />
         </div>
         <br>
       
     </div>
     <br><br>Desks on Demand
-    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
+    <script>
+      
+    </script>
   </body>
 </html>
