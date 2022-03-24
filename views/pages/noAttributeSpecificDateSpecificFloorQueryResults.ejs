@@ -17,7 +17,7 @@
         <input id="authorized" type="hidden" value="isAdmin">
         <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
                 <% noAttributeSpecificDateSpecificFloorQueryResults.forEach(function(r) { %>
-                    <form method="POST" action="/booking">
+                    <form name="radioform" method="POST" action="/booking">
                         <ul>
                             <li>
                                 <label for="<%= r.tableid %>"><%= r.tableid %></label>
@@ -32,6 +32,7 @@
                         <input type="submit" value="Book">
                     </form>
                     <form method="POST" action="/adminbooking">
+                        <input type="hidden" name="IDtoSend" id="IDtoSend">
                         <input type="hidden" value='<%= dates.nextFromDate %>' name="startDate" id="startDate">
                         <input type="hidden" value='<%= dates.nextToDate %>' name="endDate" id="endDate">
                         <label for="useremailLookup">(ADMIN ONLY) Enter user email:</label>

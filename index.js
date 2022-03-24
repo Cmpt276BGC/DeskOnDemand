@@ -739,7 +739,7 @@ app.post('/adminbooking', async (req,res)=>{
   let errors = [];  // form validation
 
   //variables
-  var tableid = req.body.title;
+  var tableid = req.body.IDtoSend;
   console.log(tableid);
   var email = req.body.useremail;
   var bookFromDate = req.body.startDate;
