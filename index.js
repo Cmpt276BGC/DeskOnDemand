@@ -460,11 +460,11 @@ app.post('/updateDesk/:tableid', async (req, res) =>{
 });
 
 // delete a rectangle
-app.post('/delete/:id', async (req, res) => {
-  var delid = req.params.id;
+app.post('/delete/:tableid', async (req, res) => {
+  const tableIDtoDelete = req.params.tableid;
   try {
-    const result = await pool.query(`DELETE FROM rectangles WHERE rid=${delid}`);
-    res.redirect('/rectangles');
+    const result = await pool.query(`DELETE FROM bgctables WHERE tableid='${tableIDtoDelete}'`);
+    res.redirect('/desks/manageDesks');
   } catch (error) {
     res.send(error);
   }

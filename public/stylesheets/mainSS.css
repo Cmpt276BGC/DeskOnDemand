@@ -34,6 +34,7 @@ input[type=submit] {
   border: 0px;
   height: 2.2em;
   font-size: 0.9em;
+  cursor: pointer;
 }
 
 .bottomlink {
