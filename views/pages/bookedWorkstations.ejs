@@ -7,21 +7,16 @@
     <title>Workstations</title>
 </head>
 <body>
-<form method="POST" action="/cancelBooking">
 
-    <% bookedResults.forEach(function(r) { %>
     <h1>Your Booked Workstations</h1>
-    <h2>Cancel/reschedule your booking</h2>
+    <h2>Cancel your booking</h2>
+    <% bookedResults.forEach(function(r) { %>
     <ul>
         <li>
-            <label for="<%= r.tableid %>"><%= r.tableid %></label>
-            <input type="radio" value='<%= r.tableid %>' name="cancel">
+            <a href='/views/pages/bookinginfo/<%= r.uniqueid %>'><%= r.tableid %> Dates: <%= r.fromdate %> to: <%= r.todate %> </a>
         </li>
     </ul>
-    <input  type="hidden" value='<%= r.fromdate %>' name="fromDate" id="fromDate">
-    <input  type="hidden" value='<%= r.todate %>' name="toDate" id="fromDate">
-        <input type="submit" value="Cancel">
-</form>
+
     <% }); %>
 </body>
 </html>
