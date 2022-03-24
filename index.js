@@ -432,6 +432,51 @@ app.get('/desks/manageDesks', async (req,res)=>{
   }
 });
 
+// edit desk by id
+app.post('/editDesk/:tableid', async (req, res) =>{
+  console.log(req.params.tableid);
+  var deskIDLookup = req.params.tableid;
+  // search the database using the idlookup
+  try {
+    const deskQueryResult = await pool.query(`SELECT * FROM bgctables WHERE tableid='${deskIDLookup}'`);
+    const deskData = { 'deskDataRow' : deskQueryResult.rows };
+    res.render('pages/editDesk', deskData);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+// update a desk
+app.post('/desks/updateDesk', async (req, res) =>{
+  var newTableID = req.params.tableid;
+  var nupdate = req.body.newrname;
+  var wdupdate = req.body.newwd;
+  var htupdate = req.body.newht;
+  var clr = req.body.newclr;
+  var fclr= req.body.newfclr;
+  var crupdate = req.body.newcr;
+  var bclr = req.body.newbclr;
+  var opupdate = req.body.newop;
+  try {
+    const result = await pool.query(`UPDATE bgctables SET rname='${nupdate}', width=${wdupdate}, height=${htupdate}, color='${clr}', cradius=${crupdate}, fcolor='${fclr}', bcolor='${bclr}', opacity=${opupdate} WHERE rid=${updateid}`);
+    res.redirect('/desks/manageDesks');
+  }
+  catch (error) {
+    res.send(error);
+  }
+});
+
+// delete a rectangle
+app.post('/delete/:id', async (req, res) => {
+  var delid = req.params.id;
+  try {
+    const result = await pool.query(`DELETE FROM rectangles WHERE rid=${delid}`);
+    res.redirect('/rectangles');
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 // register for another employee
 app.get('/desks/bookDesks', (req,res)=>{
    res.redirect('pages/bookDesks');

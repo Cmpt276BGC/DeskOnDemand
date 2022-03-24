@@ -18,53 +18,49 @@
           <% }) %>
         <% } %>
       </ul>
-      <form method="POST">
-        <table class="tables">
+      
+      <table class="tables">
+        <tr>
+          <th>Workstation ID</th>
+          <th>Floor</th>
+          <th>Office</th>
+          <th>Window</th>
+          <th>Corner</th>
+          <th>Cubicle</th>
+          <th>Single</th>
+          <th>Double</th>
+          
+          <th>Delete</th>
+        </tr>
+        <% deskRows.forEach(function(r) { %>
           <tr>
-            <th>Workstation ID</th>
-            <th>Floor</th>
-            <th>Office</th>
-            <th>Window</th>
-            <th>Corner</th>
-            <th>Cubicle</th>
-            <th>Single</th>
-            <th>Double</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <td>
+              <form action="/editDesk/<%= r.tableid%>" method="POST">
+                <input class="thisDesk" type="submit" value="<%= r.tableid%>">
+              </form>
+            </td>
+            <td><%= r.floor %></td>
+            <td><%= r.office %></td>
+            <td><%= r.haswindow %></td>
+            <td><%= r.corner %></td>
+            <td><%= r.cubicle %></td>
+            <td><%= r.single %></td>
+            <td><%= r.double %></td>
+            
+            <td>
+              <form id="delDesk" action="/delete/<%=r.tableid%>" method="POST">
+                <input id="delete" type="submit" value="DELETE">
+              </form>
+            </td>
           </tr>
-          <% deskRows.forEach(function(r) { %>
-            <tr>
-              <td><%= r.tableid %></td>
-              <td><%= r.floor %></td>
-              <td><%= r.office %></td>
-              <td><%= r.haswindow %></td>
-              <td><%= r.corner %></td>
-              <td><%= r.cubicle %></td>
-              <td><%= r.single %></td>
-              <td><%= r.double %></td>
-              <td>
-                <form action="/desks/<%=r.rid%>" method="POST">
-                  <input class="thisDesk" type="submit" value="EDIT">
-                </form>
-              </td>
-              <td>
-                <form id="delDesk" action="/delete/<%=r.id%>" method="POST">
-                  <input id="delete" type="submit" value="DELETE">
-                </form>
-              </td>
-            </tr>
-          <% }); %>
-        </table>
-        <div>
-            <input type="submit" class="button" value="Add User" onclick="javascript: form.action='/users/addUser'"/>
-            <input type="submit" class="button" value="Add Admin" onclick="javascript: form.action='/addAdmin'"/>
-            <input type="submit" class="button" value="Delete User" onclick="javascript: form.action='/deleteUser'"/>
-            <input type="submit" class="button" value="Edit User Information" onclick="javascript: form.action='/users/updateUser'"/>
-            <input type="submit" class="button" onclick="location.href='/db';" value="Display All Users" />
-            <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
-        </div>
-        <br>
-      </form>
+        <% }); %>
+      </table>
+
+      <div>
+        
+          <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
+      </div>
+      <br>
     </div>
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 

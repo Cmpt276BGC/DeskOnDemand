@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Edit Desk</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+  </head> 
+  <body>
+    <div class="background">
+      <br>
+      <h1 class="header">Edit Desk</h1>
+      <ul class="errors">
+        <% if(typeof errors != 'undefined') { %>
+          <% errors.forEach(error => { %>
+            <li><%= error.message %></li>
+          <% }) %>
+        <% } %>
+      </ul>
+      
+        <table class="tables">
+          <tr>
+            <th>Workstation ID</th>
+            <th>Floor</th>
+            <th>Office</th>
+            <th>Window</th>
+            <th>Corner</th>
+            <th>Cubicle</th>
+            <th>Single</th>
+            <th>Double</th>
+            
+          </tr>
+          <% deskDataRow.forEach(function(r) { %>
+            <tr>
+              <td>
+                <input type="text" name="InputNewID" value="<%= r.tableid%>">
+              </td>
+              <td>
+                <input type="dropdown" name="InputNewFloor" value="<%= r.floor%>">
+              </td>
+              <td>
+                <select name="InputNewOffice" value="<%= r.office%>">
+                  <option value="t">Yes</option>
+                  <option value="f">No</option>
+                </select>
+              </td>
+              <td>
+                <%= r.haswindow%>
+              </td>
+              <td>
+                <%= r.corner%>
+              </td>
+              <td>
+                <%= r.cubicle%>
+              </td>
+              <td>
+                <%= r.single%>
+              </td>
+              <td>
+                <%= r.double%>
+              </td>
+            </tr>
+          <% }); %>
+        </table>
+        <div>
+          <input type="submit" class="button" onclick="location.href='/users/admindash';" value="Return to Admin Dash" />
+        </div>
+        <br>
+      
+    </div>
+    <br><br>Desks on Demand
+    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+  </body>
+</html>
