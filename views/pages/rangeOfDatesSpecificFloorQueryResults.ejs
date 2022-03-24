@@ -14,7 +14,7 @@
               <li><%=messages.error %></li>
             <% } %>
         </ul>
-        <input id="authorized" type="hidden" value="isAdmin">
+        <input id="authorized" type="hidden" value="<%=isAdmin %>">
         <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
                 <% rangeOfDatesSpecificFloorQueryResults.forEach(function(r) { %>
                     <form name="radioform" method="POST" action="/booking">
