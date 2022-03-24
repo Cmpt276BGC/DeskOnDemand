@@ -16,12 +16,12 @@
                             <li>
                                 <label for="<%= r.tableid %>"><%= r.tableid %></label>
                                 <input type="radio" value='<%= r.tableid %>' name="title">
-                                <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
-                                <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
                             </li>
                         </ul>
                         <% }); %>
                         <br>
+                        <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
+                        <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
                         <input type="submit" value="Book">
                     </form>
 

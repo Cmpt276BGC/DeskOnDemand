@@ -130,6 +130,7 @@ describe('Login', function() {
 //                 should.not.exist(err)
 //                 res.should.have.status(200)
 //                 res.should.be.json
+//                 res.body.
 //                 done()
 //             })
 //     })
