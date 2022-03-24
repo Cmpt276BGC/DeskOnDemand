@@ -66,3 +66,18 @@ ul {
   list-style-type:none;
   padding: 0;
 }
+
+.tables {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #ddd;
+  font-size: 18px;
+}
+
+.tables tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.tables tr.header, .tables tr:hover {
+  background-color: #f1f1f1;
+}

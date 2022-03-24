@@ -11,7 +11,6 @@
     <div class="background">
       <br>
       <h1 class="header">Manage Desks</h1>
-      Please click on the desk ID to edit info <br>
       <ul class="errors">
         <% if(typeof errors != 'undefined') { %>
           <% errors.forEach(error => { %>
@@ -20,26 +19,42 @@
         <% } %>
       </ul>
       <form method="POST">
-        <div>
-          <input type="text" class="inputbox" id="fname" name="fname" placeholder="First Name" /> 
-        </div>
-        <br>
-        <div>
-          <input type="text" class="inputbox" id="lname" name="lname" placeholder="Last Name" /> 
-        </div>
-        <br>
-        <div>
-            <input type="email" class="inputbox" id="email" name="email" placeholder="Email" required /> 
-        </div>
-        <br>
-        <div>
-            <input type="password" class="inputbox" id="password" name="password" placeholder="Password" /> 
-        </div>
-        <br>
-        <div>
-            <input type="password" class="inputbox" id="confirmpw" name="confirmpw" placeholder="Confirm Password" /> 
-        </div>
-        <br>
+        <table class="tables">
+          <tr>
+            <th>Workstation ID</th>
+            <th>Floor</th>
+            <th>Office</th>
+            <th>Window</th>
+            <th>Corner</th>
+            <th>Cubicle</th>
+            <th>Single</th>
+            <th>Double</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          <% deskRows.forEach(function(r) { %>
+            <tr>
+              <td><%= r.tableid %></td>
+              <td><%= r.floor %></td>
+              <td><%= r.office %></td>
+              <td><%= r.haswindow %></td>
+              <td><%= r.corner %></td>
+              <td><%= r.cubicle %></td>
+              <td><%= r.single %></td>
+              <td><%= r.double %></td>
+              <td>
+                <form action="/desks/<%=r.rid%>" method="POST">
+                  <input class="thisDesk" type="submit" value="EDIT">
+                </form>
+              </td>
+              <td>
+                <form id="delDesk" action="/delete/<%=r.id%>" method="POST">
+                  <input id="delete" type="submit" value="DELETE">
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </table>
         <div>
             <input type="submit" class="button" value="Add User" onclick="javascript: form.action='/users/addUser'"/>
             <input type="submit" class="button" value="Add Admin" onclick="javascript: form.action='/addAdmin'"/>

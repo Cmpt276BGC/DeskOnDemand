@@ -422,13 +422,19 @@ app.get('/db', async (req, res) => {
 // ADMIN DESK FUNCTIONS
 
 // manage desks
-app.get('/desks/manageDesks', (req,res)=>{
-  res.render('pages/manageDesks');
+app.get('/desks/manageDesks', async (req,res)=>{
+  try {
+    const desksQueryResult = await pool.query(`SELECT * FROM bgctables`);
+    const allDesks = { 'deskRows': desksQueryResult.rows };
+    res.render('pages/manageDesks', allDesks);
+  } catch(error) {
+    res.send(error);
+  }
 });
 
 // register for another employee
-app.get('/registerNew', (req,res)=>{
-   res.redirect('users/register');
+app.get('/desks/bookDesks', (req,res)=>{
+   res.redirect('pages/bookDesks');
  
 });
 
