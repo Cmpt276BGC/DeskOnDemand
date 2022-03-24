@@ -477,8 +477,6 @@ app.post('/delete/:tableid', async (req, res) => {
 });
 
 
-
-
 //SEARCH FUNCTIONALITY
 
 app.post('/searchTablesSpecificDate', async (req, res) =>{
