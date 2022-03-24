@@ -10,8 +10,8 @@ var pool = new Pool({
 });
 
 chai.use(chaiHttp)
-chai.use(require('chai-json'))
-chai.use(require('chai-things'))
+// chai.use(require('chai-json'))
+// chai.use(require('chai-things'))
 
 before(function() {
     pool.query(`delete from bgcusers where fname='test'`)
@@ -105,6 +105,45 @@ describe('Login', function() {
                 res.should.have.status(302)
                 res.should.redirectTo('/users/adminlogin')
                 res.should.be.text
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+})
+
+describe('Database', function() {
+    it('should output all users registered in the database on /db', function(done) {
+        chai.request(server).get('/db')
+            .end(function(err, res) {
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+})
+
+describe('Search for workstations', function() {
+    it('should present the user to the dashboard page where they choose a workstation', function(done) {
+        chai.request(server).get('/users/dashboard')
+        .end(function(err, res) {
+            should.not.exist(err)
+            res.should.have.status(200)
+            res.should.be.html
+            res.body.should.be.a('object')
+            done()
+        })
+    })
+
+    it('should display all available workstations given user preferences', function(done) {
+        chai.request(server).post('/users/dashboard')
+            .send({
+                floor: 'any',
+            })
+            .end(function(err, res) {
+                should.not.exist(err)
+                res.should.be.html
                 res.body.should.be.a('object')
                 done()
             })
