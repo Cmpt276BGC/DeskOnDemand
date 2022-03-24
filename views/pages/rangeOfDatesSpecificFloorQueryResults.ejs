@@ -9,6 +9,12 @@
     </head>
     <body>
         <h3>User Page</h3>
+        <ul>
+            <% if (messages.error) { %>
+              <li><%=messages.error %></li>
+            <% } %>
+        </ul>
+        <input id="authorized" type="hidden" value="isAdmin">
         <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
                 <% rangeOfDatesSpecificFloorQueryResults.forEach(function(r) { %>
                     <form method="POST" action="/booking">
@@ -25,6 +31,13 @@
                         <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
                         <input type="submit" value="Book">
                     </form>
+                    <form method="POST" action="/adminbooking">
+                        <input type="hidden" value='<%= dates.nextFromDate %>' name="startDate" id="startDate">
+                        <input type="hidden" value='<%= dates.nextToDate %>' name="endDate" id="endDate">
+                        <label for="useremailLookup">(ADMIN ONLY) Enter user email:</label>
+                        <input id="useremailLookup" name="useremail" type="email">
+                        <input id="adminButton" type="submit" value="Book for User">
+                    </form>
 
         <form method="GET" action="/users/dashboard">
             <input type="submit" value="Search again">
@@ -33,5 +46,7 @@
         <form method="POST" action="/logout">
             <input type="submit" value="Log Out">
         </form>
+        <script type="text/javascript" src="/public/adminbutton.js">
+        </script>
     </body>
 </html>

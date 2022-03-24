@@ -428,6 +428,11 @@ app.get('/desks/manageDesks', async (req,res)=>{
   }
 });
 
+// bookings under admin
+app.get('/desks/bookDesks', async(req,res)=>{
+  res.redirect('/users/dashboard');
+});
+
 // edit desk by id
 app.post('/editDesk/:tableid', async (req, res) =>{
   
@@ -451,7 +456,7 @@ app.post('/updateDesk/:tableid', async (req, res) =>{
   
   try {
     const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', office='${inputNewOffice}', haswindow='${inputNewWindow}', corner='${inputNewCorner}', cubicle='${inputNewCubicle}', Single='${inputNewSingle}', double='${inputNewDouble}' WHERE tableid='${tableID}'`);
-    req.flash('success_msg', "Desk information successfully updated!");
+    req.flash('success_msg', "Workstation information successfully updated!");
     res.redirect('/desks/manageDesks');
   }
   catch (error) {
@@ -459,27 +464,26 @@ app.post('/updateDesk/:tableid', async (req, res) =>{
   }
 });
 
-// delete a rectangle
+// delete a workstation
 app.post('/delete/:tableid', async (req, res) => {
   const tableIDtoDelete = req.params.tableid;
   try {
     const result = await pool.query(`DELETE FROM bgctables WHERE tableid='${tableIDtoDelete}'`);
+    req.flash('success_msg', "Workstation successfully deleted!");
     res.redirect('/desks/manageDesks');
   } catch (error) {
     res.send(error);
   }
 });
 
-// register for another employee
-app.get('/desks/bookDesks', (req,res)=>{
-   res.redirect('pages/bookDesks');
- 
-});
+
 
 
 //SEARCH FUNCTIONALITY
 
 app.post('/searchTablesSpecificDate', async (req, res) =>{
+  // admin check
+  const isAdmin = req.user.admin;
   try{
     const searchTablesClient = await pool.connect();
     
@@ -532,7 +536,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     //searches for any floor with no attributes selected
     if(floor === 'any' && office=='false' && window=='false' && corner=='false' && cubicle=='false' && single=='false' && double=='false'){
       const noAttributeSpecificDateQuery = await searchTablesClient.query(`select tableid from bgctables a where not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`);
-      const noAttributeSpecificDateQueryResults = {'noAttributeSpecificDateQueryResults' : noAttributeSpecificDateQuery.rows, dates};
+      const noAttributeSpecificDateQueryResults = {'noAttributeSpecificDateQueryResults' : noAttributeSpecificDateQuery.rows, dates, isAdmin};
       console.log(typeof noAttributeSpecificDateQueryResults)
       if(noAttributeSpecificDateQuery.rows.length>0){
         res.render('pages/noAttributeSpecificDateQueryResults', noAttributeSpecificDateQueryResults)
@@ -544,7 +548,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     //searches db for specific floor, extra attributes unchecked
     else if(office=='false' && window=='false' && corner=='false' && cubicle=='false' && single=='false' && double=='false'){
       const noAttributeSpecificDateSpecificFloorQuery = await searchTablesClient.query(`select tableid from bgctables a where floor='${floor}' and not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`)
-      const noAttributeSpecificDateSpecificFloorQueryResults = {'noAttributeSpecificDateSpecificFloorQueryResults' : noAttributeSpecificDateSpecificFloorQuery.rows, dates};
+      const noAttributeSpecificDateSpecificFloorQueryResults = {'noAttributeSpecificDateSpecificFloorQueryResults' : noAttributeSpecificDateSpecificFloorQuery.rows, dates, isAdmin};
       if(noAttributeSpecificDateSpecificFloorQuery.rows.length>0){
         res.render('pages/noAttributeSpecificDateSpecificFloorQueryResults', noAttributeSpecificDateSpecificFloorQueryResults);
       } else {
@@ -556,7 +560,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
         //complete
         if(floor === 'any'){
           const anyFloorSpecificDateQuery = await searchTablesClient.query(`select tableid from bgctables a where office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' and not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`);
-          const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' :  anyFloorSpecificDateQuery.rows, dates};
+          const anyFloorSpecificDateQueryResults = {'anyFloorSpecificDateQueryResults' :  anyFloorSpecificDateQuery.rows, dates, isAdmin};
           if(anyFloorSpecificDateQuery.rows.length>0){
             res.render('pages/anyFloorSpecificDateQueryResults', anyFloorSpecificDateQueryResults);
           }
@@ -568,7 +572,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
         //complete
         } else {
           const specificFloorSpecificDateQuery = await searchTablesClient.query(`select tableid from bgctables a where office='${office}' and floor='${floor}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' and not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`);
-          const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' :  specificFloorSpecificDateQuery.rows, dates};
+          const specificFloorSpecificDateQueryResults = {'specificFloorSpecificDateQueryResults' :  specificFloorSpecificDateQuery.rows, dates, isAdmin};
           if(specificFloorSpecificDateQuery.rows.length>0){
             res.render('pages/specificFloorSpecificDateQueryResults', specificFloorSpecificDateQueryResults);
           } else {
@@ -584,6 +588,8 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
 
 //function to search for a table which is available for a specific range of dates
 app.post('/searchTablesDateRange',  async (req,res)=>{
+  // admin check
+  const isAdmin = req.user.admin;
   try{
     const searchTablesDateRangeClient = await pool.connect();
   
@@ -641,7 +647,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
    if(floor === 'any' && office=='false' && window=='false' && corner=='false' && cubicle=='false' && single=='false' && double=='false'){
     //const rangeOfDatesQuery = await searchTablesDateRangeClient.query(`select bgctables.tableid from bgcbookings full join bgctables on bgcbookings.tableid=bgctables.tableid where not (fromdate < '${toDateISOString}') and ('${fromDateISOString}' < todate) or fromdate IS NULL and todate IS NULL order by tableid`);
     const rangeOfDatesQuery = await searchTablesDateRangeClient.query(`select tableid from bgctables a where not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`)
-    const rangeOfDatesQueryResults = {'rangeOfDatesQueryResults' : rangeOfDatesQuery.rows, dates}
+    const rangeOfDatesQueryResults = {'rangeOfDatesQueryResults' : rangeOfDatesQuery.rows, dates, isAdmin}
     if(rangeOfDatesQuery.rows.length > 0){
       res.render('pages/rangeOfDatesNoAttributeQueryResults', rangeOfDatesQueryResults)
     } else {
@@ -650,7 +656,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
     //searches a range of dates for a particular floor when all attributes are unchecked
    } else if(office=='false' && window=='false' && corner=='false' && cubicle=='false' && single=='false' && double=='false'){
      const rangeOfDatesSpecificFloorQuery = await searchTablesDateRangeClient.query(`select tableid from bgctables a where floor='${floor}' and not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`);
-     const rangeOfDatesSpecificFloorQueryResults = {'rangeOfDatesSpecificFloorQueryResults' : rangeOfDatesSpecificFloorQuery.rows, dates};
+     const rangeOfDatesSpecificFloorQueryResults = {'rangeOfDatesSpecificFloorQueryResults' : rangeOfDatesSpecificFloorQuery.rows, dates, isAdmin};
      if(rangeOfDatesSpecificFloorQuery.rows.length>0){
        res.render('pages/rangeOfDatesSpecificFloorQueryResults', rangeOfDatesSpecificFloorQueryResults);
      } else{
@@ -660,7 +666,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
      //searches a range of dates for any floors with the particular attributes selected
     if(floor=='any'){
       const rangeOfDatesSpecificAttributeQuery = await searchTablesDateRangeClient.query(`select tableid from bgctables a where office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' and not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`)
-      const rangeOfDatesSpecificAttributeQueryResults = {'rangeOfDatesSpecificAttributeQueryResults' : rangeOfDatesSpecificAttributeQuery.rows, dates};
+      const rangeOfDatesSpecificAttributeQueryResults = {'rangeOfDatesSpecificAttributeQueryResults' : rangeOfDatesSpecificAttributeQuery.rows, dates, isAdmin};
       if(rangeOfDatesSpecificAttributeQuery.rows.length>0){
         res.render('pages/rangeOfDatesSpecificAttributeQueryResults', rangeOfDatesSpecificAttributeQueryResults)
       } else {
@@ -669,7 +675,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
       //searches a range of dates for a particular floor with particular attributes selected
     } else {
       const rangeOfDatesSpecificFloorSpecificAttributeQuery = await searchTablesDateRangeClient.query(`select tableid from bgctables a where floor='${floor}' and office='${office}' AND haswindow='${window}' AND corner='${corner}' and cubicle='${cubicle}' and single='${single}' and double='${double}' and not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`)
-      const rangeofDatesSpecificFloorSpecificAttributeQueryResults = {'rangeOfDatesSpecificFloorSpecificAttributeQueryResults' : rangeOfDatesSpecificFloorSpecificAttributeQuery.rows, dates};
+      const rangeofDatesSpecificFloorSpecificAttributeQueryResults = {'rangeOfDatesSpecificFloorSpecificAttributeQueryResults' : rangeOfDatesSpecificFloorSpecificAttributeQuery.rows, dates, isAdmin};
       if(rangeOfDatesSpecificFloorSpecificAttributeQuery.rows.length>0){
         res.render('pages/rangeOfDatesSpecificFloorSpecificAttributeQueryResults', rangeofDatesSpecificFloorSpecificAttributeQueryResults);
       } else {
@@ -719,10 +725,51 @@ app.post('/booking', async (req,res)=>{
   //query
   const bookTableQuery = bookingClient.query(`insert into bgcbookings values('${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
 
+  req.flash('success_msg', "Workstation successfully booked!");
   res.redirect('/users/dashboard')
   bookingClient.release();
 })
 
+
+app.post('/adminbooking', async (req,res)=>{
+  
+  const bookingClient = await pool.connect();
+  let errors = [];  // form validation
+
+  //variables
+  var tableid = req.body.title;
+  var email = req.body.useremail;
+  var bookFromDate = req.body.startDate;
+  var bookToDate = req.body.endDate;
+  console.log(bookFromDate);
+  console.log(bookToDate);
+
+  // check that no field(s) left empty
+  if (!email) {
+    errors.push({ message: "Please fill in an email" });
+  }
+
+  // check if email exists
+  pool.query(
+    `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
+      if (err) {
+        throw err;
+      } 
+
+      console.log(results.rows);  // debugging
+
+      if (results.rows.length == 0) {
+        errors.push({ message: "Email not registered" });
+      } else {
+        bookingClient.query(`insert into bgcbookings values('${tableid}', '${email}', '${bookFromDate}', '${bookToDate}')`);
+        req.flash('success_msg', "Workstation successfully booked!");
+        res.redirect('/users/admindash')
+        bookingClient.release();
+      }
+    }
+  );
+  
+});
 
 app.get('/bookedworkstations', async (req, res) => {
   try{
