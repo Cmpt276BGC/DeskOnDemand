@@ -484,6 +484,7 @@ app.post('/delete/:tableid', async (req, res) => {
 app.post('/searchTablesSpecificDate', async (req, res) =>{
   // admin check
   const isAdmin = req.user.admin;
+  console.log(isAdmin);
   try{
     const searchTablesClient = await pool.connect();
     
@@ -716,6 +717,7 @@ app.post('/booking', async (req,res)=>{
 
   //variables
   var tableid = req.body.title;
+  console.log(tableid);
   var userEmail = req.user.uemail;
   var bookFromDate = req.body.fromDate;
   var bookToDate = req.body.toDate;
@@ -738,11 +740,10 @@ app.post('/adminbooking', async (req,res)=>{
 
   //variables
   var tableid = req.body.title;
+  console.log(tableid);
   var email = req.body.useremail;
   var bookFromDate = req.body.startDate;
   var bookToDate = req.body.endDate;
-  console.log(bookFromDate);
-  console.log(bookToDate);
 
   // check that no field(s) left empty
   if (!email) {

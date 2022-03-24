@@ -14,7 +14,8 @@
               <li><%=messages.error %></li>
             <% } %>
         </ul>
-        <input id="authorized" type="hidden" value="isAdmin">
+        <input id="authorized" type="hidden" value="<%=isAdmin %>">
+        <%= isAdmin%>
         <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
                 <% noAttributeSpecificDateQueryResults.forEach(function(r) { %>
                     <form method="POST" action="/booking">
@@ -47,7 +48,7 @@
             <input type="submit" value="Log Out">
         </form>
 
-        <script defer type="text/javascript" src="/public/adminbutton.js">
+        <script type="text/javascript" src="/public/adminbutton.js">
         </script>
     </body>
 </html>
