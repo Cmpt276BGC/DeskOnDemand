@@ -700,10 +700,12 @@ app.get('/bookedworkstations', async (req, res) => {
 // Not woking in process -Bhavneet
 app.post('/cancelBooking', async (req,res)=>{
   var tableidcancellation = req.body.cancel;
+  var fromDatebook = req.body.fromDate;
+  var toDatebook = req.body.toDate;
   console.log(tableidcancellation);
   try{
     const cancelBooking= await pool.connect();
-    const cancel = await cancelBooking.query(`DELETE from bgcbookings where tableid='${tableidcancellation}' AND uemail='${req.user.email}'`);
+    const cancel = await cancelBooking.query(`DELETE from bgcbookings where tableid='${tableidcancellation}' AND uemail='${req.user.email}' AND fromdate='${fromDatebook} AND todate='${toDatebook}'`);
     res.redirect('/users/dashboard');
   }catch(err){
     res.send(err);

@@ -18,7 +18,8 @@
             <input type="radio" value='<%= r.tableid %>' name="cancel">
         </li>
     </ul>
-   
+    <input  type="hidden" value='<%= r.fromdate %>' name="fromDate" id="fromDate">
+    <input  type="hidden" value='<%= r.todate %>' name="toDate" id="fromDate">
         <input type="submit" value="Cancel">
 </form>
     <% }); %>
