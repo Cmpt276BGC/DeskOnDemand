@@ -723,9 +723,15 @@ app.post('/booking', async (req,res)=>{
   var bookToDate = req.body.toDate;
   console.log(bookFromDate);
   console.log(bookToDate);
+  const generateUniqueId = require('generate-unique-id');
+  let id = generateUniqueId({
+    excludeSymbols: ['0','#','@','|'],
+    length: 10
+  });
+  console.log(id);
   
   //query
-  const bookTableQuery = bookingClient.query(`insert into bgcbookings values('${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
+  const bookTableQuery = bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
 
   req.flash('success_msg', "Workstation successfully booked!");
   res.redirect('/users/dashboard')
@@ -756,13 +762,19 @@ app.post('/adminbooking', async (req,res)=>{
       if (err) {
         throw err;
       } 
+      const generateUniqueId = require('generate-unique-id');
+      let id = generateUniqueId({
+        excludeSymbols: ['0','#','@','|'],
+        length: 10
+      });
+    console.log(id);
 
       console.log(results.rows);  // debugging
 
       if (results.rows.length == 0) {
         errors.push({ message: "Email not registered" });
       } else {
-        bookingClient.query(`insert into bgcbookings values('${tableid}', '${email}', '${bookFromDate}', '${bookToDate}')`);
+        bookingClient.query(`insert into bgcbookings values( '${id}','${tableid}', '${email}', '${bookFromDate}', '${bookToDate}')`);
         req.flash('success_msg', "Workstation successfully booked!");
         res.redirect('/users/admindash')
         bookingClient.release();
@@ -791,20 +803,44 @@ app.get('/bookedworkstations', async (req, res) => {
 })
 // Not woking in process -Bhavneet
 app.post('/cancelBooking', async (req,res)=>{
-  var tableidcancellation = req.body.cancel;
-  var fromDatebook = req.body.fromDate;
-  var toDatebook = req.body.toDate;
+  var tableidcancellation = req.body.cancelbyID;
   console.log(tableidcancellation);
   try{
     const cancelBooking= await pool.connect();
-    const cancel = await cancelBooking.query(`DELETE from bgcbookings where tableid='${tableidcancellation}' AND uemail='${req.user.email}' AND fromdate='${fromDatebook} AND todate='${toDatebook}'`);
-    res.redirect('/users/dashboard');
+    const cancel = await cancelBooking.query(`DELETE from bgcbookings where uniqueid='${tableidcancellation}'`);
+  }catch(err){
+    res.send(err);
+  }
+
+  try{
+    const bookedworkstations = await pool.connect();
+    const booked = await bookedworkstations.query(`SELECT * from bgcbookings where uemail='${req.user.uemail}'`);
+    const bookedResults = {'bookedResults':(booked) ?  booked.rows: null};
+    //res.redirect('/users/dashboard');
+     if(booked.rows.length>0){
+      res.render('pages/bookedWorkstations',bookedResults);
+      }
+      else{
+        res.render('pages/nobookedWorkstation')
+      } 
+
   }catch(err){
     res.send(err);
   }
    
 
 })
+app.get('/views/pages/bookinginfo/:id',(req,res)=>{
+    
+  let booking_id = req.params.id;
+  var sql =`SELECT * from bgcbookings where uniqueid='${booking_id}'`;
+  pool.query(sql,(error,result)=>{
+          if(error)
+              res.send(error);
+      var results = {'rows':result.rows}
+      res.render('pages/bookinginfo',results);
+  })
+});
   
 
 // environment listen
