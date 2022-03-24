@@ -6,8 +6,8 @@ if (!isProduction) {
 }
 
 // emmii's database
-//const connectionString =`postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
-const connectionString = 'postgres://postgres:Jojek2020.@localhost/dod' //matts local db
+const connectionString =`postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
+// const connectionString = 'postgres://postgres:Jojek2020.@localhost/dod' //matts local db
 // const connectionString = 'postgres://postgres:Reset123@localhost/bgcuser
 // connectionString = 'postgres://postgres:root@localhost/bgcusers'
 

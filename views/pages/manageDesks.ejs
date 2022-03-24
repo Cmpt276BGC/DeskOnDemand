@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Manage Desks</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+  </head> 
+  <body>
+    <div class="background">
+      <br>
+      <h1 class="header">Manage Desks</h1>
+      Please click on the desk ID to edit info <br>
+      <ul class="errors">
+        <% if(typeof errors != 'undefined') { %>
+          <% errors.forEach(error => { %>
+            <li><%= error.message %></li>
+          <% }) %>
+        <% } %>
+      </ul>
+      <form method="POST">
+        <div>
+          <input type="text" class="inputbox" id="fname" name="fname" placeholder="First Name" /> 
+        </div>
+        <br>
+        <div>
+          <input type="text" class="inputbox" id="lname" name="lname" placeholder="Last Name" /> 
+        </div>
+        <br>
+        <div>
+            <input type="email" class="inputbox" id="email" name="email" placeholder="Email" required /> 
+        </div>
+        <br>
+        <div>
+            <input type="password" class="inputbox" id="password" name="password" placeholder="Password" /> 
+        </div>
+        <br>
+        <div>
+            <input type="password" class="inputbox" id="confirmpw" name="confirmpw" placeholder="Confirm Password" /> 
+        </div>
+        <br>
+        <div>
+            <input type="submit" class="button" value="Add User" onclick="javascript: form.action='/users/addUser'"/>
+            <input type="submit" class="button" value="Add Admin" onclick="javascript: form.action='/addAdmin'"/>
+            <input type="submit" class="button" value="Delete User" onclick="javascript: form.action='/deleteUser'"/>
+            <input type="submit" class="button" value="Edit User Information" onclick="javascript: form.action='/users/updateUser'"/>
+            <input type="submit" class="button" onclick="location.href='/db';" value="Display All Users" />
+            <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
+        </div>
+        <br>
+      </form>
+    </div>
+    <br><br>Desks on Demand
+    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+  </body>
+</html>

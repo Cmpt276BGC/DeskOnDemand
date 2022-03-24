@@ -419,11 +419,11 @@ app.get('/db', async (req, res) => {
 
 
 
-// ADMIN FUNCTIONS
+// ADMIN DESK FUNCTIONS
 
-// view as regular user
-app.get('/regularUser', (req,res)=>{
-  res.redirect('users/dashboard');
+// manage desks
+app.get('/desks/manageDesks', (req,res)=>{
+  res.render('pages/manageDesks');
 });
 
 // register for another employee
