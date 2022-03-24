@@ -15,7 +15,6 @@
             <% } %>
         </ul>
         <input id="authorized" type="hidden" value="<%=isAdmin %>">
-        <%= isAdmin%>
         <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
                 <% noAttributeSpecificDateQueryResults.forEach(function(r) { %>
                     <form name="radioform" method="POST" action="/booking">
