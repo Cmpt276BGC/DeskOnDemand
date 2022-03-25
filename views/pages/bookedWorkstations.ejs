@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workstations</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
 </head>
 <body>
-
-    <h1>Your Booked Workstations</h1>
+    <div class="background">
+    <h1 class="header">Your Booked Workstations</h1>
     <h2>Cancel your booking</h2>
     <% bookedResults.forEach(function(r) { %>
     <ul>
@@ -21,5 +22,6 @@
     <form method="GET" action="/users/dashboard">
         <input type="submit" value="Go to Booking">
     </form>
+    </div>
 </body>
 </html>

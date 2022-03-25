@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="/stylesheets/mainCSS.css">
     </head>
     <body>
-        <h3>Swag Page</h3>
+        <div class="background"> 
+        <h3 class="header">User Page</h3>
         <ul>
             <% if (messages.error) { %>
               <li><%=messages.error %></li>
@@ -48,5 +49,6 @@
         </form>
         <script type="text/javascript" src="/public/adminbutton.js">
         </script>
+        </div>
     </body>
 </html>
