@@ -9,6 +9,7 @@ const flash = require('express-flash');   // for flash messages
 const passport = require('passport');  // passportJS package
 const initializePassport = require("./passportConfig");  // passport configurations
 const cors = require("cors") // cross-origin resource sharing
+var AgGrid = require('ag-grid-enterprise');
 
 const res = require('express/lib/response');
 const { error } = require('console');
@@ -77,6 +78,17 @@ app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
   req.flash('success_msg', "Successfully logged out");
   res.redirect('/users/login');
 })
+
+// bgcusers to json test code
+app.get('/desksjson', async (req,res)=>{
+  try {
+    const desksQueryResult = await pool.query(`SELECT * FROM bgctables`);
+    const allDesks = { 'deskRows': desksQueryResult.rows };
+    res.json(desksQueryResult.rows);
+  } catch(error) {
+    res.send(error);
+  }
+});
 
 app.post('/users/register', async (req, res) => {
   let {fname, lname, email, password, confirmpw} = req.body;
