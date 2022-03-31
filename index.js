@@ -82,13 +82,14 @@ app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
 // bgcusers to json test code
 app.get('/desksjson', async (req,res)=>{
   try {
-    const desksQueryResult = await pool.query(`SELECT * FROM bgctables`);
+    const desksQueryResult = await pool.query(`SELECT * FROM workstations`);
     const allDesks = { 'deskRows': desksQueryResult.rows };
     res.json(desksQueryResult.rows);
   } catch(error) {
     res.send(error);
   }
 });
+
 
 app.post('/users/register', async (req, res) => {
   let {fname, lname, email, password, confirmpw} = req.body;

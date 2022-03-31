@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://unpkg.com/ag-grid-enterprise@27.1.0/dist/ag-grid-enterprise.min.js"></script>
+  <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
   <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     <style>
@@ -14,6 +14,7 @@
 
 <body>
     <div id="myGrid" class="ag-theme-alpine" style="height: 100%"></div>
+    <button onclick="getSelectedRow()">Get Selected Row</button>
     
     <script type="text/javascript" src="/public/desksjson.js"></script>
 </body>

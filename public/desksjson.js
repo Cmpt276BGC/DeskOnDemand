@@ -1,11 +1,9 @@
 // specify the columns
 const columnDefs = [
-    { field: "tableid", sortable: true, filter: true, checkboxSelection: true },
+    { headerName: 'Table ID', field: "tableid", sortable: true, filter: true, checkboxSelection: true },
     { field: "floor", sortable: true, filter: true },
-    { field: "office", sortable: true, filter: true },
-    { field: "haswindow", sortable: true, filter: true},
-    { field: "single", sortable: true, filter: true},
-    { field: "double", sortable: true, filter: true},
+    { field: "type", sortable: true, filter: true },
+    { headerName: 'Has Window', field: "haswindow", sortable: true, filter: true},
   ];
 
   // let the grid know which columns to use
@@ -28,4 +26,9 @@ fetch('./desksjson/')
         gridOptions.api.setRowData(data);
     });
 
-    
+const getSelectedRow = () => {
+  const selectedNodes = gridOptions.api.getSelectedNodes()
+  const selectedData = selectedNodes.map( node => node.data )
+  const selectedDataStringPresentation = selectedData.map( node => `${node.tableid}`)
+  alert(`Selected Table: ${selectedDataStringPresentation}`);
+}
