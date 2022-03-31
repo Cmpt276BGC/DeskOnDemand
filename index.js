@@ -65,6 +65,11 @@ app.get('/desks', (req, res) => {
   res.render('pages/desks');
 });
 
+// temp second floor SVG
+app.get('/f2', (req, res) => {
+  res.render('pages/floor2');
+});
+
 
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
   res.render('pages/dashboard', { user: req.user.fname });
