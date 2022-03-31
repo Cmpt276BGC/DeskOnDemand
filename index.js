@@ -60,6 +60,11 @@ app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
 });
 
 
+// temp desks page
+app.get('/desks', (req, res) => {
+  res.render('pages/desks');
+});
+
 
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
   res.render('pages/dashboard', { user: req.user.fname });
