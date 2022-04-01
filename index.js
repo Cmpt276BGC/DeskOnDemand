@@ -573,8 +573,6 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var windowChecked = windowCheck(window);
     var cornerChecked = cornerCheck(corner);
  
-
-    /*
     var query = await searchTablesDateRangeClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
     var queryResults = {'queryResults' : query.rows, dates}
     
@@ -584,7 +582,6 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
       res.redirect('/noResultsForSearch')
     }
     
-    */
 
     console.log(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`)
     res.send("Swag")
