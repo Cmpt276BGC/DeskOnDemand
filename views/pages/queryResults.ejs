@@ -5,18 +5,13 @@
         <title>Desks On Demand</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+        <link rel="stylesheet" href="/stylesheets/mainSS.css">
     </head>
     <body>
-        <h3>User Page</h3>
-        <ul>
-            <% if (messages.error) { %>
-              <li><%=messages.error %></li>
-            <% } %>
-        </ul>
-        <input id="authorized" type="hidden" value="<%= isAdmin %>">
-            <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
-                <% rangeOfDatesSpecificAttributeQueryResults.forEach(function(r) { %>
+        <div class="background">
+        <h3 class="header">User Page</h3>
+        <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
+                <% queryResults.forEach(function(r) { %>
                     <form name="radioform" method="POST" action="/booking">
                         <ul>
                             <li>
@@ -27,17 +22,9 @@
                     
                         <% }); %>
                         <br>
-                        <input type="submit" value="Book">
                         <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
                         <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
-                    </form>
-                    <form method="POST" action="/adminbooking">
-                        <input type="hidden" name="IDtoSend" id="IDtoSend">
-                        <input type="hidden" value='<%= dates.nextFromDate %>' name="startDate" id="startDate">
-                        <input type="hidden" value='<%= dates.nextToDate %>' name="endDate" id="endDate">
-                        <label for="useremailLookup">(ADMIN ONLY) Enter user email:</label>
-                        <input id="useremailLookup" name="useremail" type="email">
-                        <input id="adminButton" type="submit" value="Book for User">
+                        <input type="submit" value="Book">
                     </form>
 
         <form method="GET" action="/users/dashboard">
@@ -49,5 +36,6 @@
         </form>
         <script type="text/javascript" src="/public/adminbutton.js">
         </script>
+        </div>
     </body>
 </html>
