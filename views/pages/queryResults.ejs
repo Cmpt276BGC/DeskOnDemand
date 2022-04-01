@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Desks On Demand</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/stylesheets/mainSS.css">
+    </head>
+    <body>
+        <div class="background">
+        <h3 class="header">User Page</h3>
+        <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
+                <% queryResults.forEach(function(r) { %>
+                    <form name="radioform" method="POST" action="/booking">
+                        <ul>
+                            <li>
+                                <label for="<%= r.tableid %>"><%= r.tableid %></label>
+                                <input type="radio" value='<%= r.tableid %>' name="title" required>
+                            </li>
+                        </ul>
+                    
+                        <% }); %>
+                        <br>
+                        <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
+                        <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
+                        <input type="submit" value="Book">
+                    </form>
+
+        <form method="GET" action="/users/dashboard">
+            <input type="submit" value="Search again">
+        </form>
+        
+        <form method="GET" action="/users/logout">
+            <input type="submit" value="Log Out">
+        </form>
+        <script type="text/javascript" src="/public/adminbutton.js">
+        </script>
+        </div>
+    </body>
+</html>

@@ -30,26 +30,25 @@
       <label for="Date">Date: </label>
       <input type="date" id="specificDate" name="specificDate" required>
       
+      <label for="workstationType">Type: </label>
+      <select name="workstationType" id="workstationType">
+
+        <option value="any">Any</option>
+        <option value="office">Office</option>
+        <option value="single cubicle">Single Cubicle</option>
+        <option value="double cubicle">Double Cubicle</option>
+        <option value="Boardroom">Boardroom</option>
+        
+      </select>
+
       <fieldset style="width: 150px;">
           <legend><u>Additional: </u></legend>
-
-          <label for="Office">Office: </label>
-          <input type="checkbox" id="office" name="office" value="true">
 
           <label for="Window">Window: </label>
           <input type="checkbox" id="window" name="window" value="true">
 
           <label for="Corner">Corner: </label>
           <input type="checkbox" id="corner" name="corner" value="true"><br>
-
-          <label for="Cubicle">Cubicle: </label>
-          <input type="checkbox" id="cubicle" name="cubicle" value="true"><br>
-
-          <label for="single">Single: </label>
-          <input type="checkbox" id="single" name="single" value="true"><br>
-
-          <label for="double">Double: </label>
-          <input type="checkbox" id="double" name="double" value="true"><br>
 
       </fieldset>
 
