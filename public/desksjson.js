@@ -8,7 +8,9 @@ const columnDefs = [
 
   // let the grid know which columns to use
   const gridOptions = {
-    columnDefs: columnDefs
+    columnDefs: columnDefs,
+    onCellMouseOver: cellMouseOver,
+    onCellMouseOut: cellMouseOut
   };
 
 // lookup the container we want the Grid to use
@@ -31,4 +33,29 @@ const getSelectedRow = () => {
   const selectedData = selectedNodes.map( node => node.data )
   const selectedDataStringPresentation = selectedData.map( node => `${node.tableid}`)
   alert(`Selected Table: ${selectedDataStringPresentation}`);
+}
+
+function cellMouseOver(event){
+  console.log(event.data.tableid);
+  workstationhighlight(event.data.tableid);
+}
+
+function workstationhighlight(workstationID){
+  var deskID = workstationID.replace(/\s/g,'');
+  console.log(`"${deskID}"`);
+  deskID = document.getElementById(deskID);
+  console.log(deskID);
+  deskID.style.fill= 'cyan';
+}
+
+function cellMouseOut(event){
+  console.log(event.data.tableid);
+  unhighlight(event.data.tableid);
+}
+
+function unhighlight(workstationID){
+  var deskID = workstationID.replace(/\s/g,'');
+  deskID = document.getElementById(deskID);
+  console.log(deskID);
+  deskID.style.fill= 'lightgrey';
 }
