@@ -8,19 +8,20 @@
     <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
 </head>
 <body>
+    <form method="post" action="/cancelBooking">
     <div class="background">
     <h1 class="header">Your Booked Workstations</h1>
     <h2>Cancel your booking</h2>
     <% bookedResults.forEach(function(r) { %>
     <ul>
         <li>
-            <a href='/views/pages/bookinginfo/<%= r.uniqueid %>'><%= r.tableid %> Dates: <%= r.fromdate %> to: <%= r.todate %> </a>
+            <label for="<%= r.uniqueid %>"><%= r.tableid %> Dates: <%= r.fromdate %> to: <%= r.todate %></label>
+            <input type="radio" value='<%= r.uniqueid %>' name="title" required>
         </li>
     </ul>
 
     <% }); %>
-    <form method="GET" action="/users/dashboard">
-        <input type="submit" value="Go to Booking">
+     <input type="submit" value="Cancel Your booking">
     </form>
     </div>
 </body>
