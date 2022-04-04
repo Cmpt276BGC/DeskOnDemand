@@ -93,3 +93,27 @@ button {
   font-size: 0.9em;
   cursor: pointer;
 }
+
+.cubicle{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
+.office{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
+.desk{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
+.boardroom{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}

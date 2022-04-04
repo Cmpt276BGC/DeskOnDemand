@@ -59,7 +59,6 @@ function editSelected() {
 }
 
 function cellMouseOver(event){
-  console.log(event.data.tableid);
   workstationhighlight(event.data.tableid);
 }
 
@@ -68,15 +67,14 @@ function workstationhighlight(workstationID){
   console.log(`"${deskID}"`);
   deskID = document.getElementById(deskID);
   console.log(deskID);
-  if (deskID='NULL'){
-    return;
-  } else {
+  // if (deskID='NULL'){
+  //   return;
+  // } else {
     deskID.style.fill= 'cyan';
-  }
+  // }
 }
 
 function cellMouseOut(event){
-  console.log(event.data.tableid);
   unhighlight(event.data.tableid);
 }
 
@@ -84,9 +82,9 @@ function unhighlight(workstationID){
   var deskID = workstationID.replace(/\s/g,'');
   deskID = document.getElementById(deskID);
   console.log(deskID);
-  if (deskID='NULL'){
-    return;
-  } else {
+  // if (deskID='NULL'){
+  //   return;
+  // } else {
     deskID.style.fill= 'lightgrey';
-  }
+  // }
 }

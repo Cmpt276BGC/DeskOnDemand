@@ -478,7 +478,7 @@ app.post('/updateDesk/:tableid', async (req, res) =>{
   let errors = [];  // form validation
   
   try {
-    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', type='${inputNewType}', haswindow='${inputNewWindow}', corner='${inputNewCorner}'`);
+    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', type='${inputNewType}', haswindow='${inputNewWindow}', corner='${inputNewCorner}' WHERE tableid='${tableID}'`);
     req.flash('success_msg', "Workstation information successfully updated!");
     res.redirect('/manageDesks');
   }
