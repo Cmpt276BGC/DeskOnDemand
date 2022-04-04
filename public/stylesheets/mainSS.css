@@ -62,6 +62,9 @@ label{
   width:80px;
   display:inline-block;
 }
+.booked{
+  width:500px;
+}
 
 ul {
   list-style-type:none;
@@ -94,9 +97,26 @@ button {
   cursor: pointer;
 }
 
-fieldset{
-  width: 150px;
-  margin:auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.cubicle{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
+.office{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
+.desk{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
+.boardroom{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
 }

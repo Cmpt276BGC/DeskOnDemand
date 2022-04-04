@@ -23,13 +23,9 @@
           <tr>
             <th></th>
             <th>Floor</th>
-            <th>Office</th>
-            <th>Window</th>
-            <th>Corner</th>
-            <th>Cubicle</th>
-            <th>Single</th>
-            <th>Double</th>
-            
+            <th>Type</th>
+            <th>Has Window</th>
+            <th>Corner</th>            
           </tr>
           <% deskDataRow.forEach(function(r) { %>
             <form action="/updateDesk/<%=r.tableid%>" method="POST">
@@ -41,22 +37,13 @@
                   <%= r.floor%>
                 </td>
                 <td>
-                  <%= r.office === true ? 'Yes' : 'No' %>
+                  <%= r.type%>
                 </td>
                 <td>
                   <%= r.haswindow === true ? 'Yes' : 'No' %>
                 </td>
                 <td>
                   <%= r.corner === true ? 'Yes' : 'No' %>              
-                </td>
-                <td>
-                  <%=r.cubicle === true ? 'Yes' : 'No' %>              
-                </td>
-                <td>
-                  <%= r.single === true ? 'Yes' : 'No' %>
-                </td>
-                <td>
-                  <%= r.double === true ? 'Yes' : 'No' %>
                 </td>
               </tr>
             <tr>
@@ -74,9 +61,11 @@
                 </select>
               </td>
               <td>
-                <select name="inputNewOffice">
-                  <option value="t">Yes</option>
-                  <option value="f">No</option>
+                <select name="inputNewType">
+                  <option value="desk">desk</option>
+                  <option value="cubicle">cubicle</option>
+                  <option value="office">office</option>
+                  <option value="boardroom">boardroom</option>
                 </select>   
               </td>
               <td>
@@ -91,24 +80,6 @@
                   <option value="f">No</option>
                 </select>                 
               </td>
-              <td>
-                <select name="inputNewCubicle">
-                  <option value="t">Yes</option>
-                  <option value="f">No</option>
-                </select>         
-              </td>
-              <td>
-                <select name="inputNewSingle">
-                  <option value="t">Yes</option>
-                  <option value="f">No</option>
-                </select>
-              </td>
-              <td>
-                <select name="inputNewDouble">
-                  <option value="t">Yes</option>
-                  <option value="f">No</option>
-                </select>
-              </td>
             </tr>
           <% }); %>
         </table>
@@ -117,15 +88,12 @@
           <input type="submit" value="SUBMIT UPDATE">
         </form>
         <input type="submit" class="button" onclick="location.href='/users/admindash';" value="ADMIN DASHBOARD" />
-        <input type="submit" class="button" onclick="location.href='/desks/manageDesks';" value="BACK" />
+        <input type="submit" class="button" onclick="location.href='/manageDesks';" value="BACK" />
         </div>
         <br>
       
     </div>
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
-    <script>
-      
-    </script>
   </body>
 </html>
