@@ -92,7 +92,7 @@ app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
 // bgcusers to json test code
 app.get('/desksjson', async (req,res)=>{
   try {
-    const desksQueryResult = await pool.query(`SELECT * FROM workstations`);
+    const desksQueryResult = await pool.query(`SELECT * FROM bgctables`);
     const allDesks = { 'deskRows': desksQueryResult.rows };
     res.json(desksQueryResult.rows);
   } catch(error) {
@@ -441,7 +441,7 @@ app.get('/db', async (req, res) => {
 // ADMIN DESK FUNCTIONS
 
 // manage desks
-app.get('/desks/manageDesks', async (req,res)=>{
+app.get('/manageDesks', async (req,res)=>{
   try {
     const desksQueryResult = await pool.query(`SELECT * FROM bgctables`);
     const allDesks = { 'deskRows': desksQueryResult.rows };
@@ -474,13 +474,13 @@ app.post('/editDesk/:tableid', async (req, res) =>{
 app.post('/updateDesk/:tableid', async (req, res) =>{
   const tableID = req.params.tableid;
   
-  let {inputNewFloor, inputNewOffice, inputNewWindow, inputNewCorner, inputNewCubicle, inputNewSingle, inputNewDouble} = req.body;
+  let {inputNewFloor, inputNewType, inputNewWindow, inputNewCorner} = req.body;
   let errors = [];  // form validation
   
   try {
-    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', office='${inputNewOffice}', haswindow='${inputNewWindow}', corner='${inputNewCorner}', cubicle='${inputNewCubicle}', Single='${inputNewSingle}', double='${inputNewDouble}' WHERE tableid='${tableID}'`);
+    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', type='${inputNewType}', haswindow='${inputNewWindow}', corner='${inputNewCorner}'`);
     req.flash('success_msg', "Workstation information successfully updated!");
-    res.redirect('/desks/manageDesks');
+    res.redirect('/manageDesks');
   }
   catch (error) {
     res.send(error);
@@ -493,7 +493,7 @@ app.post('/delete/:tableid', async (req, res) => {
   try {
     const result = await pool.query(`DELETE FROM bgctables WHERE tableid='${tableIDtoDelete}'`);
     req.flash('success_msg', "Workstation successfully deleted!");
-    res.redirect('/desks/manageDesks');
+    res.redirect('/manageDesks');
   } catch (error) {
     res.send(error);
   }

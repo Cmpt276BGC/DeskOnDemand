@@ -5,70 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Manage Desks</title>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
-  </head> 
-  <body>
-    <div class="background">
-      <br>
-      <h1 class="header">Manage Desks</h1>
-      Please click on the Workstation ID to edit info<br>
-      <ul>
-        <% if (messages.success_msg) { %>
-          <li><%=messages.success_msg %></li>
-        <% } %>
-      </ul>
-      <ul class="errors">
-        <% if(typeof errors != 'undefined') { %>
-          <% errors.forEach(error => { %>
-            <li><%= error.message %></li>
-          <% }) %>
-        <% } %>
-      </ul>
-      
-      <table class="tables">
-        <tr>
-          <th>Workstation ID</th>
-          <th>Floor</th>
-          <th>Office</th>
-          <th>Window</th>
-          <th>Corner</th>
-          <th>Cubicle</th>
-          <th>Single</th>
-          <th>Double</th>
-          
-          <th>Delete</th>
-        </tr>
-        <% deskRows.forEach(function(r) { %>
-          <tr>
-            <td>
-              <form action="/editDesk/<%= r.tableid%>" method="POST">
-                <input class="thisDesk" type="submit" value="<%= r.tableid%>">
-              </form>
-            </td>
-            <td><%= r.floor %></td>
-            <td><%= r.office === true ? 'Yes' : 'No'%></td>
-            <td><%= r.haswindow === true ? 'Yes' : 'No'%></td>
-            <td><%= r.corner === true ? 'Yes' : 'No'%></td>
-            <td><%= r.cubicle === true ? 'Yes' : 'No'%></td>
-            <td><%= r.single === true ? 'Yes' : 'No'%></td>
-            <td><%= r.double === true ? 'Yes' : 'No'%></td>
-            
-            <td>
-              <form action="/delete/<%=r.tableid%>" method="POST">
-                <input type="submit" value="DELETE">
-              </form>
-            </td>
-          </tr>
-        <% }); %>
-      </table>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
+      <style>
+        html, body {
+            height: 99%;
+        }
+      </style>
+  </head>
 
-      <div>
-        
-          <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
-      </div>
+  <body>
+    <div id="myGrid" class="ag-theme-alpine" style="width: 90%; height: 50%"></div>
+    <form id="deletedesk" action="" method="POST">
+      <button onclick="delSelected()">Delete Selected Workstation</button>
+    </form>
+    <input id="tableid" type="hidden" value="null" name="tableid">
+    <form id="editdesk" action="" method="POST">
+      <button onclick="editSelected()">Edit Selected Workstation</button>
+    </form>
+
+    <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
+  
       <br>
+    
     </div>
     <br><br>Desks on Demand
-    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
+    <script type="text/javascript" src="/public/desksjson.js"></script>
   </body>
 </html>
