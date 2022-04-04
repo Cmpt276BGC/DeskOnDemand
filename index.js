@@ -764,7 +764,7 @@ app.get('/bookedworkstations', async (req, res) => {
 })
 // Not woking in process -Bhavneet
 app.post('/cancelBooking', async (req,res)=>{
-  var tableidcancellation = req.body.cancelbyID;
+  var tableidcancellation = req.body.title;
   console.log(tableidcancellation);
   try{
     const cancelBooking= await pool.connect();
