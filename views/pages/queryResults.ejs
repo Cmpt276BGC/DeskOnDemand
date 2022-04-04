@@ -34,6 +34,16 @@
         <form method="GET" action="/users/logout">
             <input type="submit" value="Log Out">
         </form>
+
+        <form method="POST" action="/adminbooking">
+            <input type="hidden" name="IDtoSend" id="IDtoSend">
+            <input type="hidden" value='<%= dates.nextFromDate %>' name="startDate" id="startDate">
+            <input type="hidden" value='<%= dates.nextToDate %>' name="endDate" id="endDate">
+            <label for="useremailLookup">(ADMIN ONLY) Enter user email:</label>
+            <input id="useremailLookup" name="useremail" type="email">
+            <input id="adminButton" type="submit" value="Book for User">
+        </form>
+        
         <script type="text/javascript" src="/public/adminbutton.js">
         </script>
         </div>
