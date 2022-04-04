@@ -5,15 +5,9 @@ if (!isProduction) {
   require('dotenv').config();
 }
 
-<<<<<<< HEAD
 const connectionString =`postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
 // const connectionString = 'postgres://postgres:Jojek2020.@localhost/dod' //matts local db
 // const connectionString = 'postgres://postgres:Reset123@localhost/bgcuser'
-=======
-// const connectionString =`postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
-//const connectionString = 'postgres://postgres:Jojek2020.@localhost/dod' //matts local db
- const connectionString = 'postgres://postgres:Reset123@localhost/bgcuser'
->>>>>>> fe6cc19b2de7b803669a7621fe847f1ab714225b
 // connectionString = 'postgres://postgres:root@localhost/bgcusers'
 
 const pool = new Pool({
