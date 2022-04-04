@@ -547,6 +547,12 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var specificDateISOString = specificDate.toISOString().split('T')[0];
     var specificDateEndISOString = specificDateEnd.toISOString().split('T')[0];
 
+    var permanentBooking = req.body.permanent;
+    
+    if(permanentBooking=='true'){
+      specificDateEndISOString = '2999-12-31'
+    }
+
     //variables
     var floor = req.body.floor;
     
@@ -572,8 +578,6 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var floorChecked = floorCheck(floor);
     var windowChecked = windowCheck(window);
     var cornerChecked = cornerCheck(corner);
- 
-
     
     var query = await searchTablesClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
     var queryResults = {'queryResults' : query.rows, dates}
@@ -600,11 +604,12 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
     //set javascript calendar datetime to align with sql default datetime value
     var fromDate = new Date(req.body.fromDate);
     var fromDateISOString = fromDate.toISOString().split('T')[0];
-    
+
     var toDate = new Date(req.body.toDate);
     var toDateISOString = toDate.toISOString().split('T')[0];
 
-    //variables
+    console.log(toDateISOString)
+
     //variables
     var floor = req.body.floor;
     
@@ -617,6 +622,10 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
       corner='false'
     }
     var workstationType = req.body.workstationType;
+
+    
+
+    
 
    //create date object to merge with query results to be sent to next page and allow for smooth booking
 
@@ -698,7 +707,6 @@ app.post('/booking', async (req,res)=>{
   res.redirect('/users/dashboard')
   bookingClient.release();
 })
-
 
 app.post('/adminbooking', async (req,res)=>{
   

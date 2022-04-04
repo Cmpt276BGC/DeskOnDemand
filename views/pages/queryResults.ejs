@@ -9,8 +9,8 @@
     </head>
     <body>
         <div class="background">
-        <h3 class="header">User Page</h3>
-        <p>Book from: <%= dates.nextFromDate %> to: <%= dates.nextToDate %></p>
+        <h3 class="header">Search Results</h3>
+        <p><b>Book from:</b> <%= dates.nextFromDate %> <b>to</b> <%= dates.nextToDate %></p>
                 <% queryResults.forEach(function(r) { %>
                     <form name="radioform" method="POST" action="/booking">
                         <ul>
