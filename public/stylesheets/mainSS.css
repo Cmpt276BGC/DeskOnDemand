@@ -101,6 +101,7 @@ button {
   fill:lightgrey;
   stroke-width:2;
   stroke:rgb(0,0,0);
+  font-weight: normal;
 }
 
 .office{
