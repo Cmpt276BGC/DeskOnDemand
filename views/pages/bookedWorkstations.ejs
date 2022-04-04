@@ -17,12 +17,36 @@
         <li>
             <label for="<%= r.uniqueid %>"><%= r.tableid %> Dates: <%= r.fromdate %> to: <%= r.todate %></label>
             <input type="radio" value='<%= r.uniqueid %>' name="title" required>
+            <input type="hidden" value='<%= r.fromdate %>' class ='fromdate'>
+            <input type="hidden"  value='<%= r.todate %>' class="todate">
+            <p class="result"></p> 
         </li>
     </ul>
-
     <% }); %>
      <input type="submit" value="Cancel Your booking">
     </form>
+    <form method="GET" action="/users/dashboard">
+        <input type="submit" value="Search again">
+    </form>
     </div>
+    <script>
+        var fromdates = document.getElementsByClassName('fromdate');
+        var todates = document.getElementsByClassName('todate');
+        var result = document.getElementsByClassName("result");
+        console.log(fromdates[0].value);
+        console.log(todates);
+        for( let i=0;i<fromdates.length;i++){
+             let d1 = new Date(fromdates[i].value);
+            var specificDateISOStringfro = d1.toISOString().split('T')[0];
+            d1 = new Date(specificDateISOStringfro);
+            let  d2 = new Date(todates[i].value);
+            var specificDateISOStringto = d2.toISOString().split('T')[0];
+            d2= new Date(specificDateISOStringto);
+             let time = Math.abs(d1-d2);
+            let  diffdays=Math.ceil(time/(1000*60*60*24));
+            console.log(diffdays);
+            result[i].innerHTML= diffdays + 'days';
+        }
+    </script>
 </body>
 </html>
