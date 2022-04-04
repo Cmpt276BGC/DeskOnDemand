@@ -791,18 +791,7 @@ app.post('/cancelBooking', async (req,res)=>{
    
 
 })
-app.get('/views/pages/bookinginfo/:id',(req,res)=>{
-    
-  let booking_id = req.params.id;
-  var sql =`SELECT * from bgcbookings where uniqueid='${booking_id}'`;
-  pool.query(sql,(error,result)=>{
-          if(error)
-              res.send(error);
-      var results = {'rows':result.rows}
-      res.render('pages/bookinginfo',results);
-  })
-});
-  
+
 
 // environment listen
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));

@@ -62,6 +62,9 @@ label{
   width:80px;
   display:inline-block;
 }
+.booked{
+  width:100%;
+}
 
 ul {
   list-style-type:none;
