@@ -17,6 +17,11 @@
   </head>
 
   <body>
+    <ul>
+      <% if (messages.success_msg) { %>
+        <li><%=messages.success_msg %></li>
+      <% } %>
+    </ul>
     <div id="myGrid" class="ag-theme-alpine" style="width: 90%; height: 50%"></div>
     <form id="deletedesk" action="" method="POST">
       <button onclick="delSelected()">Delete Selected Workstation</button>

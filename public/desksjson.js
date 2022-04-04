@@ -35,17 +35,17 @@ const getSelectedRow = () => {
   const selectedNodes = gridOptions.api.getSelectedNodes()
   const selectedData = selectedNodes.map( node => node.data )
   const selectedDataStringPresentation = selectedData.map( node => `${node.tableid}`)
-  tableid.value = selectedDataStringPresentation;
-  console.log(tableid.value);
-  document.getElementById('deletedesk').action = '/delete/'+tableid.value;
-  document.getElementById('deletedesk').submit();
+  alert(`Selected Table: ${selectedDataStringPresentation}`);
 }
 
 function delSelected() {
   const selectedNodes = gridOptions.api.getSelectedNodes()
   const selectedData = selectedNodes.map( node => node.data )
   const selectedDataStringPresentation = selectedData.map( node => `${node.tableid}`)
-  alert(`Selected Table: ${selectedDataStringPresentation}`);
+  tableid.value = selectedDataStringPresentation;
+  console.log(tableid.value);
+  document.getElementById('deletedesk').action = '/delete/'+tableid.value;
+  document.getElementById('deletedesk').submit();
 }
 
 function editSelected() {
