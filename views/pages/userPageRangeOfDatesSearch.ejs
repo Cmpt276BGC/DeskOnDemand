@@ -9,36 +9,39 @@
   </head>
   <body>
     <div class="background">
+
+      <h1>Search for Range of Dates</h1>
+
     <form method="POST" action="/searchTablesDateRange">
-            
-      <label for="Floor">Floor: </label>
-      <select name="floor" id="floor">
+      
+        <label for="Floor">Floor: </label>
+        <select name="floor" id="floor">
           <option value="any">Any</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
           <option value="6">6</option>
-      </select>
+        </select>
 
-      <label for="Date">From: </label>
-      <input type="date" id="fromDate" name="fromDate" required>
+        <label for="workstationType">Type: </label>
+        <select name="workstationType" id="workstationType">
 
-      <label for="Date">To: </label>
-      <input type="date" id="toDate" name="toDate" required>
-      
-      <label for="workstationType">Type: </label>
-      <select name="workstationType" id="workstationType">
+          <option value="any">Any</option>
+          <option value="office">Office</option>
+          <option value="single cubicle">Single Cubicle</option>
+          <option value="double cubicle">Double Cubicle</option>
+          <option value="Boardroom">Boardroom</option>
+          
+        </select>
 
-        <option value="any">Any</option>
-        <option value="office">Office</option>
-        <option value="single cubicle">Single Cubicle</option>
-        <option value="double cubicle">Double Cubicle</option>
-        <option value="Boardroom">Boardroom</option>
-        
-      </select>
+        <label for="Date">From: </label>
+        <input type="date" id="fromDate" name="fromDate" required>
 
-      <fieldset style="width: 150px;">
+        <label for="Date">To: </label>
+        <input type="date" id="toDate" name="toDate" required>
+
+      <fieldset>
           <legend><u>Additional: </u></legend>
 
           <label for="Window">Window: </label>
@@ -47,12 +50,15 @@
           <label for="Corner">Corner: </label>
           <input type="checkbox" id="corner" name="corner" value="true"><br>
 
-      </fieldset>
+      </fieldset><br>
 
+     
+
+ 
       <input type="submit" value="Submit">
     </form>
-    <form method="GET" action="/userPageRangeOfDates">
-      <input type="submit" value="Search For Range of Dates">
+    <form method="GET" action="/users/dashboard">
+      <input type="submit" value="Home">
     </form>
     <form method="GET" action="/bookedworkstations">
       <input type="submit" value="Your Booked Workstations">
