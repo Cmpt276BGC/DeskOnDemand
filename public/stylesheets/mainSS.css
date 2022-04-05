@@ -122,6 +122,10 @@ button {
   stroke:rgb(0,0,0);
 }
 
+svg text{
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
 
 /* tab style */
 .tab {

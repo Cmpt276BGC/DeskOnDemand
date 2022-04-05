@@ -22,7 +22,7 @@
         <li><%=messages.success_msg %></li>
       <% } %>
     </ul>
-    <div id="myGrid" class="ag-theme-alpine" style="width: 90%; height: 50%"></div>
+    <div id="myGrid" class="ag-theme-alpine" style="width: 100%; height: 40%"></div>
     <form id="deletedesk" action="" method="POST">
       <button onclick="delSelected()">Delete Selected Workstation</button>
     </form>
@@ -37,6 +37,8 @@
       <button class="tablinks" onclick="floorplan(event, '2F')">Second Floor</button>
       <button class="tablinks" onclick="floorplan(event, '3F')">Third Floor</button>
       <button class="tablinks" onclick="floorplan(event, '4F')">Fourth Floor</button>
+      <button class="tablinks" onclick="floorplan(event, '5F')">Fifth Floor</button>
+      <button class="tablinks" onclick="floorplan(event, '6F')">Sixth Floor</button>
     </div>
     <div id="2F" class="tabcontent">
       <svg class="floor" width="1000" height="525">
@@ -550,6 +552,438 @@
 
     </div>
 
+    <div id="4F" class="tabcontent">
+      <svg width="1110" height="670">
+        <rect class="floor" width="1110" height="670" style="fill:white;stroke-width:1;stroke:rgb(0,0,0)" />
+        <svg>
+          <rect class="office" id="411" x="60" width="87" height="80"/>
+          <text x="103" y="40">411</text>
+        </svg>
+        <svg>
+          <rect class="office" id="412" x="147" width="62" height="80"/>
+          <text x="178" y="40">412</text>
+        </svg>
+        <svg>
+          <rect class="office" id="413" x="209" width="62" height="80"/>
+          <text x="240" y="40">413</text>
+        </svg>
+        <svg>
+          <rect class="boardroom" id="414" x="271" width="190" height="115"/>
+          <text x="366" y="55">Black Tusk Boardroom</text>
+          <text x="366" y="70">414</text>
+        </svg>
+        <svg>
+          <rect class="office" id="415" x="461" width="62" height="80"/>
+          <text x="492" y="40">415</text>
+        </svg>
+        <svg>
+          <rect class="office" id="416" x="523" width="62" height="80"/>
+          <text x="554" y="40">416</text>
+        </svg>
+        <svg>
+          <rect class="office" id="417" x="585" width="62" height="80"/>
+          <text x="616" y="40">417</text>
+        </svg>
+        <svg>
+          <rect class="office" id="418" x="647" width="87" height="80"/>
+          <text x="690" y="40">418</text>
+        </svg>
+        <svg>
+          <rect class="office" id="419" x="734" width="87" height="80"/>
+          <text x="777" y="40">419</text>
+        </svg>
+        <svg>
+          <rect class="office" id="420" x="821" width="62" height="80"/>
+          <text x="852" y="40">420</text>
+        </svg>
+        <svg>
+          <rect class="office" id="421" x="883" width="87" height="80"/>
+          <text x="926" y="40">421</text>
+        </svg>
+
+        <svg>
+          <rect class="cubicle" id="1-424" x="556" y="115" width="48" height="43"/>
+          <text x="580" y="136">1-424</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-424" x="604" y="115" width="48" height="43"/>
+          <text x="628" y="136">2-424</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-424" x="556" y="177" width="48" height="43"/>
+          <text x="580" y="198">3-424</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-424" x="604" y="177" width="48" height="43"/>
+          <text x="628" y="198">4-424</text>
+        </svg>
+        <svg>
+          <rect class="boardroom" id="425" x="652" y="115" width="82" height="105"/>
+          <text x="693" y="167">425</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="1-426" x="734" y="115" width="48" height="43"/>
+          <text x="758" y="136">1-426</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-426" x="779" y="115" width="48" height="43"/>
+          <text x="803" y="136">2-426</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-426" x="734" y="177" width="48" height="43"/>
+          <text x="758" y="198">3-426</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-426" x="779" y="177" width="48" height="43"/>
+          <text x="803" y="198">4-426</text>
+        </svg>
+
+        <svg>
+          <rect class="office" id="429" x="1030" y="64" width="65" height="95"/>
+          <text x="1062" y="111">429</text>
+        </svg>
+
+        <svg>
+          <rect class="cubicle" id="1-430" x="859" y="124" width="48" height="43"/>
+          <text x="883" y="145">1-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-430" x="907" y="124" width="48" height="43"/>
+          <text x="931" y="145">2-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-430" x="955" y="124" width="48" height="43"/>
+          <text x="979" y="145">3-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-430" x="859" y="182" width="48" height="43"/>
+          <text x="883" y="203">4-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="5-430" x="907" y="182" width="48" height="43"/>
+          <text x="931" y="203">5-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="6-430" x="955" y="182" width="48" height="43"/>
+          <text x="979" y="203">6-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="7-430" x="1030" y="159" width="80" height="48"/>
+          <text x="1070" y="183">7-430</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="1-431" x="859" y="225" width="48" height="43"/>
+          <text x="883" y="246">1-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-431" x="907" y="225" width="48" height="43"/>
+          <text x="931" y="246">2-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-431" x="955" y="225" width="48" height="43"/>
+          <text x="979" y="246">3-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-431" x="893" y="288" width="48" height="43"/>
+          <text x="917" y="309">4-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="5-431" x="941" y="288" width="48" height="43"/>
+          <text x="965" y="309">5-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="6-431" x="1067" y="207" width="43" height="48"/>
+          <text x="1089" y="231">6-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="7-431" x="1014" y="288" width="48" height="43"/>
+          <text x="1038" y="309">7-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="8-431" x="1062" y="288" width="48" height="43"/>
+          <text x="1086" y="309">8-431</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="1-432" x="893" y="331" width="48" height="43"/>
+          <text x="917" y="352">1-432</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="5-431" x="941" y="331" width="48" height="43"/>
+          <text x="965" y="352">2-432</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-432" x="1014" y="331" width="48" height="43"/>
+          <text x="1038" y="352">3-432</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-432" x="1062" y="331" width="48" height="43"/>
+          <text x="1086" y="352">4-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="5-432" x="923" y="404" width="35" height="25"/>
+          <text x="940" y="417">5-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="6-432" x="958" y="404" width="35" height="25"/>
+          <text x="975" y="417">6-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="7-432" x="923" y="429" width="35" height="25"/>
+          <text x="940" y="441">7-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="8-432" x="958" y="429" width="35" height="25"/>
+          <text x="975" y="441">8-432</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="9-432" x="1067" y="399" width="43" height="48"/>
+          <text x="1088" y="423">9-432</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="10-432" x="1067" y="442" width="43" height="48"/>
+          <text x="1088" y="466">10-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="11-432" x="923" y="490" width="35" height="25"/>
+          <text x="940" y="501">11-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="12-432" x="958" y="490" width="35" height="25"/>
+          <text x="975" y="501">12-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="13-432" x="923" y="515" width="35" height="25"/>
+          <text x="940" y="527">13-432</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="14-432" x="958" y="515" width="35" height="25"/>
+          <text x="975" y="527">14-432</text>
+        </svg>
+        <svg>
+          <rect class="office" id="438" x="1030" y="490" width="80" height="100"/>
+          <text x="1070" y="540">438</text>
+        </svg>
+
+        <svg>
+          <rect class="cubicle" id="1-441" x="489" y="627" width="48" height="43"/>
+          <text x="513" y="648">1-441</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-441" x="537" y="627" width="48" height="43"/>
+          <text x="561" y="648">2-441</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-441" x="585" y="627" width="48" height="43"/>
+          <text x="609" y="648">3-441</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-441" x="663" y="590" width="48" height="80"/>
+          <text x="687" y="630">4-441</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="5-441" x="711" y="590" width="48" height="80"/>
+          <text x="735" y="630">5-441</text>
+        </svg>
+        <svg>
+          <rect class="office" id="439" x="759" y="590" width="90" height="80"/>
+          <text x="804" y="630">439</text>
+        </svg>
+
+        <svg>
+          <rect class="cubicle" id="1-443" x="280" y="590" width="48" height="80"/>
+          <text x="304" y="630">1-443</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-443" x="328" y="590" width="48" height="80"/>
+          <text x="352" y="630">2-443</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-443" x="376" y="590" width="48" height="80"/>
+          <text x="400" y="630">3-443</text>
+        </svg>
+        <svg>
+          <rect class="office" id="444" x="180" y="590" width="100" height="80"/>
+          <text x="230" y="630">444</text>
+        </svg>
+        <svg>
+          <rect class="office" id="445" x="80" y="590" width="100" height="80"/>
+          <text x="130" y="630">445</text>
+        </svg>
+        <svg>
+          <rect class="office" id="447" y="552" width="80" height="118"/>
+          <text x="40" y="611">447</text>
+        </svg>
+        <svg>
+          <rect class="office" id="448" y="460" width="80" height="92"/>
+          <text x="40" y="506">448</text>
+        </svg>
+        <svg>
+          <rect class="office" id="449" y="398" width="80" height="62"/>
+          <text x="40" y="429">449</text>
+        </svg>
+        <svg>
+          <rect class="office" id="450" y="336" width="80" height="62"/>
+          <text x="40" y="367">450</text>
+        </svg>
+        <svg>
+          <rect class="office" id="451" y="246" width="80" height="90"/>
+          <text x="40" y="291">451</text>
+        </svg>
+
+        <svg>
+          <rect class="desk" id="1-453" x="125" y="110" width="35" height="25"/>
+          <text x="142" y="122">1-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="2-453" x="160" y="110" width="35" height="25"/>
+          <text x="177" y="122">2-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="3-453" x="195" y="110" width="35" height="25"/>
+          <text x="212" y="122">3-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="10-453" x="125" y="135" width="35" height="25"/>
+          <text x="142" y="147">10-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="11-453" x="160" y="135" width="35" height="25"/>
+          <text x="177" y="147">11-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="12-453" x="195" y="135" width="35" height="25"/>
+          <text x="212" y="147">12-453</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-453" x="105" y="185" width="48" height="86"/>
+          <text x="129" y="228">4-453</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="5-453" x="153" y="185" width="48" height="43"/>
+          <text x="177" y="206">5-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="13-453" x="201" y="185" width="48" height="43"/>
+          <text x="225" y="206">13-453</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="7-453" x="153" y="228" width="48" height="43"/>
+          <text x="177" y="249">7-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="6-453" x="201" y="228" width="48" height="43"/>
+          <text x="225" y="249">6-453</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="1-453" x="105" y="290" width="48" height="86"/>
+          <text x="129" y="333">1-452</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="8-453" x="153" y="290" width="48" height="43"/>
+          <text x="177" y="311">8-453</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="9-453" x="201" y="290" width="48" height="43"/>
+          <text x="225" y="311">9-453</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-453" x="153" y="333" width="48" height="43"/>
+          <text x="177" y="354">2-452</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="3-452" x="201" y="333" width="48" height="43"/>
+          <text x="225" y="354">3-452</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="4-452" x="105" y="400" width="48" height="86"/>
+          <text x="129" y="443">4-452</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="5-452" x="153" y="400" width="48" height="43"/>
+          <text x="177" y="421">5-452</text>
+        </svg>
+        <svg>
+          <rect class="desk" id="6-452" x="201" y="400" width="48" height="43"/>
+          <text x="225" y="421">6-452</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="7-452" x="153" y="443" width="48" height="43"/>
+          <text x="177" y="464">7-452</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="8-452" x="105" y="500" width="48" height="43"/>
+          <text x="129" y="521">8-452</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="9-452" x="153" y="500" width="48" height="43"/>
+          <text x="177" y="521">9-452</text>
+        </svg>
+
+        <svg>
+          <rect class="it" id="455" x="240" y="470" width="140" height="85" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)" />
+          <text x="310" y="511">IT STORAGE 455</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="1-422" x="380" y="512" width="48" height="43"/>
+          <text x="404" y="533">1-422</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="2-422" x="428" y="512" width="48" height="43"/>
+          <text x="452" y="533">2-422</text>
+        </svg>
+        <svg>
+          <rect class="cubicle" id="3-422" x="476" y="512" width="48" height="43"/>
+          <text x="500" y="533">3-422</text>
+        </svg>
+        <svg>
+          <rect id="434" x="800" y="410" width="70" height="105" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)" />
+          <text x="835" y="430">PLOTTER</text>
+          <text x="835" y="445">434</text>
+        </svg>
+        <svg>
+          <rect class="empty" x="300" y="260" width="220" height="210" style="fill:grey;stroke-width:2;stroke:black" />
+        </svg>
+        
+        <svg>
+          <rect class="it" id="440" x="580" y="455" width="245" height="100" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)" />
+          <text x="702" y="505">IT SERVER 440</text>
+        </svg>
+        <svg>
+          <rect class="empty" x="580" y="260" width="220" height="210" style="fill:grey;stroke-width:2;stroke:black" />
+        </svg>
+        <svg>
+          <rect class="phone" id="435" x="825" y="515" width="45" height="40" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)" />
+          <text x="847" y="530">PHONE</text>
+          <text x="847" y="545">435</text>
+        </svg>
+
+      </svg>
+    </div>
+
+    <div id="5F" class="tabcontent">
+      <svg width="1110" height="670">
+        <rect class="floor" width="1110" height="670" style="fill:white;stroke-width:1;stroke:rgb(0,0,0)" />
+        <svg>
+          <rect class="office" />
+        </svg>
+
+      </svg>
+    </div>
+
+    <div id="6F" class="tabcontent">
+      <svg width="1110" height="670">
+        <rect class="floor" width="1110" height="670" style="fill:white;stroke-width:1;stroke:rgb(0,0,0)" />
+        <svg>
+          <rect class="office" id="611" x="60" width="87" height="80"/>
+          <text text-anchor="middle" x="103" y="40">611</text>
+        </svg>
+        <svg>
+          <rect class="office" id="611" x="60" width="87" height="80"/>
+          <text text-anchor="middle" x="103" y="40">611</text>
+        </svg>
+
+      </svg>
+    </div>
 
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
