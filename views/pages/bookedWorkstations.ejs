@@ -12,18 +12,28 @@
     <div class="background">
     <h1 class="header">Your Booked Workstations</h1>
     <h2>Cancel your booking</h2>
-    <% bookedResults.forEach(function(r) { %>
-    <ul>
-        <li>
-            
-            <label class="booked" for="<%= r.uniqueid %>"><%= r.tableid %> Dates: <%= r.fromdate %> to: <%= r.todate %></label>
-            <input type="radio" value='<%= r.uniqueid %>' name="title" required>
-            <input type="hidden" value='<%= r.fromdate %>' class ='fromdate'>
-            <input type="hidden"  value='<%= r.todate %>' class="todate">  
-            <p class="result"></p>
-        </li>
-    </ul>
-    <% }); %>
+    <table class="table">
+        <thead>
+          <tr class="heading">
+              <th></th>
+              <th>Table id</th>
+              <th>From date</th>
+              <th>To Date</th>
+              <th>No Of days</th>
+          </tr>
+        </thead>
+        <% bookedResults.forEach(function(r) { %>
+          <tbody class="table-body">
+              <tr class="activity">
+                  <th><input type="radio" value='<%= r.uniqueid %>' name="title" required></th>
+                  <td><%= r.tableid %></a></td>
+                  <td><input type="hidden" value='<%= r.fromdate %>' class ='fromdate'><%= r.fromdate %></td>
+                  <td><input type="hidden"  value='<%= r.todate %>' class="todate"><%= r.todate %></td>
+                  <td><p class="result"></p></td>
+              </tr>
+          </tbody>
+          <% }); %>
+      </table>
      <input type="submit" value="Cancel Your booking">
     </form>
     <form method="GET" action="/users/dashboard">
@@ -49,9 +59,9 @@
             let  diffdays=Math.ceil(time/(1000*60*60*24));
             console.log(diffdays);
             if(diffdays==1){
-                result[i].innerHTML= 'Booked For ' + diffdays + ' day';
+                result[i].innerHTML= diffdays ;
             }else{
-                result[i].innerHTML= 'Booked For ' + diffdays + ' days';
+                result[i].innerHTML= diffdays;
             }
         }
     </script>
