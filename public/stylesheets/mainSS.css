@@ -159,3 +159,17 @@ svg text{
   border: 1px solid #ccc;
   border-top: none;
 }
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #c6c6c6;
+}
+td,
+th {
+  border: 2px solid #c6c6c6;
+  border-collapse: collapse;
+  padding: 0.5rem;
+  text-align: left;
+}
