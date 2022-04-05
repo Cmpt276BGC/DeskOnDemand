@@ -12,13 +12,25 @@
     <body>
       <div class="container">
         <h2>Database Results</h2>
-        <% results.forEach(function(r) { %>
-            <ul>
-                <li>
-                  <a href='/users/admindash/viewUserBookings/<%= r.uemail %>'><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> </a>
-                </li>
-                <br>
-            </ul>
+            <table class="table">
+              <thead>
+                <tr class="heading">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th></th>
+                </tr>
+              </thead>
+              <% results.forEach(function(r) { %>
+                <tbody class="table-body">
+                    <tr class="activity">
+                        <th><%= r.fname %> <%= r.lname %></th>
+                        <td><%= r.uemail %></td>
+                        <td><%=r.admin%></td>
+                        <td><a href='/users/admindash/viewUserBookings/<%= r.uemail %>'>View Bookings</a></td>
+                        
+                    </tr>
+                </tbody>
             <% }); %>
           </form>
           <form method="GET" action="/users/admindash/manageUsers">
