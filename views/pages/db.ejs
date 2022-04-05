@@ -16,9 +16,9 @@
           <input type="submit" value="Return to Manage Users">
         </form>
         <% results.forEach(function(r) { %>
-          <form method="POST" action="/users/admindash/viewUserBookings">
+          <form method="GET" action="/users/admindash/viewUserBookings/<%= r.uemail %>">
             <ul>
-                <li><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> <b>ID:</b> <%= r.id %> | View bookings for <input type="submit" style="background-color: white; color: black; border:1px solid black;" value="<%= r.uemail %>" name="viewBookingsEmail" id="viewBookingsEmail"></li><br>
+                <li><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> <b>ID:</b> <%= r.id %> <input type="submit" style="background-color: white; color:black; border: 1px solid black;" value="View This User's Bookings"></li><br>
               <% }); %>
             </ul>
           </form>

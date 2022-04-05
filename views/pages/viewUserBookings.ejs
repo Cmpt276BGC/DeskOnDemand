@@ -10,15 +10,17 @@
     <body>
         <div class="background">
         <h3 class="header">View User Bookings</h3>
-
+            <form method="POST" action="/users/admindash/deleteUserBooking">
                 <% viewUserBookingsQueryResults.forEach(function(r) { %>
                     <ul>
-                        <li> <%= r.tableid %>: <%= r.fromdate %> <b>to</b> <%= r.todate %></li>
+                        <li> <%= r.tableid %>: <%= r.fromdate %> <b>to</b> <%= r.todate %></li> 
+                        <li>Delete this booking ID number <input type="submit" style="background-color: white; color: black; border: 1px solid black;" value="<%= r.uniqueid %>" name="deleteID" value="deleteID"></li>
                     </ul>
                     
                 <% }); %><br>
-        
-        <form method="GET" action="/users/admindash/manageUsers">
+                <input type="hidden" value="<%= emailJSON.uemail %>" name="uemail" id="uemail">
+            </form>        
+        <form method="GET" action="/db">
             <input type="submit" value="Return">
         </form>
 
