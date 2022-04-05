@@ -12,15 +12,17 @@
     <body>
       <div class="container">
         <h2>Database Results</h2>
-        <form method="GET" action="/users/admindash/manageUsers">
-          <input type="submit" value="Return to Manage Users">
-        </form>
         <% results.forEach(function(r) { %>
-          <form method="GET" action="/users/admindash/viewUserBookings/<%= r.uemail %>">
             <ul>
-                <li><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> <b>ID:</b> <%= r.id %> <input type="submit" style="background-color: white; color:black; border: 1px solid black;" value="View This User's Bookings"></li><br>
-              <% }); %>
+                <li>
+                  <a href='/users/admindash/viewUserBookings/<%= r.uemail %>'><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> </a>
+                </li>
+                <br>
             </ul>
+            <% }); %>
+          </form>
+          <form method="GET" action="/users/admindash/manageUsers">
+            <input type="submit" value="Return to Manage Users">
           </form>
         </div>
     </body>
