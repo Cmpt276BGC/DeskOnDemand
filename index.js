@@ -499,6 +499,39 @@ app.post('/delete/:tableid', async (req, res) => {
   }
 });
 
+app.get('/users/admindash/viewUserBookings/:uemail', async (req, res) => {
+  try{
+    var uemail = req.params.uemail;
+    const viewUserBookings = await pool.connect();
+    const viewUserBookingsQuery = await viewUserBookings.query(`SELECT * FROM BGCBOOKINGS WHERE uemail='${uemail}'`)
+
+    let emailJSON = {'uemail' : uemail}
+
+    var viewUserBookingsQueryResults = {'viewUserBookingsQueryResults' : viewUserBookingsQuery.rows, emailJSON}
+    console.log(uemail)
+    console.log(viewUserBookingsQueryResults)
+    res.render('pages/viewUserBookings', viewUserBookingsQueryResults)
+    viewUserBookings.release();
+  } catch(err) {
+    res.send(err)
+  }
+})
+
+app.post('/users/admindash/deleteUserBooking', async (req, res) =>{
+  try{
+    var uniqueIDToDelete = req.body.deleteID
+    var uemailForNext = req.body.uemail
+    const deleteUserBooking = await pool.connect();
+    const deleteUserBookingQuery = await deleteUserBooking.query(`DELETE FROM bgcbookings where uniqueid='${uniqueIDToDelete}'`)
+    console.log(uemailForNext)
+    req.flash('success_msg', "Booking successfully deleted!");
+    res.redirect(`/users/admindash/viewUserBookings/${uemailForNext}`);
+    deleteUserBooking.release();
+  } catch(err) {
+    res.send(err)
+  }
+})
+
 
 //SEARCH FUNCTIONALITY
 
@@ -622,10 +655,6 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
       corner='false'
     }
     var workstationType = req.body.workstationType;
-
-    
-
-    
 
    //create date object to merge with query results to be sent to next page and allow for smooth booking
 
@@ -767,7 +796,6 @@ app.get('/bookedworkstations', async (req, res) => {
   }catch(err){
     res.send('error')
   }
-
 
 })
 // Not woking in process -Bhavneet
