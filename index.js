@@ -499,6 +499,21 @@ app.post('/delete/:tableid', async (req, res) => {
   }
 });
 
+app.post('/users/admindash/viewUserBookings', async (req, res) => {
+  try{
+    var uemail = req.body.viewBookingsEmail;
+    const viewUserBookings = await pool.connect();
+    const viewUserBookingsQuery = await viewUserBookings.query(`SELECT * FROM BGCBOOKINGS WHERE uemail='${uemail}'`)
+    var viewUserBookingsQueryResults = {'viewUserBookingsQueryResults' : viewUserBookingsQuery.rows}
+    console.log(uemail)
+    console.log(viewUserBookingsQueryResults)
+    res.render('pages/viewUserBookings', viewUserBookingsQueryResults)
+    viewUserBookings.release();
+  } catch(err) {
+    res.send(err)
+  }
+})
+
 
 //SEARCH FUNCTIONALITY
 
@@ -767,7 +782,6 @@ app.get('/bookedworkstations', async (req, res) => {
   }catch(err){
     res.send('error')
   }
-
 
 })
 // Not woking in process -Bhavneet

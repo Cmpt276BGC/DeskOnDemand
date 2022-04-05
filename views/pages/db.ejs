@@ -15,12 +15,13 @@
         <form method="GET" action="/users/admindash/manageUsers">
           <input type="submit" value="Return to Manage Users">
         </form>
-          <ul>
-            <% results.forEach(function(r) { %>
-              <li>Name: <%= r.fname %> <%= r.lname %> Email: <%= r.uemail %> Admin: <%=r.admin%> ID: <%= r.id %></li>
-            <% }); %>
-          </ul>
-          <h2>End of List</h2>
+        <% results.forEach(function(r) { %>
+          <form method="POST" action="/users/admindash/viewUserBookings">
+            <ul>
+                <li><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> <b>ID:</b> <%= r.id %> | View bookings for <input type="submit" style="background-color: white; color: black; border:1px solid black;" value="<%= r.uemail %>" name="viewBookingsEmail" id="viewBookingsEmail"></li><br>
+              <% }); %>
+            </ul>
+          </form>
         </div>
     </body>
   </div>

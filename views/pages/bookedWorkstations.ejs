@@ -15,11 +15,12 @@
     <% bookedResults.forEach(function(r) { %>
     <ul>
         <li>
-            <p class="result"></p>
+            
             <label class="booked" for="<%= r.uniqueid %>"><%= r.tableid %> Dates: <%= r.fromdate %> to: <%= r.todate %></label>
             <input type="radio" value='<%= r.uniqueid %>' name="title" required>
             <input type="hidden" value='<%= r.fromdate %>' class ='fromdate'>
             <input type="hidden"  value='<%= r.todate %>' class="todate">  
+            <p class="result"></p>
         </li>
     </ul>
     <% }); %>
@@ -48,9 +49,9 @@
             let  diffdays=Math.ceil(time/(1000*60*60*24));
             console.log(diffdays);
             if(diffdays==1){
-                result[i].innerHTML= 'Booked For ' + diffdays + 'day :';
+                result[i].innerHTML= 'Booked For ' + diffdays + ' day';
             }else{
-                result[i].innerHTML= 'Booked For ' + diffdays + ' days :';
+                result[i].innerHTML= 'Booked For ' + diffdays + ' days';
             }
         }
     </script>
