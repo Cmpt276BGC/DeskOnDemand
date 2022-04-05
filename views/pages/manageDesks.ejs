@@ -17,20 +17,20 @@
   </head>
 
   <body>
+    <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
     <ul>
       <% if (messages.success_msg) { %>
         <li><%=messages.success_msg %></li>
       <% } %>
     </ul>
     <div id="myGrid" class="ag-theme-alpine" style="width: 100%; height: 40%"></div>
-    <form id="deletedesk" action="" method="POST">
-      <button onclick="delSelected()">Delete Selected Workstation</button>
-    </form>
-    <input id="tableid" type="hidden" value="null" name="tableid">
-    <form id="editdesk" action="" method="POST">
-      <button onclick="editSelected()">Edit Selected Workstation</button>
-    </form>
-    <input type="submit" class="button" onclick="location.href='/users/AdminDash';" value="Return to Admin Dash" />
+      <form id="deletedesk" action="" method="POST">
+        <button onclick="delSelected()">Delete Selected Workstation</button>
+      </form>
+      <input id="tableid" type="hidden" value="null" name="tableid">
+      <form id="editdesk" action="" method="POST">
+        <button onclick="editSelected()">Edit Selected Workstation</button>
+      </form>
     </div>
     
     <div class="tab">
@@ -985,7 +985,7 @@
       </svg>
     </div>
 
-    <br><br>Desks on Demand
+    <br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
     <script type="text/javascript" src="/public/desksjson.js"></script>
   </body>
