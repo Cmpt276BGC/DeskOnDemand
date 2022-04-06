@@ -3,20 +3,18 @@
 }
 
 body {
-  background-image: linear-gradient(90deg, #271f8c 0%, #7a7abc 35%, #d5d6e9 100%);
+  background-image: linear-gradient(90deg, #271f8c 0%, #909edb 50%, #271f8c 100%);
   text-align: center;
   font-family: Arial;
-  width: 80%;
-  margin-left: 10%;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .background {
-  background: #ffffff;
-  opacity:55%;
-  border-radius: 10px;
+  background: rgb(255,255,255,0.55);
+  border-radius: 3px;
   box-shadow: 0px 0px 15px 2px #271f8c;
-  padding: 0;
-  margin: auto;
+  padding: 5px;
 }
 
 .inputbox {
@@ -30,11 +28,12 @@ input[type=submit] {
   width: auto;
   color: #e0ebeb;
   border-radius: 3px;
-  background-color: #271f8c;
+  background-color: rgb(39, 31, 140);
   border: 0px;
   height: 2.2em;
   font-size: 0.9em;
   cursor: pointer;
+  opacity: .80;
 }
 
 .bottomlink {
@@ -45,12 +44,28 @@ input[type=submit] {
   cursor: pointer;
 }
 
-.images{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+#bgclogo{
+  background-image: url("/Logos/BGC_Logo.png");
+  width: 150px;
+  height: 150px;
+  box-shadow: 0 0 8px 8px rgb(39, 31, 140,0.40) inset;
+  border-radius: 3px;
 }
+
+#dodlogo{
+  background-image: url("/Logos/DeskonDemand.jpg");
+  width: 200px;
+  height: 200px;
+  box-shadow: 0 0 8px 8px rgb(39, 31, 140,0.40) inset;
+  margin-left:auto;
+  margin-right:0;
+  border-radius: 3px;
+}
+
+.images-child {
+  width: 50%;
+  float: left;
+}  
 
 input {
   padding: 4px 4px;
@@ -95,6 +110,11 @@ button {
   height: 2.2em;
   font-size: 0.9em;
   cursor: pointer;
+  opacity: .80;
+}
+
+.ag-header-cell-label {
+  justify-content: center;
 }
 
 .cubicle{
@@ -125,6 +145,9 @@ button {
 svg text{
   text-anchor: middle;
   dominant-baseline: middle;
+  stroke-width: 0;
+  fill:rgb(0,0,0);
+  font-size: .8em;
 }
 
 /* tab style */

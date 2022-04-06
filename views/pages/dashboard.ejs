@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="background">
-    <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    <h1 class="header">Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
     <ul>
       <% if (messages.success_msg) { %>
         <li><%=messages.success_msg %></li>

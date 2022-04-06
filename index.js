@@ -458,8 +458,7 @@ app.get('/desks/bookDesks', async(req,res)=>{
 
 // edit desk by id
 app.post('/editDesk/:tableid', async (req, res) =>{
-  
-  var deskIDLookup = req.params.tableid;
+    var deskIDLookup = req.params.tableid;
   // search the database using the idlookup
   try {
     const deskQueryResult = await pool.query(`SELECT * FROM bgctables WHERE tableid='${deskIDLookup}'`);

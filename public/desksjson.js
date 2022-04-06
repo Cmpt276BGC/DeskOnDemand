@@ -54,8 +54,14 @@ function editSelected() {
   const selectedDataStringPresentation = selectedData.map( node => `${node.tableid}`);
   tableid.value = selectedDataStringPresentation;
   console.log(tableid.value);
-  document.getElementById('editdesk').action = '/editDesk/'+tableid.value;
-  document.getElementById('editdesk').submit();
+  
+  if (selectedData.length == 0) {
+    alert('Please select a workstation');
+    return false;
+  } else {
+    document.getElementById('editdesk').action = '/editDesk/'+tableid.value;
+    document.getElementById('editdesk').submit();
+  }
 }
 
 function cellMouseOver(event){
