@@ -474,11 +474,11 @@ app.post('/editDesk/:tableid', async (req, res) =>{
 app.post('/updateDesk/:tableid', async (req, res) =>{
   const tableID = req.params.tableid;
   
-  let {inputNewFloor, inputNewType, inputNewWindow, inputNewCorner} = req.body;
+  let {inputNewType, inputNewWindow, inputNewCorner} = req.body;
   let errors = [];  // form validation
   
   try {
-    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET floor='${inputNewFloor}', type='${inputNewType}', haswindow='${inputNewWindow}', corner='${inputNewCorner}' WHERE tableid='${tableID}'`);
+    const deskUpdateQueryResult = await pool.query(`UPDATE bgctables SET type='${inputNewType}', haswindow='${inputNewWindow}', corner='${inputNewCorner}' WHERE tableid='${tableID}'`);
     req.flash('success_msg', "Workstation information successfully updated!");
     res.redirect('/manageDesks');
   }
