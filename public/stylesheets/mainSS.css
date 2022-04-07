@@ -216,3 +216,8 @@ th {
 .hiddenradio {
   display: none;
 }
+
+.clickableSVG:hover {
+  cursor: pointer;
+  filter: brightness(60%);
+}
