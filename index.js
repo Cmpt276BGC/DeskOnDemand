@@ -836,7 +836,8 @@ app.post('/cancelBooking', async (req,res)=>{
   console.log(tableidcancellation);
   try{
     const cancelBooking= await pool.connect();
-    const cancel = await cancelBooking.query(`DELETE from bgcbookings where uniqueid='${tableidcancellation}'`);
+    const cancel = await cancelBooking.query(`DELETE from bgcbookings where uniqueid='${tableidcancellation}'`)
+    cancelBooking.release();
   }catch(err){
     res.send(err);
   }
