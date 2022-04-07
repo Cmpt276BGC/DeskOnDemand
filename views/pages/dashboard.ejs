@@ -63,11 +63,22 @@
     <form method="GET" action="/bookedworkstations">
       <input type="submit" value="Your Booked Workstations">
     </form>
-    <form method="GET" action="/users/admindash">
-      <input type="submit" value="Admin Dashboard">
+    <form  method="GET" action="/users/admindash">
+      <input id="adminDash" type="submit" value="Admin Dashboard">
     </form>
     </div>
     <br><br>Desks on Demand
-    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+    <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
+    <input type="hidden" name="authorized" id="authorized" value='<%= isadmin %>''>
+    <script type="text/javascript">
+      function adminDash(){
+        const isAuthorized = document.getElementById("authorized").value;
+        console.log(isAuthorized);
+        if (isAuthorized != "true") {
+          document.getElementById("adminDash").type = "hidden";
+        }
+      };
+      adminDash();
+    </script>
   </body>
 </html>

@@ -60,11 +60,6 @@ app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
 });
 
 
-// temp desks page
-app.get('/desks', (req, res) => {
-  res.render('pages/desks');
-});
-
 // temp second floor SVG
 app.get('/f2', (req, res) => {
   res.render('pages/floor2');
@@ -72,7 +67,8 @@ app.get('/f2', (req, res) => {
 
 
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
-  res.render('pages/dashboard', { user: req.user.fname });
+  let isadmin = req.user.admin;
+  res.render('pages/dashboard', { user: req.user.fname, isadmin: isadmin});
 });
 
 app.get('/users/admindash', checkAuthorization, (req, res) => {
