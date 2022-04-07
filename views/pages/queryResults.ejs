@@ -967,22 +967,27 @@
         
         
         <p><b>Book from:</b> <%= dates.nextFromDate %> <b>to</b> <%= dates.nextToDate %></p>
+        <div class="results">
                 <% queryResults.forEach(function(r) { %>
+                  
                     <form name="radioform" method="POST" action="/booking">
+                      
                         <ul>
                             <li>
-                                <label for="<%= r.tableid %>"><%= r.tableid %></label>
+                                <b>Table ID:</b> <%= r.tableid %>
+                                <b>Floor:</b> <%= r.floor %>
                                 <input type="radio" value='<%= r.tableid %>' name="title" required>
                             </li>
                         </ul>
-                    
+                       
                         <% }); %>
                         <br>
                         <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
                         <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
                         <input type="submit" value="Book">
+                      
                     </form>
-
+                  </div>    
         <form method="GET" action="/users/dashboard">
             <input type="submit" value="Search again">
         </form>

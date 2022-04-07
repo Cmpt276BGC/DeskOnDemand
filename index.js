@@ -530,12 +530,6 @@ app.post('/updateUserInfo', async (req, res) => {
 
     var adminChecked = adminCheck(admin);
 
-    console.log(fname)
-    console.log(lname)
-    console.log(email)
-    console.log(password)
-    console.log(admin)
-
     if(password===''){
       const emptyPWUpdate = await pool.connect();
       const emptyPWQuery = await emptyPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}'` + adminChecked + ` where uemail='${email}'`)
@@ -668,7 +662,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var windowChecked = windowCheck(window);
     var cornerChecked = cornerCheck(corner);
     
-    var query = await searchTablesClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
+    var query = await searchTablesClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
     var queryResults = {'queryResults' : query.rows, dates, isadmin}
     
     if(query.rows.length>0){
@@ -686,7 +680,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
 
 //function to search for a table which is available for a specific range of dates
 app.post('/searchTablesDateRange',  async (req,res)=>{
-
+  let isadmin = req.user.admin;
   try{
     const searchTablesDateRangeClient = await pool.connect();
   
@@ -731,8 +725,8 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
    var windowChecked = windowCheck(window);
    var cornerChecked = cornerCheck(corner);
 
-   var query = await searchTablesDateRangeClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`) 
-   var queryResults = {'queryResults' : query.rows, dates}
+   var query = await searchTablesDateRangeClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`) 
+   var queryResults = {'queryResults' : query.rows, dates, isadmin}
    
    if(query.rows.length>0){
      res.render('pages/queryResults', queryResults)

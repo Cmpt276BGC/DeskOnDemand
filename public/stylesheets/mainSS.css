@@ -196,3 +196,8 @@ th {
   padding: 0.5rem;
   text-align: left;
 }
+
+.results{
+  overflow:auto;
+  height: 500px; 
+}
