@@ -372,7 +372,7 @@ app.post('/deleteUser', checkAuthorization, async (req, res) => {
               }
               console.log(results.rows);
               req.flash('success_msg', "Successfully registered, please log in");
-              res.redirect("/users/admindash/manageUsers");
+              res.redirect("/db");
             }
           )
         }
@@ -497,6 +497,62 @@ app.post('/delete/:tableid', async (req, res) => {
     res.send(error);
   }
 });
+
+app.get('/users/admindash/editUserInfo/:uemail', async (req, res) => {
+  try{  
+    var uemail = req.params.uemail;
+    const editUserInfoClient = await pool.connect();
+    const editUserInfoQuery = await editUserInfoClient.query(`select * from bgcusers where uemail='${uemail}'`);
+    const editUserInfoQueryResults = {'editUserInfoQueryResults' : editUserInfoQuery.rows};
+    res.render('pages/editUser', editUserInfoQueryResults);
+    editUserInfoClient.release();
+  } catch(err){
+    res.send(err);
+  }
+})
+
+function adminCheck(admin) {
+  if(admin===''){
+    return ``
+  } else {
+    return ` , admin='${admin}'`
+  }
+}
+
+app.post('/updateUserInfo', async (req, res) => {
+  try{
+    
+    var fname = req.body.fname;
+    var lname = req.body.lname;
+    var email = req.body.uemail;
+    var password = req.body.password;
+    var admin = req.body.admin;
+
+    var adminChecked = adminCheck(admin);
+
+    console.log(fname)
+    console.log(lname)
+    console.log(email)
+    console.log(password)
+    console.log(admin)
+
+    if(password===''){
+      const emptyPWUpdate = await pool.connect();
+      const emptyPWQuery = await emptyPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}'` + adminChecked + ` where uemail='${email}'`)
+      req.flash("Information Updated")
+      res.redirect(`/users/admindash/editUserInfo/${email}`)
+    } else {
+      const filledPWUpdate = await pool.connect();
+      var hashedPW = await bcrypt.hash(password, 10);
+      const filledPWQuery = await filledPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}', upass='${hashedPW}'` + adminChecked + ` where uemail='${email}'`)
+      req.flash("Information Updated")
+      res.redirect(`/users/admindash/editUserInfo/${email}`)
+    }
+    
+  } catch(err) {
+    res.send(err)
+  }
+})
 
 app.get('/users/admindash/viewUserBookings/:uemail', async (req, res) => {
   try{
