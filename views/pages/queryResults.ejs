@@ -29,11 +29,11 @@
               <text text-anchor="middle" x="160" y="50">LOUNGE</text>
             </svg>
             <svg class="cubicle">
-              <rect class="workstation" id="13-208" y="100" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
+              <rect class="workstation" id="13-208" onClick="reply_click(this.id)" y="100" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="130">13-208</text>
             </svg>
             <svg class="cubicle">
-              <rect class="workstation" id="12-208" y="160" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
+              <rect class="workstation" id="12-208" onClick="reply_click(this.id)" y="160" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="190">12-208</text>
             </svg>
             <svg class="cubicle">
@@ -1777,21 +1777,27 @@
         
         
         <p><b>Book from:</b> <%= dates.nextFromDate %> <b>to</b> <%= dates.nextToDate %></p>
-        <div id="workstationresults"class="results">
-                <% queryResults.forEach(function(r) { %>
+        <div class="results">
+          <form id="regularusersbumit" method="POST" action="/booking">
+            <div hidden>
+            <form  name="radioform" >
+            <% queryResults.forEach(function(r) { %>
                   
-                    <form name="radioform" method="POST" action="/booking">
+                    
                       
                         <ul>
                             <li>
                                 <b>Table ID:</b> <%= r.tableid %>
                                 <b>Floor:</b> <%= r.floor %>
-                                <input type="radio" value='<%= r.tableid %>' name="title" required>
+                                <input type="radio" value='<%= r.tableid %>' name="titleID" required>
                             </li>
                         </ul>
                        
                         <% }); %>
+                      </form>
+                      </div>
                         <br>
+                        <input type="text" value='' name="title" id="title">
                         <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
                         <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
                         
@@ -1820,6 +1826,17 @@
         
         <script type="text/javascript" src="/public/adminbutton.js">
         </script>
+
+        <script type="text/javascript">
+          function reply_click(clicked_id)
+          {
+            
+            document.getElementById("title").value = clicked_id;
+            var tableselected = document.getElementById("title").value;
+            console.log(tableselected);
+          }
+        </script>
+
         </div>
     </body>
 </html>
