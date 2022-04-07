@@ -764,6 +764,7 @@ app.post('/booking', async (req,res)=>{
   
   const bookingClient = await pool.connect();
 
+  
   //variables
   var tableid = req.body.title;
   console.log(tableid);
@@ -789,7 +790,7 @@ app.post('/booking', async (req,res)=>{
     res.redirect('/users/dashboard')
     bookingClient.release();
   } else {
-    req.flash('success_msg', "Workstation already booked.");
+    res.status(204).send();
     bookingClient.release();
   }
 

@@ -10,7 +10,6 @@
     <body>
         <div class="background">
         <h3 class="header">Search Results</h3>
-        
         <div class="tab">
             <button class="tablinks" onclick="floorplan(event, '2F')">Second Floor</button>
             <button class="tablinks" onclick="floorplan(event, '3F')">Third Floor</button>
@@ -28,15 +27,15 @@
               <rect width="320" height="100" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)" />
               <text text-anchor="middle" x="160" y="50">LOUNGE</text>
             </svg>
-            <svg class="cubicle" id="13-208x">
+            <svg class="cubicle" id="13-208x" onClick="reply_click(this.id)">
               <rect class="workstation" id="13-208" y="100" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="130">13-208</text>
             </svg>
-            <svg class="cubicle" id="12-208x">
+            <svg class="cubicle" id="12-208x" onClick="reply_click(this.id)">
               <rect class="workstation" id="12-208" y="160" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="190">12-208</text>
             </svg>
-            <svg class="cubicle" id="10-208x">
+            <svg class="cubicle" id="10-208x" onClick="reply_click(this.id)">
               <rect class="workstation" id="10-208" y="290" width="60" height="60"style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="320">10-208</text>
             </svg>
@@ -1773,8 +1772,6 @@
       
             </svg>
           </div>
-        
-        
         
         <p><b>Book from:</b> <%= dates.nextFromDate %> <b>to</b> <%= dates.nextToDate %></p>
         <div class="results">
