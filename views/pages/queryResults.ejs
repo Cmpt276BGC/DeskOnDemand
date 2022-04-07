@@ -1776,7 +1776,7 @@
         <p><b>Book from:</b> <%= dates.nextFromDate %> <b>to</b> <%= dates.nextToDate %></p>
         <div class="results">
           <form id="regularusersbumit" method="POST" action="/booking">
-            <div hidden>
+            <div class="hiddenradio">
 
               <% queryResults.forEach(function(r) { %>     
                 <ul>
@@ -1793,9 +1793,7 @@
             <input type="hidden" value='<%= dates.nextFromDate %>' name="fromDate" id="fromDate">
             <input type="hidden" value='<%= dates.nextToDate %>' name="toDate" id="fromDate">
               
-            
-          
-            </div> 
+          </div> 
             <input type="submit" value="Book">   
           </form>
         <form method="GET" action="/users/dashboard">
