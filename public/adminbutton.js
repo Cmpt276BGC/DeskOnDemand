@@ -56,7 +56,7 @@ console.log(tableid);
   for(let j=0;j<newtable.length;j++){
     if(tableid[i].attributes.id.value==newtable[j]){
       console.log('hello')
-        tableid[i].setAttribute('style', 'fill:green;stroke-width:2;stroke:rgb(0,0,0)')
+        tableid[i].setAttribute('style', 'fill:#20B2AA;stroke-width:2;stroke:rgb(0,0,0)')
     }
   }
 }  
