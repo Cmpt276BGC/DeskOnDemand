@@ -626,7 +626,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     //set javascript calendar datetime to align with sql default datetime value
     var specificDate = new Date(req.body.specificDate);
     var specificDateEnd = new Date(req.body.specificDate);
-    specificDateEnd.setDate(specificDate.getDate() + 1);
+    //specificDateEnd.setDate(specificDate.getDate() + 1);
     var specificDateISOString = specificDate.toISOString().split('T')[0];
     var specificDateEndISOString = specificDateEnd.toISOString().split('T')[0];
 
