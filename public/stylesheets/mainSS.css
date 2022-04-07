@@ -213,10 +213,6 @@ th {
   column-count: 4;
 }
 
-<<<<<<< HEAD
-
-
-=======
 .hiddenradio {
   display: none;
 }
@@ -225,4 +221,3 @@ th {
   cursor: pointer;
   filter: brightness(60%);
 }
->>>>>>> c3788d4f93f96d3ea22ab29fe970c8aa4e9a9bb4
