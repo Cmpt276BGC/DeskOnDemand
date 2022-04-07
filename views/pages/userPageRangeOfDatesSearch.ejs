@@ -40,7 +40,7 @@
 
         <label for="Date">To: </label>
         <input type="date" id="toDate" name="toDate" required>
-
+        <div></div><br>
       <fieldset>
           <legend><u>Additional: </u></legend>
 
@@ -50,19 +50,23 @@
           <label for="Corner">Corner: </label>
           <input type="checkbox" id="corner" name="corner" value="true"><br>
 
-      </fieldset><br>
-
+      </fieldset>
+      <div></div>
      
 
  
       <input type="submit" value="Submit">
     </form>
+    <br>
+    <div class="buttongroup">
     <form method="GET" action="/users/dashboard">
-      <input type="submit" value="Home">
+      <input type="submit" value="Search for Specific Date">
     </form>
+    <div class="space"></div>
     <form method="GET" action="/bookedworkstations">
       <input type="submit" value="Your Booked Workstations">
     </form>
+  </div>
     </div>
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 

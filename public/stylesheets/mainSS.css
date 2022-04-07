@@ -229,3 +229,8 @@ th {
   height: auto;
   display: inline-block;
 }
+
+fieldset{
+  display:inline-block;
+  width: 150px;
+}

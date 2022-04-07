@@ -60,12 +60,6 @@ app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
 });
 
 
-// temp second floor SVG
-app.get('/f2', (req, res) => {
-  res.render('pages/floor2');
-});
-
-
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
   let isadmin = req.user.admin;
   res.render('pages/dashboard', { user: req.user.fname, isadmin: isadmin});
@@ -215,66 +209,6 @@ app.post('/users/addUser', checkAuthorization, async (req, res) => {
       }
     );
   }
-});
-
-app.post('/users/updateUser', checkAuthorization, async (req, res) => {
-
-  let {fname, lname, email, password, confirmpw} = req.body;
-  let errors = [];  // form validation
-
-  // check that no field(s) left empty
-  if (!email) {
-    errors.push({ message: "Please fill in an email" });
-  }
-
-  if(req.body.fname && req.body.email){
-    pool.query (
-      `UPDATE bgcusers SET fname = $1 WHERE uemail=$2`, [fname,email], (err, results) => {
-        if (err) {
-          throw err;
-        }
-        console.log(results.rows);
-        req.flash('success_msg', "Successfully registered, please log in");
-        res.redirect("/users/admindash/manageUsers");
-      }
-    )
-  }
-    
-    if(req.body.lname && req.body.email){
-      pool.query (
-        `UPDATE bgcusers SET lname = $1 WHERE uemail=$2`, [lname,email], (err, results) => {
-          if (err) {
-            throw err;
-          }
-          console.log(results.rows);
-          req.flash('success_msg', "Successfully registered, please log in");
-          res.redirect("/users/admindash/manageUsers");
-        }
-      )
-    }
-    
-    if(req.body.password && req.body.email){
-        // check password length
-      if (password.length < 8) {
-        errors.push({ message: "Password must be at least 8 characters" });
-      }
-        // check password re-entered correctly
-      if (password != confirmpw) {
-        errors.push({ message: "Passwords do not match" })
-      }
-      let hashedPW = await bcrypt.hash(password, 10);
-      console.log(hashedPW);
-        pool.query (
-          `UPDATE bgcusers SET upass = $1 WHERE uemail=$2`, [hashedPW,email], (err, results) => {
-            if (err) {
-              throw err;
-            }
-            console.log(results.rows);
-            req.flash('success_msg', "Successfully registered, please log in");
-            res.redirect("/users/admindash/manageUsers");
-          }
-        )
-    }
 });
 
 app.post('/addAdmin', checkAuthorization, async (req, res) => {
@@ -737,7 +671,8 @@ app.post('/booking', async (req,res)=>{
   
   const bookingClient = await pool.connect();
 
-  
+  var errors = [];
+
   //variables
   var tableid = req.body.title;
   console.log(tableid);
@@ -753,20 +688,27 @@ app.post('/booking', async (req,res)=>{
   });
   console.log(id);
   
-  //query
-  const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and ('${bookFromDate}' < todate) and (fromdate < '${bookToDate}')`)
-  console.log(checkBookingQuery)
-  if(checkBookingQuery.rows.length===0){
-    const bookTableQuery = await bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
-
-    req.flash('success_msg', "Workstation successfully booked!");
-    res.redirect('/users/dashboard')
-    bookingClient.release();
-  } else {
+  if(tableid===""){
+    errors.push({ message : "Invalid"})
     res.status(204).send();
     bookingClient.release();
-  }
 
+  } else {
+    const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and ('${bookFromDate}' < todate) and (fromdate < '${bookToDate}')`)
+    console.log(checkBookingQuery)
+    if(checkBookingQuery.rows.length===0){
+      const bookTableQuery = await bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
+  
+      req.flash('success_msg', "Workstation successfully booked!");
+      res.redirect('/users/dashboard')
+      bookingClient.release();
+    } else {
+      errors.push({message : "Invalid Booking"})
+      res.status(204).send();
+      bookingClient.release();
+    }
+  }
+  //query
   
 })
 
@@ -787,8 +729,12 @@ app.post('/adminbooking', async (req,res)=>{
     errors.push({ message: "Please fill in an email" });
   }
 
-  // check if email exists
-  pool.query(
+  if(tableid===""){
+    res.status(204).send();
+    bookingClient.release();
+  } else{
+    // check if email exists
+    pool.query(
     `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
       if (err) {
         throw err;
@@ -812,6 +758,7 @@ app.post('/adminbooking', async (req,res)=>{
       }
     }
   );
+  }
   
 });
 

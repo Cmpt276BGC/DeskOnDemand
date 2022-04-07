@@ -17,6 +17,13 @@
             <button class="tablinks" onclick="floorplan(event, '5F')">Fifth Floor</button>
             <button class="tablinks" onclick="floorplan(event, '6F')">Sixth Floor</button>
           </div>
+          <ul class="errors">
+            <% if(typeof errors != 'undefined') { %>
+              <% errors.forEach(error => { %>
+                <li><%= error.message %></li>
+              <% }) %>
+            <% } %>
+          </ul>
           <div id="2F" class="tabcontent" style="display:block">
             <svg class="floor" width="1000" height="525">
               <rect width="1000" height="525" style="opacity:.5;fill:white;stroke-width:1;stroke:rgb(0,0,0)" />
@@ -1801,7 +1808,7 @@
           <input type="hidden" name="IDtoSend" id="IDtoSend">
           <input type="hidden" value='<%= dates.nextFromDate %>' name="startDate" id="startDate">
           <input type="hidden" value='<%= dates.nextToDate %>' name="endDate" id="endDate">
-          <input id="useremailLookup" name="useremail" type="email" value="Enter user email">
+          <input id="useremailLookup" name="useremail" type="email" placeholder="Enter user email">
           <input id="adminButton" type="submit" value="Book for User">
         </form>
         <form method="GET" action="/users/dashboard">
