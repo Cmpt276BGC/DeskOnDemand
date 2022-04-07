@@ -10,7 +10,6 @@ if (!isProduction) {
 const connectionString = 'postgres://postgres:Jojek2020.@localhost/dod' //matts local db
 // const connectionString = 'postgres://postgres:Reset123@localhost/bgcuser'
 
-<<<<<<< HEAD
  const pool = new Pool({
        connectionString: isProduction ? process.env.DATABASE_URL : connectionString
  });
@@ -21,17 +20,5 @@ const connectionString = 'postgres://postgres:Jojek2020.@localhost/dod' //matts 
   //     rejectUnauthorized: false
   //   }
   // });
-=======
-// const pool = new Pool({
-//   connectionString: isProduction ? process.env.DATABASE_URL : connectionString
-// });
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
->>>>>>> 5bf9145275ceae795a3f3640463036b4762b8dde
 
 module.exports = { pool };

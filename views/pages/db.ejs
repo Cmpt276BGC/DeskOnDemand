@@ -24,14 +24,15 @@
                 </thead>
                 <form method="POST" action="/deleteUser">
                 <% results.forEach(function(r) { %>
-                  <tbody class="table-body">
+                  <tbody class="table-body" style="background-color:none; border: none;">
                       <tr class="activity">
                           <th><%= r.fname %> <%= r.lname %></th>
                           <td><%= r.uemail %></td>
                           <td><%=r.admin%></td>
-                          <td><a href='/users/admindash/editUserInfo/<%= r.uemail %>'>Edit User Info</a></td>
-                          <td><a href='/users/admindash/viewUserBookings/<%= r.uemail %>'>View Bookings</a></td>
-                          <td><button type="submit" id="email" name="email" value="<%= r.uemail %>">Delete User</td>
+                          <td style="width: 120px;"><a href='/users/admindash/viewUserBookings/<%= r.uemail %>'>View Bookings</a></td>
+                          <td><a href='/users/admindash/editUserInfo/<%= r.uemail %>'>Edit User Info</a><button type="submit" id="email" name="email" value="<%= r.uemail %>" style="background:none;"><img src="/public/trashbin.jpg" style="vertical-align: middle; margin-bottom:4px;" alt="Delete" height="27px" width="27px"></td>
+                          
+                          
                         
                       </tr>
                   </tbody>
