@@ -217,3 +217,15 @@ th {
   cursor: pointer;
   filter: brightness(60%);
 }
+
+.buttongroup {
+  display:flex;
+  align-items: center;
+  margin-left: 30%;
+}
+
+.space {
+  width: 4px;
+  height: auto;
+  display: inline-block;
+}

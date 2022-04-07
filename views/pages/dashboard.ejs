@@ -57,15 +57,19 @@
 
       <input type="submit" value="Submit">
     </form>
-    <form method="GET" action="/userPageRangeOfDates">
-      <input type="submit" value="Search For Range of Dates">
-    </form>
-    <form method="GET" action="/bookedworkstations">
-      <input type="submit" value="Your Booked Workstations">
-    </form>
-    <form  method="GET" action="/users/admindash">
-      <input id="adminDash" type="submit" value="Admin Dashboard">
-    </form>
+    <div class="buttongroup">
+      <form method="GET" action="/userPageRangeOfDates">
+        <input type="submit" value="Search For Range of Dates">
+      </form>
+      <div class="space"></div>
+      <form method="GET" action="/bookedworkstations">
+        <input type="submit" value="Your Booked Workstations">
+      </form>
+      <div class="space"></div>
+      <form  method="GET" action="/users/admindash">
+        <input id="adminDash" type="submit" value="Admin Dashboard">
+      </form>
+    </div>
     </div>
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>

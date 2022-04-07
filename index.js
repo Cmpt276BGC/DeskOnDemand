@@ -850,7 +850,7 @@ app.post('/cancelBooking', async (req,res)=>{
     //res.redirect('/users/dashboard');
      if(booked.rows.length>0){
       res.render('pages/bookedWorkstations',bookedResults);
-      bookedworkstations.release();
+      
       }
       else{
         res.render('pages/nobookedWorkstation')
