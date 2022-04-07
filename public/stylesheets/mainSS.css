@@ -221,7 +221,7 @@ th {
 .buttongroup {
   display:flex;
   align-items: center;
-  margin-left: 30%;
+  justify-content: center;
 }
 
 .space {
