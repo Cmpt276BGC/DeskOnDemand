@@ -142,6 +142,12 @@ button {
   stroke:rgb(0,0,0);
 }
 
+.workstation{
+  fill:lightgrey;
+  stroke-width:2;
+  stroke:rgb(0,0,0);
+}
+
 svg text{
   text-anchor: middle;
   dominant-baseline: middle;
@@ -187,12 +193,22 @@ svg text{
 table {
   border-collapse: collapse;
   width: 100%;
-  border: 2px solid #c6c6c6;
+  border: 2px solid #6d6d6d;
 }
-td,
-th {
-  border: 2px solid #c6c6c6;
+td {
+  border: 2px solid #6d6d6d;
   border-collapse: collapse;
   padding: 0.5rem;
   text-align: left;
+}
+th {
+  border: 2px solid #6d6d6d;
+  border-collapse: collapse;
+  padding: 0.5rem;
+  text-align: left;
+  background-color: #ddd;
+}
+
+#workstationresults {
+  column-count: 2;
 }
