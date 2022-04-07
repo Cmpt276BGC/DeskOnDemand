@@ -780,11 +780,20 @@ app.post('/booking', async (req,res)=>{
   console.log(id);
   
   //query
-  const bookTableQuery = bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
+  const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and fromdate='${bookFromDate}' and todate='${bookToDate}'`)
+  console.log(checkBookingQuery)
+  if(checkBookingQuery.rows.length===0){
+    const bookTableQuery = await bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
 
-  req.flash('success_msg', "Workstation successfully booked!");
-  res.redirect('/users/dashboard')
-  bookingClient.release();
+    req.flash('success_msg', "Workstation successfully booked!");
+    res.redirect('/users/dashboard')
+    bookingClient.release();
+  } else {
+    req.flash('success_msg', "Workstation already booked.");
+    bookingClient.release();
+  }
+
+  
 })
 
 app.post('/adminbooking', async (req,res)=>{

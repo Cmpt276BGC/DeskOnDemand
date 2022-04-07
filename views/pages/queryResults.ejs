@@ -28,15 +28,15 @@
               <rect width="320" height="100" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)" />
               <text text-anchor="middle" x="160" y="50">LOUNGE</text>
             </svg>
-            <svg class="cubicle" id="13-208x" onClick="reply_click(this.id)">
+            <svg class="cubicle" id="13-208x">
               <rect class="workstation" id="13-208" y="100" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="130">13-208</text>
             </svg>
-            <svg class="cubicle" id="12-208x" onClick="reply_click(this.id)">
+            <svg class="cubicle" id="12-208x">
               <rect class="workstation" id="12-208" y="160" width="60" height="60" style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="190">12-208</text>
             </svg>
-            <svg class="cubicle">
+            <svg class="cubicle" id="10-208x">
               <rect class="workstation" id="10-208" y="290" width="60" height="60"style="fill:rgb(204, 34, 34);stroke-width:2;stroke:rgb(0,0,0)"/>
               <text text-anchor="middle" x="30" y="320">10-208</text>
             </svg>
@@ -1824,10 +1824,9 @@
           <input id="adminButton" type="submit" value="Book for User">
         </form>
         
-        <script type="text/javascript" src="/public/adminbutton.js">
-        </script>
+        <script type="text/javascript" src="/public/adminbutton.js"></script>
 
-        <script type="text/javascript">
+        <script>
           function reply_click(clicked_id)
           {
             var actual_id = clicked_id.replace(/\x/g, '');
