@@ -634,7 +634,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var windowChecked = windowCheck(window);
     var cornerChecked = cornerCheck(corner);
     
-    var query = await searchTablesClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
+    var query = await searchTablesClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' < todate) and (fromdate < '${specificDateEndISOString}'));`) 
     var queryResults = {'queryResults' : query.rows, dates, isadmin}
     
     if(query.rows.length>0){
@@ -697,7 +697,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
    var windowChecked = windowCheck(window);
    var cornerChecked = cornerCheck(corner);
 
-   var query = await searchTablesDateRangeClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`) 
+   var query = await searchTablesDateRangeClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' < todate) and (fromdate < '${toDateISOString}'));`) 
    var queryResults = {'queryResults' : query.rows, dates, isadmin}
    
    if(query.rows.length>0){
@@ -705,6 +705,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
    } else {
      res.redirect('/noResultsForSearch')
    }
+   
 
   searchTablesDateRangeClient.release();
   } catch(err) {
@@ -753,7 +754,7 @@ app.post('/booking', async (req,res)=>{
   console.log(id);
   
   //query
-  const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and fromdate='${bookFromDate}' and todate='${bookToDate}'`)
+  const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and ('${bookFromDate}' < todate) and (fromdate < '${bookToDate}')`)
   console.log(checkBookingQuery)
   if(checkBookingQuery.rows.length===0){
     const bookTableQuery = await bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
