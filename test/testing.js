@@ -5,7 +5,7 @@ var server = require('../index')
 var should = chai.should()
 const { Pool } = require('pg');
 var pool = new Pool({
-//   connectionString: 'postgres://postgres:root@localhost/bgcusers'
+  connectionString: 'postgres://postgres:root@localhost/bgcusers'
 //   connectionString: 'postgres://postgres:Jojek2020.@localhost/dod' //Matts connection string
 });
 
@@ -111,6 +111,30 @@ describe('Login', function() {
     })
 })
 
+describe('Dashboard', function() {
+    it('should display admin dashboard to a admin user', function(done) {
+        chai.request(server).get('/users/admindash')
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+
+    it('should display user dashboard to a regular user', function(done) {
+        chai.request(server).get('/users/dashboard')
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+})
+
 describe('Database', function() {
     it('should output all users registered in the database on /db', function(done) {
         chai.request(server).get('/db')
@@ -135,13 +159,49 @@ describe('Search for workstations', function() {
             done()
         })
     })
+})
 
-    it('should display all available workstations given user preferences', function(done) {
+describe('Book a workstations', function() {
+    it('should display all workstations with one date', function(done) {
         chai.request(server).post('/users/dashboard')
             .send({
+                specificDate: '2022-04-16',
                 floor: 'any',
+                workstationType: 'any',
+                window: 'false',
+                corner: 'false',
+                permanent: 'false'
             })
-            .end(function(err, res) {
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+
+    it('should allow the user to book a workstation from a range of dates', function(done) {
+        chai.request(server).get('/userPageRangeOfDates')
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+
+    it('should display all workstations when searching with a range of dates', function(done) {
+        chai.request(server).post('/userPageRangeOfDates')
+            .send({
+                fromDate: '2022-04-18',
+                toDate: '2022-04-19',
+                floor: 'any',
+                workstationType: 'any',
+                window: 'false',
+                corner: 'false',
+            })
+            .end(function(err, res){
                 should.not.exist(err)
                 res.should.be.html
                 res.body.should.be.a('object')
@@ -150,27 +210,39 @@ describe('Search for workstations', function() {
     })
 })
 
-// //not complete
-// describe('Search', function(){
-//     it('should search for available workstations on a particular date with no specific floor or attributes', function(done){
-//         chai.request(server).post('/searchTablesSpecificDate')
-//             .send({
-//                 specificDateISOString: '2022-03-16',
-//                 specificDateEndISOString: '2022-03-17',
-//                 floor: 'any',
-//                 office: 'false',
-//                 window: 'false',
-//                 corner: 'false',
-//                 cubicle: 'false',
-//                 single: 'false',
-//                 double: 'false'
-//             })
-//             .end(function(err, res){
-//                 should.not.exist(err)
-//                 res.should.have.status(200)
-//                 res.should.be.json
-//                 res.body.
-//                 done()
-//             })
-//     })
-// })
+describe('See workstations', function() {
+    it('should display the workstations that the user has booked', function(done) {
+        chai.request(server).get('/bookedworkstations')
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+
+    it('should display all workstations in database for admins', function(done) {
+        chai.request(server).get('/manageDesks')
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.have.status(200)
+                res.should.be.html
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+
+    it('should cancel a booking', function(done) {
+        chai.request(server).post('/cancelBooking')
+            .send({
+                title: 'true'
+            })
+            .end(function(err, res){
+                should.not.exist(err)
+                res.should.be.json
+                res.body.should.be.a('object')
+                done()
+            })
+    })
+})
