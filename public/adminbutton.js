@@ -60,3 +60,25 @@ console.log(tableid);
     }
   }
 }  
+
+
+// clickable SVG
+let clickableSVGs = document.getElementsByClassName('clickableSVG');
+for (i= 0; i<clickableSVGs.length; i++) {
+  console.log(clickableSVGs[i].attributes.id.value);
+}
+for (i= 0; i<clickableSVGs.length; i++) {
+  (function() {
+    var clicked_id =clickableSVGs[i].attributes.id.value;
+    clickableSVGs[i].addEventListener('click', (evt) => reply_click(clicked_id));
+  }());
+}
+function reply_click(clicked_id)
+{
+  console.log(clicked_id);
+  var actual_id = clicked_id.replace(/\x/g, '');
+  document.getElementById("title").value = actual_id;
+  var tableselected = document.getElementById("title").value;
+  console.log(tableselected);
+
+}
