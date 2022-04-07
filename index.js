@@ -372,7 +372,7 @@ app.post('/deleteUser', checkAuthorization, async (req, res) => {
               }
               console.log(results.rows);
               req.flash('success_msg', "Successfully registered, please log in");
-              res.redirect("/users/admindash/manageUsers");
+              res.redirect("/db");
             }
           )
         }
@@ -498,6 +498,56 @@ app.post('/delete/:tableid', async (req, res) => {
   }
 });
 
+app.get('/users/admindash/editUserInfo/:uemail', async (req, res) => {
+  try{  
+    var uemail = req.params.uemail;
+    const editUserInfoClient = await pool.connect();
+    const editUserInfoQuery = await editUserInfoClient.query(`select * from bgcusers where uemail='${uemail}'`);
+    const editUserInfoQueryResults = {'editUserInfoQueryResults' : editUserInfoQuery.rows};
+    res.render('pages/editUser', editUserInfoQueryResults);
+    editUserInfoClient.release();
+  } catch(err){
+    res.send(err);
+  }
+})
+
+function adminCheck(admin) {
+  if(admin===''){
+    return ``
+  } else {
+    return ` , admin='${admin}'`
+  }
+}
+
+app.post('/updateUserInfo', async (req, res) => {
+  try{
+    
+    var fname = req.body.fname;
+    var lname = req.body.lname;
+    var email = req.body.uemail;
+    var password = req.body.password;
+    var admin = req.body.admin;
+
+    var adminChecked = adminCheck(admin);
+
+    if(password===''){
+      const emptyPWUpdate = await pool.connect();
+      const emptyPWQuery = await emptyPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}'` + adminChecked + ` where uemail='${email}'`)
+      req.flash("Information Updated")
+      res.redirect(`/users/admindash/editUserInfo/${email}`)
+    } else {
+      const filledPWUpdate = await pool.connect();
+      var hashedPW = await bcrypt.hash(password, 10);
+      const filledPWQuery = await filledPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}', upass='${hashedPW}'` + adminChecked + ` where uemail='${email}'`)
+      req.flash("Information Updated")
+      res.redirect(`/users/admindash/editUserInfo/${email}`)
+    }
+    
+  } catch(err) {
+    res.send(err)
+  }
+})
+
 app.get('/users/admindash/viewUserBookings/:uemail', async (req, res) => {
   try{
     var uemail = req.params.uemail;
@@ -612,7 +662,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var windowChecked = windowCheck(window);
     var cornerChecked = cornerCheck(corner);
     
-    var query = await searchTablesClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
+    var query = await searchTablesClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
     var queryResults = {'queryResults' : query.rows, dates, isadmin}
     
     if(query.rows.length>0){
@@ -630,7 +680,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
 
 //function to search for a table which is available for a specific range of dates
 app.post('/searchTablesDateRange',  async (req,res)=>{
-
+  let isadmin = req.user.admin;
   try{
     const searchTablesDateRangeClient = await pool.connect();
   
@@ -675,8 +725,8 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
    var windowChecked = windowCheck(window);
    var cornerChecked = cornerCheck(corner);
 
-   var query = await searchTablesDateRangeClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`) 
-   var queryResults = {'queryResults' : query.rows, dates}
+   var query = await searchTablesDateRangeClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' between fromdate and todate or '${toDateISOString}' between fromdate and todate));`) 
+   var queryResults = {'queryResults' : query.rows, dates, isadmin}
    
    if(query.rows.length>0){
      res.render('pages/queryResults', queryResults)

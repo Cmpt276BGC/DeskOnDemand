@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Users:</title>
+    <link rel="stylesheet" href="/public/stylesheets/mainSS.css">
+  </head>
+
+  <div class="background">
+    <body>
+      <div class="container">
+        <h2>Database Results</h2>
+        <form method="GET" action="/users/admindash/manageUsers">
+          <input type="submit" value="Return to Manage Users">
+        </form>
+          <% viewUsersQueryResults.forEach(function(r) { %>
+          
+            <ul>
+                <li><b>Name: </b><%= r.fname %> <%= r.lname %> <b>Email:</b> <%= r.uemail %> <b>Admin:</b> <%=r.admin%> <b>ID:</b> <%= r.id %></li><br>
+              <% }); %>
+            </ul>
+         
+        </div>
+    </body>
+  </div>
+</html>

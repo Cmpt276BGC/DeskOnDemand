@@ -19,19 +19,24 @@
                       <th>Email</th>
                       <th>Admin</th>
                       <th></th>
+                      <th></th>
                   </tr>
                 </thead>
+                <form method="POST" action="/deleteUser">
                 <% results.forEach(function(r) { %>
                   <tbody class="table-body">
                       <tr class="activity">
                           <th><%= r.fname %> <%= r.lname %></th>
                           <td><%= r.uemail %></td>
                           <td><%=r.admin%></td>
+                          <td><a href='/users/admindash/editUserInfo/<%= r.uemail %>'>Edit User Info</a></td>
                           <td><a href='/users/admindash/viewUserBookings/<%= r.uemail %>'>View Bookings</a></td>
-                          
+                          <td><button type="submit" id="email" name="email" value="<%= r.uemail %>">Delete User</td>
+                        
                       </tr>
                   </tbody>
               <% }); %>
+                </form>
           <form method="GET" action="/users/admindash/manageUsers">
             <input type="submit" value="Return to Manage Users">
           </form>

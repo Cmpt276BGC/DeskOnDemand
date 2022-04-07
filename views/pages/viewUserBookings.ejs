@@ -13,8 +13,7 @@
             <form method="POST" action="/users/admindash/deleteUserBooking">
                 <% viewUserBookingsQueryResults.forEach(function(r) { %>
                     <ul>
-                        <li> <%= r.tableid %>: <%= r.fromdate %> <b>to</b> <%= r.todate %></li> 
-                        <li>Delete this booking ID number <input type="submit" style="background-color: white; color: black; border: 1px solid black;" value="<%= r.uniqueid %>" name="deleteID" value="deleteID"></li>
+                        <li> <%= r.tableid %>: <%= r.fromdate %> <b>to</b> <%= r.todate %> <button type="submit" style="background-color: transparent;" value="<%= r.uniqueid %>" name="deleteID" value="deleteID"><img src="/public/trashcan.jpg" alt="Delete" height="20px" width="20px"></button></li> 
                     </ul>
                     
                 <% }); %><br>
