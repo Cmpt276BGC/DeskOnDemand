@@ -1,6 +1,3 @@
-// var radios = document.forms["radioform"].elements["titleID"];
-// var IDtoSend = document.getElementById("IDtoSend");
-
 // admin booking only enabled for admins
 function adminButton(){
   const isAuthorized = document.getElementById("authorized").value;
@@ -33,17 +30,6 @@ function floorplan(evt, floor) {
   document.getElementById(floor).style.display = "block";
   evt.currentTarget.className += " active";
 }
-
-
-
-// display green
-
-// for (var i = 0; i<radios.length; i++) {
-//   radios[i].onclick = function(){
-//     IDtoSend.value = this.value;
-//     console.log(this.value);
-//   }
-// }
 
 var table = document.getElementsByName('titleID')
 var tableid = document.getElementsByClassName('workstation');
