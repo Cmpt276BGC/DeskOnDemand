@@ -4,7 +4,7 @@ var tableid = document.getElementById('tableid');
 const columnDefs = [
     { headerName: 'Table ID', field: "tableid", sortable: true, filter: true, checkboxSelection: true },
     { field: "floor", sortable: true, filter: true },
-    { field: "type", sortable: true, filter: true },
+    { headerName: "Type", field: "workstationtype", sortable: true, filter: true },
     { headerName: 'Has Window', field: "haswindow", sortable: true, filter: true},
     { headerName: 'Is Corner', field: "corner", sortable: true, filter: true},
   ];
