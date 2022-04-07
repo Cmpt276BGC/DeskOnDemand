@@ -60,11 +60,6 @@ app.get('/users/adminlogin', checkAuthenticated, (req, res) => {
 });
 
 
-// temp desks page
-app.get('/desks', (req, res) => {
-  res.render('pages/desks');
-});
-
 // temp second floor SVG
 app.get('/f2', (req, res) => {
   res.render('pages/floor2');
