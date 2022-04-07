@@ -339,42 +339,18 @@ app.post('/addAdmin', checkAuthorization, async (req, res) => {
 
 app.post('/deleteUser', checkAuthorization, async (req, res) => {
 
-  let {fname, lname, email, password, confirmpw} = req.body;
-  let errors = [];  // form validation
-
-  // check that no field(s) left empty
-  if (!email) {
-    errors.push({ message: "Please fill in the email field to delete a user" });
-  }
-
-    // check if email exists
-    pool.query(
-      `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
-        if (err) {
-          throw err;
-        } 
-
-        console.log(results.rows);
-
-        // email already in database
-        if (results.rows.length == 0) {
-          errors.push ({ message: "Email not registered" });
-          res.render('pages/manageUsers', { errors });
-        } else {
-          pool.query (
-            `DELETE FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
-              if (err) {
-                throw err;
-              }
-              console.log(results.rows);
-              req.flash('success_msg', "Successfully registered, please log in");
-              res.redirect("/db");
-            }
-          )
-        }
-      }
-    );
-  });
+  var email = req.body.email;
+  var useremail = req.user.uemail;
+  
+  const deleteClient = await pool.connect();
+  const deleteQuery = await deleteClient.query(`delete from bgcusers where uemail='${email}' and not (uemail='${useremail}') and not (uemail='superuser@test.com')`)
+  deleteClient.release();
+ 
+  console.log(email)
+  console.log(useremail)
+  res.redirect('/db')
+  
+});
 
 // regular user login
 app.post(
