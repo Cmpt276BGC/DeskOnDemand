@@ -11,33 +11,32 @@
     <form method="post" action="/cancelBooking">
     <div class="background">
     <h1 class="header">Your Booked Workstations</h1>
-    <h2>Cancel your booking</h2>
     <table class="table">
         <thead>
-          <tr class="heading">
-              <th></th>
-              <th>Table ID</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Number of Days</th>
+          <tr class="heading">              
+            <th>Table ID</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Number of Days</th>
+            <th></th>
           </tr>
         </thead>
         <% bookedResults.forEach(function(r) { %>
           <tbody class="table-body">
-              <tr class="activity">
-                  <th><input type="radio" value='<%= r.uniqueid %>' name="title" required></th>
-                  <td><%= r.tableid %></a></td>
-                  <td><input type="hidden" value='<%= r.fromdate %>' class ='fromdate'><%= r.fromdate %></td>
-                  <td><input type="hidden"  value='<%= r.todate %>' class="todate"><%= r.todate %></td>
-                  <td><p class="result"></p></td>
-              </tr>
+            <tr class="activity">
+                <td><%= r.tableid %></a></td>
+                <td><input type="hidden" value='<%= r.fromdate %>' class ='fromdate'><%= r.fromdate %></td>
+                <td><input type="hidden"  value='<%= r.todate %>' class="todate"><%= r.todate %></td>
+                <td><p class="result"></p></td>
+                <td><button type="submit" name="title" value="<%= r.uniqueid %>" style="background:none;"></button><img src="/public/trashbin.jpg" style="vertical-align: middle; margin-bottom:4px;" alt="Delete" height="27px" width="27px"></td>
+                    
+            </tr>
           </tbody>
           <% }); %>
       </table>
-     <input type="submit" value="Cancel Your booking">
     </form>
     <form method="GET" action="/users/dashboard">
-        <input type="submit" value="Search again">
+        <input type="submit" value="Back to Search">
     </form>
     </div>
     <script>
@@ -56,7 +55,7 @@
             d2= new Date(specificDateISOStringto);
 
             let time = Math.abs(d1-d2);
-            let  diffdays=Math.ceil(time/(1000*60*60*24));
+            let  diffdays=Math.ceil(time/(1000*60*60*24)+1);
             console.log(diffdays);
             if(diffdays==1){
                 result[i].innerHTML= diffdays ;

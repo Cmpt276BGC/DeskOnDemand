@@ -193,16 +193,16 @@ svg text{
 table {
   border-collapse: collapse;
   width: 100%;
-  border: 2px solid #6d6d6d;
+  border: 1px solid #6d6d6d;
 }
 td {
-  border: 2px solid #6d6d6d;
+  border: 1px solid #6d6d6d;
   border-collapse: collapse;
   padding: 0.5rem;
   text-align: left;
 }
 th {
-  border: 2px solid #6d6d6d;
+  border: 1px solid #6d6d6d;
   border-collapse: collapse;
   padding: 0.5rem;
   text-align: left;

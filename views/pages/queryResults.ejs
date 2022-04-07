@@ -977,7 +977,7 @@
                 <text x="551" y="145">510</text>
               </svg>
               <svg>
-                <rect class="PPE" id="518" x="647" width="87" height="80"/>
+                <rect class="PPE" id="518" x="647" width="87" height="80" style="fill:rgb(141, 141, 172);stroke-width:2;stroke:rgb(0,0,0)"/>
                 <text x="690" y="40">518 PPE</text>
               </svg>
               <svg class="clickableSVG" id="519x">
@@ -1795,15 +1795,7 @@
             
             <input type="submit" value="Book">   
           </form>
-        <form method="GET" action="/users/dashboard">
-            <input type="submit" value="Search again">
-        </form>
         
-        <form method="GET" action="/users/logout">
-            <input type="submit" value="Log Out">
-        </form>
-
-
         <form method="POST" action="/adminbooking">
           <input type="hidden" name="authorized" id="authorized" value='<%= isadmin %>''>
           <input type="hidden" name="IDtoSend" id="IDtoSend">
@@ -1812,9 +1804,13 @@
           <input id="useremailLookup" name="useremail" type="email" value="Enter user email">
           <input id="adminButton" type="submit" value="Book for User">
         </form>
-        
+        <form method="GET" action="/users/dashboard">
+          <input type="submit" value="Search again">
+        </form>
         <script type="text/javascript" src="/public/adminbutton.js">
         </script>
-        </div>
+      </div>
+      <br><br>Desks on Demand
+      <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br>
     </body>
 </html>
