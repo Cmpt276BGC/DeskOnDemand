@@ -89,7 +89,7 @@ app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
   res.redirect('/users/login');
 })
 
-// bgcusers to json test code
+// bgcusers to json
 app.get('/desksjson', async (req,res)=>{
   try {
     const desksQueryResult = await pool.query(`SELECT * FROM bgctables`);
@@ -569,6 +569,7 @@ function cornerCheck(corner){
 
 //search for specific date
 app.post('/searchTablesSpecificDate', async (req, res) =>{
+  let isadmin = req.user.admin;
   try{
     const searchTablesClient = await pool.connect();
     
@@ -612,7 +613,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var cornerChecked = cornerCheck(corner);
     
     var query = await searchTablesClient.query(`select tableid from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' between fromdate and todate or '${specificDateEndISOString}' between fromdate and todate));`) 
-    var queryResults = {'queryResults' : query.rows, dates}
+    var queryResults = {'queryResults' : query.rows, dates, isadmin}
     
     if(query.rows.length>0){
       res.render('pages/queryResults', queryResults)

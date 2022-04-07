@@ -4,9 +4,10 @@ var IDtoSend = document.getElementById("IDtoSend");
 // admin booking only enabled for admins
 function adminButton(){
   const isAuthorized = document.getElementById("authorized").value;
- 
+  console.log(isAuthorized);
   if (isAuthorized != "true") {
-    document.getElementById("adminButton").disabled = true;
+    document.getElementById("adminButton").type = "hidden";
+    document.getElementById("useremailLookup").type = "hidden";
   }
 };
 
@@ -17,10 +18,7 @@ for (var i = 0; i<radios.length; i++) {
   }
 }
 
-//adminButton();
-
-
-
+adminButton();
 
 function floorplan(evt, floor) {
   // Declare all variables
