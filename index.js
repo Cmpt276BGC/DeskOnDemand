@@ -82,7 +82,7 @@ app.get('/users/admindash/manageUsers', checkAuthorization, (req, res) => {
 app.get('/users/logout', checkNotAuthenticated, async (req, res) => {
   req.logOut();  // function within passport
   req.flash('success_msg', "Successfully logged out");
-  res.redirect('/users/login');
+  res.redirect('/');
 })
 
 // bgcusers to json
