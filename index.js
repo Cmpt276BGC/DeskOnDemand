@@ -439,12 +439,14 @@ app.post('/updateUserInfo', async (req, res) => {
     if(password===''){
       const emptyPWUpdate = await pool.connect();
       const emptyPWQuery = await emptyPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}'` + adminChecked + ` where uemail='${email}'`)
+      emptyPWUpdate.release();
       req.flash("Information Updated")
       res.redirect(`/users/admindash/editUserInfo/${email}`)
     } else {
       const filledPWUpdate = await pool.connect();
       var hashedPW = await bcrypt.hash(password, 10);
       const filledPWQuery = await filledPWUpdate.query(`update bgcusers set fname='${fname}', lname='${lname}', upass='${hashedPW}'` + adminChecked + ` where uemail='${email}'`)
+      filledPWUpdate.release();
       req.flash("Information Updated")
       res.redirect(`/users/admindash/editUserInfo/${email}`)
     }
