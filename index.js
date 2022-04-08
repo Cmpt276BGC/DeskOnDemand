@@ -696,7 +696,7 @@ app.post('/booking', async (req,res)=>{
     bookingClient.release();
 
   } else {
-    const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and ('${bookFromDate}' < todate) and (fromdate < '${bookToDate}')`)
+    const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and ('${bookFromDate}' <= todate) and (fromdate <= '${bookToDate}')`)
     console.log(checkBookingQuery)
     if(checkBookingQuery.rows.length===0){
       const bookTableQuery = await bookingClient.query(`insert into bgcbookings values('${id}','${tableid}', '${userEmail}', '${bookFromDate}', '${bookToDate}')`)
@@ -731,38 +731,43 @@ app.post('/adminbooking', async (req,res)=>{
     errors.push({ message: "Please fill in an email" });
   }
 
-  if(tableid===""){
+  console.log(tableid)
+
+  const checkBookingQuery = await bookingClient.query(`select * from bgcbookings where tableid='${tableid}' and ('${bookFromDate}' <= todate) and (fromdate <= '${bookToDate}')`)
+
+  if(checkBookingQuery.rows.length>0){
     res.status(204).send();
     bookingClient.release();
-  } else{
-    // check if email exists
+  } else {
     pool.query(
-    `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
-      if (err) {
-        throw err;
-      } 
-      const generateUniqueId = require('generate-unique-id');
-      let id = generateUniqueId({
-        excludeSymbols: ['0','#','@','|'],
-        length: 10
+      `SELECT * FROM bgcusers WHERE uemail=$1`, [email], (err, results) => {
+        if (err) {
+          throw err;
+        } 
+        const generateUniqueId = require('generate-unique-id');
+        let id = generateUniqueId({
+          excludeSymbols: ['0','#','@','|'],
+          length: 10
+        });
+      console.log(id);
+  
+        console.log(results.rows);  // debugging
+  
+        if (results.rows.length == 0) {
+          errors.push({ message: "Email not registered" });
+          bookingClient.release();
+        } else {
+          bookingClient.query(`insert into bgcbookings values( '${id}','${tableid}', '${email}', '${bookFromDate}', '${bookToDate}')`);
+          req.flash('success_msg', "Workstation successfully booked!");
+          res.redirect('/users/admindash')
+          bookingClient.release();
+        }
       });
-    console.log(id);
-
-      console.log(results.rows);  // debugging
-
-      if (results.rows.length == 0) {
-        errors.push({ message: "Email not registered" });
-      } else {
-        bookingClient.query(`insert into bgcbookings values( '${id}','${tableid}', '${email}', '${bookFromDate}', '${bookToDate}')`);
-        req.flash('success_msg', "Workstation successfully booked!");
-        res.redirect('/users/admindash')
-        bookingClient.release();
-      }
-    }
-  );
+  }
+    
   }
   
-});
+);
 
 app.get('/bookedworkstations', async (req, res) => {
   try{
@@ -801,10 +806,11 @@ app.post('/cancelBooking', async (req,res)=>{
     //res.redirect('/users/dashboard');
      if(booked.rows.length>0){
       res.render('pages/bookedWorkstations',bookedResults);
-      
+      bookedworkstations.release();
       }
       else{
-        res.render('pages/nobookedWorkstation')
+        res.render('pages/nobookedWorkstation');
+        bookedworkstations.release();
       } 
 
   }catch(err){
