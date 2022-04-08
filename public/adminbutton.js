@@ -78,6 +78,7 @@ function reply_click(clicked_id)
   console.log(clicked_id);
   var actual_id = clicked_id.replace(/\x/g, '');
   document.getElementById("title").value = actual_id;
+  document.getElementById("IDtoSend").value = actual_id;
   var tableselected = document.getElementById("title").value;
   console.log(tableselected);
 
