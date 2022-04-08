@@ -70,5 +70,34 @@
     </div>
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+    <script type="text/javascript">
+      function adminDash(){
+        const isAuthorized = document.getElementById("authorized").value;
+        console.log(isAuthorized);
+        if (isAuthorized != "true") {
+          document.getElementById("adminDash").type = "hidden";
+        }
+      };
+      adminDash();
+      var fromdate = document.getElementById("fromDate");
+        var todate = document.getElementById('toDate');
+        var todayDate = new Date();
+      var month = todayDate.getMonth() +1; 
+      var year = todayDate.getUTCFullYear() - 0; 
+      var tdate = todayDate.getDate(); 
+      var plusoneday = tdate +1;
+      if(month < 10){
+        month = "0" + month;
+      }
+      if(tdate < 10){
+        plusoneday = "0" + plusoneday;
+        tdate = "0" + tdate;
+      }
+      var maxDate = year + "-" + month + "-" + tdate;
+      fromdate.setAttribute('min', maxDate);
+      var maxDateplusone = year +"-"+month+"-"+plusoneday;
+      todate.setAttribute('min',maxDateplusone)
+      console.log(maxDate);
+    </script>
   </body>
 </html>
