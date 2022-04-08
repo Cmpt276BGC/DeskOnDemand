@@ -70,5 +70,14 @@
     </div>
     <br><br>Desks on Demand
     <br><input type="submit" class="button" onclick="location.href='/users/logout';" value="Logout" /><br> 
+    <script type="text/javascript">
+      function adminDash(){
+        const isAuthorized = document.getElementById("authorized").value;
+        console.log(isAuthorized);
+        if (isAuthorized != "true") {
+          document.getElementById("adminDash").type = "hidden";
+        }
+      };
+    </script>
   </body>
 </html>

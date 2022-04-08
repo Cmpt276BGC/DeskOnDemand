@@ -570,7 +570,7 @@ app.post('/searchTablesSpecificDate', async (req, res) =>{
     var windowChecked = windowCheck(window);
     var cornerChecked = cornerCheck(corner);
     
-    var query = await searchTablesClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' < todate) and (fromdate < '${specificDateEndISOString}'));`) 
+    var query = await searchTablesClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${specificDateISOString}' <= todate) and (fromdate <= '${specificDateEndISOString}'));`) 
     var queryResults = {'queryResults' : query.rows, dates, isadmin}
     
     if(query.rows.length>0){
@@ -633,7 +633,7 @@ app.post('/searchTablesDateRange',  async (req,res)=>{
    var windowChecked = windowCheck(window);
    var cornerChecked = cornerCheck(corner);
 
-   var query = await searchTablesDateRangeClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' < todate) and (fromdate < '${toDateISOString}'));`) 
+   var query = await searchTablesDateRangeClient.query(`select tableid, floor from bgctables a where` + workstationChecked + floorChecked + windowChecked + cornerChecked + ` not exists (select 1 from bgcbookings b where a.tableid=b.tableid and ('${fromDateISOString}' <= todate) and (fromdate <= '${toDateISOString}'));`) 
    var queryResults = {'queryResults' : query.rows, dates, isadmin}
    
    if(query.rows.length>0){
@@ -770,9 +770,11 @@ app.get('/bookedworkstations', async (req, res) => {
     const booked = await bookedworkstations.query(`SELECT * from bgcbookings where uemail='${req.user.uemail}'`);
     const bookedResults = {'bookedResults':(booked) ?  booked.rows: null};
     if(booked.rows.length>0){
-    res.render('pages/bookedWorkstations',bookedResults);
+      bookedworkstations.release();
+      res.render('pages/bookedWorkstations',bookedResults);
     }
     else{
+      bookedworkstations.release();
       res.render('pages/nobookedWorkstation')
     }
   }catch(err){
